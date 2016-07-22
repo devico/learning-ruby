@@ -1,5 +1,4 @@
 require_relative 'movie'
-require 'ostruct'
 require 'csv'
 
 class MovieCollection

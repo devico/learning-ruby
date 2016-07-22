@@ -15,7 +15,7 @@ class Movie
   end
 
   def actors
-    @actors
+   @actors
   end
 
   def has_genre?(type_of_genre)
