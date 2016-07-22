@@ -19,6 +19,12 @@ class Movie
   end
 
   def has_genre?(type_of_genre)
-    @genre.include?(type_of_genre)
+    begin
+      if @genre.include?(type_of_genre) == false
+        raise  'Такой жанр не существует'
+      end
+    rescue Exception => e
+      e.message
+    end
   end
 end
