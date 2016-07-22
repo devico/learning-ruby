@@ -18,8 +18,8 @@ class Movie
    @actors
   end
 
-  def show_genre(type_of_genre)
-    if @genre.include?(type_of_genre) == false
+  def has_genre?(type_of_genre)
+    if @genre.include?(type_of_genre.to_s) == false
       raise  'Такой жанр не существует'
     end
   end

@@ -36,8 +36,4 @@ end
     @collection.map(&movie_field).flatten.group_by(&:itself).map{ |k, v|  [k, v.count] }.sort.to_h
   end
 
-def has_genre?(film_genre)
-  puts @collection.map{ |movie| movie.show_genre(film_genre) }
-end
-
 end
