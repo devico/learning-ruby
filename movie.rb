@@ -18,13 +18,9 @@ class Movie
    @actors
   end
 
-  def has_genre?(type_of_genre)
-    begin
-      if @genre.include?(type_of_genre) == false
-        raise  'Такой жанр не существует'
-      end
-    rescue Exception => e
-      e.message
+  def show_genre(type_of_genre)
+    if @genre.include?(type_of_genre) == false
+      raise  'Такой жанр не существует'
     end
   end
 end
