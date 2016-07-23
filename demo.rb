@@ -31,6 +31,5 @@ movie.actors.count
 movie.actors.include?('Arnold Shwarzenegger')
 
 #ответить на запрос has_genre?('Comedy')
-#movies.first.has_genre?('Tragedy')
-movies.genre_films
-movies.first.has_genre?('Drama')
+movies.first.has_genre?('Tragedy')
+movies.first.has_genre?('Camedy')

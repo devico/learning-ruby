@@ -7,7 +7,7 @@ class MovieCollection
   def initialize(file_name)
     @collection =  CSV.read(file_name, col_sep: '|', headers: %i[ link title year country date genre length rate author actors ] )
     .map { |film| film.to_hash }
-    .map { |film| Movie.new(film[:link], film[:title], film[:year], film[:country], film[:date], film[:genre], film[:length], film[:rate], film[:author], film[:actors]) }
+    .map { |film| Movie.new(film[:link], film[:title], film[:year], film[:country], film[:date], film[:genre], film[:length], film[:rate], film[:author], film[:actors], self) }
   end
 
 # выводить список всех файлов
@@ -36,8 +36,8 @@ end
     @collection.map(&movie_field).flatten.group_by(&:itself).map{ |k, v|  [k, v.count] }.sort.to_h
   end
 
-  def genre_films
-    @collection.map { |f| f.genre }.flatten.uniq
+  def genre_exists?(genre_film)
+    @collection.map { |f| f.genre }.flatten.uniq.include?(genre_film)
   end
 
 end

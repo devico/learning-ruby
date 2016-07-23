@@ -3,7 +3,7 @@ require_relative 'movie_collection'
 class Movie
   attr_accessor :link, :title, :year, :country, :date, :genre, :length, :rate, :author, :actors
 
-  def initialize(link, title, year, country, date, genre, length, rate, author, actors)
+  def initialize(link, title, year, country, date, genre, length, rate, author, actors, movie_collection)
     @link = link
     @title = title
     @year = year
@@ -14,6 +14,7 @@ class Movie
     @rate  = rate
     @author = author
     @actors = actors.split(',')
+    @collection = movie_collection
   end
 
   def actors
@@ -21,11 +22,10 @@ class Movie
   end
 
   def has_genre?(type_of_genre)
-    #проверяем жанр в коллекции
-#    if movies.genre_films == false
-#      raise  'Такого жанра в природе не существует!'
-#    else
-#      @genre.include?(type_of_genre)
-#    end
+    if @collection.genre_exists?(type_of_genre) == false
+      raise "Жанра #{type_of_genre} в коллекции нет!"
+    else
+      @genre.include?(type_of_genre)
+    end
   end
 end
