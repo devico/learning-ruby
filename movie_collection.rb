@@ -28,7 +28,11 @@ end
 
 #выдать фильтрованный список фильмов — по полям: жанра и страны
 def filter(filters)
-  filters.reduce (@collection){ |filtered, (name, value) | filtered.select{ |f| f.send(name).include?(value.to_s) }.map { |m| puts "#{m.title} - #{m.year} - #{m.country}"} }
+#  puts filters.reduce (@collection){ |filtered, (name, value) | filtered.select{ |f| f.send(name).include?(value) }.map { |m| puts "#{m.title} - #{m.year} - #{m.country}"} }
+  filters.reduce (@collection){ |filtered, (name, value) |
+    value.each { |y| filtered.select{ |f| f.send(name).include?(y.to_s) }
+    .map { |m| puts "#{m.title} - #{m.year} - #{m.country}"} } }
+#
 end
 
 #выводить статистику по запроcу: режиссер, актер, год, месяц, страна, жанр

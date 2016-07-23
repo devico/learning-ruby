@@ -17,18 +17,21 @@ movies = MovieCollection.new(file_name)
 # выводим весь список файлов
 
 #выдать фильтрованный список фильмов — по полям: года и страны
-movies.send :filter, year: 2000
+#movies.send :filter, year: 2000
+movies.send :filter, year: 1988..1990
+
+
 
 #выдать сортированный список фильмов для любого поля
-movies.send :sort_by, :year
+#movies.send :sort_by, :year
 
 #выводить статистику по запроcу: режиссер, актер, год, месяц, страна, жанр
-movies.stats(:author)
+#movies.stats(:author)
 
 #выдать любое поле, в разумном формате
-movie = movies.all.first
-movie.actors.count
-movie.actors.include?('Arnold Shwarzenegger')
+#movie = movies.all.first
+#movie.actors.count
+#movie.actors.include?('Arnold Shwarzenegger')
 
 #ответить на запрос has_genre?('Comedy')
-movies.first.has_genre?('Camedy')
+#movies.first.has_genre?('Camedy')
