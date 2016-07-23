@@ -18,7 +18,7 @@ movies = MovieCollection.new(file_name)
 
 #выдать фильтрованный список фильмов — по полям: года и страны
 #movies.send :filter, year: 2000
-movies.send :filter, year: 1988..1990
+movies.filter(year: 1900..2005)
 
 
 

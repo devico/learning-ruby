@@ -21,6 +21,11 @@ class Movie
    @actors
   end
 
+  def match?(filter_name, filter_value)
+    filter = send(filter_name)
+    filter === filter_value.to_s
+  end
+
   def has_genre?(type_of_genre)
     raise ArgumentError, "Жанра #{type_of_genre} в коллекции нет!" unless @collection.genre_exists?(type_of_genre)
     @genre.include?(type_of_genre)
