@@ -36,4 +36,8 @@ end
     @collection.map(&movie_field).flatten.group_by(&:itself).map{ |k, v|  [k, v.count] }.sort.to_h
   end
 
+  def genre_films
+    @collection.map { |f| f.genre }.flatten.uniq
+  end
+
 end

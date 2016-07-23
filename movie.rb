@@ -1,3 +1,5 @@
+require_relative 'movie_collection'
+
 class Movie
   attr_accessor :link, :title, :year, :country, :date, :genre, :length, :rate, :author, :actors
 
@@ -19,8 +21,11 @@ class Movie
   end
 
   def has_genre?(type_of_genre)
-    if @genre.include?(type_of_genre.to_s) == false
-      raise  'Такой жанр не существует'
-    end
+    #проверяем жанр в коллекции
+#    if movies.genre_films == false
+#      raise  'Такого жанра в природе не существует!'
+#    else
+#      @genre.include?(type_of_genre)
+#    end
   end
 end
