@@ -22,10 +22,7 @@ class Movie
   end
 
   def has_genre?(type_of_genre)
-    if @collection.genre_exists?(type_of_genre) == false
-      raise "Жанра #{type_of_genre} в коллекции нет!"
-    else
-      @genre.include?(type_of_genre)
-    end
+    raise ArgumentError.new("Жанра #{type_of_genre} в коллекции нет!") unless @collection.genre_exists?(type_of_genre)
+    @genre.include?(type_of_genre)
   end
 end

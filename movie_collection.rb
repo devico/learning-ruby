@@ -37,7 +37,8 @@ end
   end
 
   def genre_exists?(genre_film)
-    @collection.map { |f| f.genre }.flatten.uniq.include?(genre_film)
+    @genres ||= @collection.map { |f| f.genre }.flatten.uniq
+    @genres.include?(genre_film)
   end
 
 end
