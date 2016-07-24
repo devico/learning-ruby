@@ -23,8 +23,11 @@ class Movie
 
   def match?(filter_name, filter_value)
     filter = send(filter_name)
-    filter.include?(filter_value) if filter.kind_of? Array
-    filter === filter_value
+    if filter.kind_of? Array
+      filter.include?(filter_value)
+    else
+      filter === filter_value
+    end
   end
 
   def has_genre?(type_of_genre)
