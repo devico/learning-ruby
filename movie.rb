@@ -25,8 +25,6 @@ class Movie
     value = send(filter_name)
     if value.kind_of? Array
       value.include?(filter_value)
-#    elsif filter_value.kind_of? Fixnum
-#      value === filter_value
     elsif filter_value.kind_of? Range
       filter_value === value.to_i
     else
