@@ -19,7 +19,7 @@ movies = MovieCollection.new(file_name)
 #выдать фильтрованный список фильмов — по полям: года и страны
 #movies.filter(genre: 'Comedy')
 #movies.filter(year: 2000)
-movies.filter(year: 1980..2000)
+puts movies.filter(year: 1980..2000)
 
 
 #выдать сортированный список фильмов для любого поля
