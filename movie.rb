@@ -17,15 +17,12 @@ class Movie
     @collection = movie_collection
   end
 
-  def actors
-   @actors
-  end
-
   def match?(filter_name, filter_value)
-    if send(filter_name).kind_of? Array
-      send(filter_name).include?(filter_value)
+    value = send(filter_name)
+    if value.kind_of? Array
+      value.include?(filter_value)
     else
-      filter_value === send(filter_name)
+      filter_value === value
     end
   end
 
