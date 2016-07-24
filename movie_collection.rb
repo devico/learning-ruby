@@ -28,7 +28,7 @@ end
 
 #выдать фильтрованный список фильмов — по полям: жанра и страны
   def filter(filters)
-    filters.reduce (@collection){ |filtered, (name, value) | filtered.select{ |f| f.match?(name, value) }.map { |m| puts "#{m.title} - #{m.send(name)}"} }
+    filters.reduce (@collection){ |filtered, (name, value) | filtered.select{ |f| f.match?(name, value) } }
 
   end
 
