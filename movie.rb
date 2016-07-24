@@ -6,7 +6,7 @@ class Movie
   def initialize(link, title, year, country, date, genre, length, rate, author, actors, movie_collection)
     @link = link
     @title = title
-    @year = year
+    @year = year.to_i
     @country = country
     @date = date
     @genre = genre.split(',')
@@ -26,7 +26,7 @@ class Movie
     if value.kind_of? Array
       value.include?(filter_value)
     elsif filter_value.kind_of? Fixnum
-      value.to_i === filter_value
+      value === filter_value
     elsif filter_value.kind_of? Range
       filter_value === value.to_i
     else
