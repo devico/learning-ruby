@@ -22,11 +22,15 @@ class Movie
   end
 
   def match?(filter_name, filter_value)
-    filter = send(filter_name)
-    if filter.kind_of? Array
-      filter.include?(filter_value)
+    value = send(filter_name)
+    if value.kind_of? Array
+      value.include?(filter_value)
+    elsif filter_value.kind_of? Fixnum
+      value.to_i === filter_value
+    elsif filter_value.kind_of? Range
+      filter_value === value.to_i
     else
-      filter === filter_value
+      value === filter_value
     end
   end
 
