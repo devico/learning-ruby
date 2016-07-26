@@ -4,8 +4,8 @@ class Netflix < MovieCollection
 
   end
 
-  def show
-    "Now showing:"
+  def show(movie_name)
+    "Now showing: #{movie_name}"
   end
 
 end

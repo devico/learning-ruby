@@ -6,8 +6,10 @@ require_relative "../netflix"
 describe Netflix do
 
   it "add movie to show" do
+    movies = MovieCollection.new("movies.txt")
+    movie = movies.all.first
     netflix = Netflix.new
-    expect(netflix.show).to eq("Now showing:")
+    expect(netflix.show(movie.title)).to eq("Now showing: The Shawshank Redemption")
   end
 
 end
