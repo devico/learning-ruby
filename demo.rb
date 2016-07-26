@@ -34,3 +34,6 @@ movie.actors.include?('Arnold Shwarzenegger')
 
 #ответить на запрос has_genre?('Comedy')
 puts movie.has_genre?('Drama')
+
+netflix1 = Netflix.new
+netflix1.show

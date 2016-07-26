@@ -11,10 +11,6 @@ class MovieCollection
     .map { |film| Movie.new(film[:link], film[:title], film[:year], film[:country], film[:date], film[:genre], film[:length], film[:rate], film[:author], film[:actors]) }
   end
 
-def show(movie, seance_start, seance_end)
-
-end
-
 # выводить список всех файлов
 def all
   @collection
