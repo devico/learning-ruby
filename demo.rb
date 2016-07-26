@@ -1,6 +1,8 @@
- require_relative 'movie'
- require_relative 'movie_collection'
- require 'date'
+require_relative 'movie'
+require_relative 'movie_collection'
+require_relative 'netflix'
+require_relative 'theatre'
+require 'date'
 
 file_name = ARGV[0] || "movies.txt"
 

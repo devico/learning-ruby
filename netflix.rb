@@ -1,0 +1,3 @@
+class Netflix < MovieCollection
+
+end

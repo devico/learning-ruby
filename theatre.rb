@@ -1,0 +1,3 @@
+class Theatre < MovieCollection
+
+end
