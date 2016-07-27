@@ -1,11 +1,15 @@
+require 'date'
+
 class Netflix < MovieCollection
 
   def initialize
 
   end
 
-  def show(movie_name)
-    "Now showing: #{movie_name}"
+  @t0 = Time.now
+
+  def show(movie_name, t0)
+    "Now showing: #{movie_name} #{t0.strftime("%H:%M")}"
   end
 
 end
