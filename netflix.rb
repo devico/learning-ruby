@@ -6,10 +6,8 @@ class Netflix < MovieCollection
 
   end
 
-  @t0 = Time.now
-
-  def show(movie_name, t0)
-    "Now showing: #{movie_name} #{t0.strftime("%H:%M")}"
+  def show(movie, t0, t1)
+    "Now showing: #{movie.title} #{t0.strftime("%H:%M")} - #{t1.strftime("%H:%M")}"
   end
 
 end
