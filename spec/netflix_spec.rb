@@ -4,15 +4,19 @@ require_relative "../movie_collection"
 require_relative "../netflix"
 require "date"
 
-describe Netflix do
+describe '#show' do
 
-  it "add movie to show" do
-    movies = MovieCollection.new("movies.txt")
-    movie = movies.first
-    netflix = Netflix.new
-    t0 = Time.now
-    t1 = t0 + movie.length.to_i * 60
-    expect(netflix.show(movie, t0, t1)).to eq("Now showing: #{movie.title} #{t0.strftime("%H:%M")} - #{t1.strftime("%H:%M")}")
+  let(:movies) { MovieCollection.new("movies.txt") }
+  let(:movie) { movies.first }
+  let(:netflix) { Netflix.new }
+  let(:t0) { Time.now }
+  let(:t1) { t0 + movie.length.to_i * 60 }
+  let(:value) { "Now showing: "}
+
+  subject { netflix.show(params) }
+
+  context 'send prms' do
+      let(:params) { [:movie, :t0, :t1] }
+      it { expect { subject }.to equal(value) }
   end
-
 end
