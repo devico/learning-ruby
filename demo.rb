@@ -19,10 +19,13 @@ movies = MovieCollection.new(file_name)
 # выводим весь список файлов
 
 #выдать фильтрованный список фильмов — по полям: года и страны
-movies.send :filter, year: 2000
+#movies.filter(genre: 'Comedy')
+#movies.filter(year: 2000)
+puts movies.filter(year: 1980..2000)
+
 
 #выдать сортированный список фильмов для любого поля
-movies.send :sort_by, :year
+movies.sort_by(:year)
 
 #выводить статистику по запроcу: режиссер, актер, год, месяц, страна, жанр
 movies.stats(:author)
@@ -33,7 +36,8 @@ movie.actors.count
 movie.actors.include?('Arnold Shwarzenegger')
 
 #ответить на запрос has_genre?('Comedy')
-puts movie.has_genre?('Drama')
+movies.first.has_genre?('Camedy')
 
-netflix1 = Netflix.new
+#онлайн кинотеатр
+netblix1 = Netflix.new
 netflix1.show
