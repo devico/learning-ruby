@@ -8,15 +8,16 @@ describe '#show' do
 
   let(:movies) { MovieCollection.new("movies.txt") }
   let(:movie) { movies.first }
+  let(:period) {movie.period?}
   let(:netflix) { Netflix.new }
-  let(:start_time) { Time.now }
-  let(:end_time) { start_time + movie.length.to_i * 60 }
-  let(:value) { "Now showing: #{movie.title} #{start_time.strftime("%H:%M")} - #{end_time.strftime("%H:%M")}"}
+#  let(:start_time) { Time.now }
+#  let(:end_time) { start_time + movie.length.to_i * 60 }
+  let(:value) { "#{movie.title} — современное кино: играют #{movie.actors.join(", ")}" }
 
   subject { netflix.show(*params) }
 
-  context 'send parametrs' do
-      let(:params) { [movie, start_time, end_time] }
+  context 'send parameters' do
+      let(:params) { [movie, period] }
       it { expect( subject ).to eq value }
   end
 end

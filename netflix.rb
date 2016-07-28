@@ -6,8 +6,13 @@ class Netflix < MovieCollection
 
   end
 
-  def show(movie, start_time, end_time)
-    "Now showing: #{movie.title} #{start_time.strftime("%H:%M")} - #{end_time.strftime("%H:%M")}"
+  def show(movie, period)
+    time_now = Time.now
+    "#{movie.title} — старый фильм (#{movie.year} год)" if period == :AncientMovie
+    "#{movie.title} — классический фильм, режиссёр #{movie.author}" if period == :ClassicMovie
+    "#{movie.title} — современное кино: играют #{movie.actors.join(", ")}" if period == :ModernMovie
+    "#{movie.title} — новинка, вышло #{time_now.year - movie.year} лет назад!" if period == :NewMovie
+
   end
 
 end

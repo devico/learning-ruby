@@ -1,7 +1,7 @@
 require_relative 'movie_collection'
 
 class Movie
-  attr_accessor :link, :title, :year, :country, :date, :genre, :length, :rate, :author, :actors
+  attr_accessor :link, :title, :year, :country, :date, :genre, :length, :rate, :author, :actors, :period
 
   def initialize(link, title, year, country, date, genre, length, rate, author, actors, movie_collection)
     @link = link
@@ -30,4 +30,19 @@ class Movie
     raise ArgumentError, "Жанра #{type_of_genre} в коллекции нет!" unless @collection.genre_exists?(type_of_genre)
     @genre.include?(type_of_genre)
   end
+
+  def period?
+
+    case @year
+      when 1900...1945 then :AncientMovie
+      when 1945...1968 then :ClassicMovie
+      when 1968...2000 then :ModernMovie
+      when 2000..2015 then :NewMovie
+      else
+        :Another
+    end
+
+  end
+
+
 end
