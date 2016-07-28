@@ -38,10 +38,10 @@ movies = MovieCollection.new(file_name)
 #movies.first.has_genre?('Camedy')
 
 #онлайн кинотеатр
-netflix = Netflix.new
-movie = movies.all.first
+netflix = Netflix.new(file_name)
+movie = netflix.all.first
 #start_time = Time.now
 #end_time_netflix = start_time + movie_netflix.length.to_i*60
 #end_time_theatre = start_time + movie_theatre.length.to_i*60
-puts netflix.show(movie)
+netflix.show(movie)
 #theatre.show(movie_theatre, start_time, end_time_theatre)
