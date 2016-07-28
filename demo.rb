@@ -40,6 +40,6 @@ movies = MovieCollection.new(file_name)
 #онлайн кинотеатр
 netflix1 = Netflix.new
 movie = movies.first
-t0 = Time.now
-t1 = t0 + movie.length.to_i*60
-netflix1.show(movie, t0, t1)
+start_time = Time.now
+end_time = start_time + movie.length.to_i*60
+netflix1.show(movie, start_time, end_time)

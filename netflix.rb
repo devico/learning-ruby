@@ -6,8 +6,8 @@ class Netflix < MovieCollection
 
   end
 
-  def show(movie, t0, t1)
-    "Now showing: #{movie.title} #{t0.strftime("%H:%M")} - #{t1.strftime("%H:%M")}"
+  def show(movie, start_time, end_time)
+    "Now showing: #{movie.title} #{start_time.strftime("%H:%M")} - #{end_time.strftime("%H:%M")}"
   end
 
 end
