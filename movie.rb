@@ -31,15 +31,15 @@ class Movie
     @genre.include?(type_of_genre)
   end
 
-  def period?
+  def afisha
 
+    time_now = Time.now
     case @year
-      when 1900...1945 then :AncientMovie
-      when 1945...1968 then :ClassicMovie
-      when 1968...2000 then :ModernMovie
-      when 2000..2015 then :NewMovie
+      when 1900...1945 then "#{@title} — старый фильм (#{@year} год)"
+      when 1945...1968 then "#{@title} — классический фильм, режиссёр #{@author}"
+      when 1968...2000 then "#{@title} — современное кино: играют #{@actors.join(", ")}"
+      when 2000..2015 then "#{@title} — новинка, вышло #{time_now.year - @year} лет назад!"
       else
-        :Another
     end
 
   end

@@ -40,9 +40,8 @@ movies = MovieCollection.new(file_name)
 #онлайн кинотеатр
 netflix = Netflix.new
 movie = movies.all.first
-period = movie.period?
 #start_time = Time.now
 #end_time_netflix = start_time + movie_netflix.length.to_i*60
 #end_time_theatre = start_time + movie_theatre.length.to_i*60
-netflix.show(movie, period)
+puts netflix.show(movie)
 #theatre.show(movie_theatre, start_time, end_time_theatre)
