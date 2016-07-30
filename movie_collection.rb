@@ -1,4 +1,3 @@
-require_relative 'movie'
 require 'csv'
 
 class MovieCollection
@@ -7,7 +6,7 @@ class MovieCollection
   def initialize(file_name)
     @collection =  CSV.read(file_name, col_sep: '|', headers: %i[ link title year country date genre length rate author actors ] )
     .map { |film| film.to_hash }
-    .map { |film| Movie.new(film[:link], film[:title], film[:year], film[:country], film[:date], film[:genre], film[:length], film[:rate], film[:author], film[:actors], self) }
+    .map { |film| Movie.create(film[:link], film[:title], film[:year], film[:country], film[:date], film[:genre], film[:length], film[:rate], film[:author], film[:actors], self) }
   end
 
 # выводить список всех файлов

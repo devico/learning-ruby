@@ -1,5 +1,10 @@
 require_relative 'movie'
+require_relative 'ancient_movie'
+require_relative 'classic_movie'
+require_relative 'modern_movie'
+require_relative 'new_movie'
 require_relative 'movie_collection'
+
 require_relative 'netflix'
 require_relative 'theatre'
 require 'date'
@@ -15,6 +20,7 @@ end
 
 # создаем коллекцию фильмов из файла
 movies = MovieCollection.new(file_name)
+
 
 # выводим весь список файлов
 
@@ -40,8 +46,9 @@ movies = MovieCollection.new(file_name)
 #онлайн кинотеатр
 netflix = Netflix.new(file_name)
 movie = netflix.all.first
+
 #start_time = Time.now
 #end_time_netflix = start_time + movie_netflix.length.to_i*60
 #end_time_theatre = start_time + movie_theatre.length.to_i*60
-netflix.show(movie)
+#netflix.show(movie)
 #theatre.show(movie_theatre, start_time, end_time_theatre)
