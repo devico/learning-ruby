@@ -2,10 +2,11 @@ require 'date'
 
 class NewMovie < Movie
 
+  @period = :new
+
   def show
     start_time = Time.now
-    end_time = @length.to_i
-    puts "#{@title} — новинка, вышло #{time_now.year - @year} лет назад!"
+    "#{@title} — новинка, вышло #{start_time.year - @year} лет назад!"
   end
 
 end

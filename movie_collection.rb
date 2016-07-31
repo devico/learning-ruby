@@ -9,6 +9,7 @@ class MovieCollection
     .map { |film| Movie.create(film[:link], film[:title], film[:year], film[:country], film[:date], film[:genre], film[:length], film[:rate], film[:author], film[:actors], self) }
   end
 
+ @period = {classic: ()}
 # выводить список всех файлов
 def all
   @collection

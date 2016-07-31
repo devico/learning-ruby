@@ -1,11 +1,14 @@
 require 'date'
 
 class AncientMovie < Movie
+  @period = :ancient
 
-   def show
-      start_time = Time.now
-      end_time = @length.to_i
-      puts "#{@title} — старый фильм (#{@year} год)"
-   end
+  def period
+    :ancient
+  end
+
+  def show
+    "#{@title} — старый фильм (#{@year} год)"
+  end
 
 end

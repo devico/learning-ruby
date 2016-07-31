@@ -21,13 +21,15 @@ class Movie
 
   def self.create(link, title, year, country, date, genre, length, rate, author, actors, movie_collection)
     period = year.to_i
-    case period
-      when 1900...1945 then AncientMovie.new(link, title, year, country, date, genre, length, rate, author, actors, movie_collection)
-      when 1945...1968 then ClassicMovie.new(link, title, year, country, date, genre, length, rate, author, actors, movie_collection)
-      when 1968...2000 then ModernMovie.new(link, title, year, country, date, genre, length, rate, author, actors, movie_collection)
-      when 2000..2015 then NewMovie.new(link, title, year, country, date, genre, length, rate, author, actors, movie_collection)
-      else
+    movie_type = case period
+      when 1900...1945 then AncientMovie
+      when 1945...1968 then ClassicMovie
+      when 1968...2000 then ModernMovie
+      when 2000..2015 then NewMovie
+      else raise ArgumentError, "Фильм не относится ни к одному классу"
     end
+
+    movie_type.new(link, title, year, country, date, genre, length, rate, author, actors, movie_collection)
 
   end
 

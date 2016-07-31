@@ -2,8 +2,8 @@ require 'date'
 
 class Netflix < MovieCollection
 
-  def show(movie)
-    movie.afisha
+  def show(params)
+    self.filter(params).map{ |m| m.show }
   end
 
 end

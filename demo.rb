@@ -45,8 +45,8 @@ movies = MovieCollection.new(file_name)
 
 #онлайн кинотеатр
 netflix = Netflix.new(file_name)
-movie = netflix.all.first
-
+# movie = netflix.all.first
+puts netflix.show(genre: 'Comedy', period: :classic)
 #start_time = Time.now
 #end_time_netflix = start_time + movie_netflix.length.to_i*60
 #end_time_theatre = start_time + movie_theatre.length.to_i*60
