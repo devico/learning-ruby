@@ -18,7 +18,6 @@ class Movie
     @collection = movie_collection
   end
 
-
   def self.create(link, title, year, country, date, genre, length, rate, author, actors, movie_collection)
     period = year.to_i
     movie_type = case period

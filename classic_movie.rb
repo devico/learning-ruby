@@ -1,5 +1,9 @@
 class ClassicMovie < Movie
 
+  def cost
+    1.5
+  end
+
   def period
     :classic
   end

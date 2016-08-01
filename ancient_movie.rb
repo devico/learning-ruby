@@ -1,10 +1,11 @@
-require 'date'
-
 class AncientMovie < Movie
-  @period = :ancient
+
+  def cost
+    1.5
+  end
 
   def period
-    :ancient
+    :classic
   end
 
   def show

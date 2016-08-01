@@ -2,7 +2,13 @@ require 'date'
 
 class NewMovie < Movie
 
-  @period = :new
+  def cost
+    5.0
+  end
+
+  def period
+    :new
+  end
 
   def show
     start_time = Time.now
