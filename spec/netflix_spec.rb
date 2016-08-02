@@ -18,8 +18,9 @@ describe '#show' do
       let(:movie) { netflix.filter(genre: 'Comedy').first }
       let(:start_time) { Time.now }
       let(:end_time) { start_time + movie.length.to_i * 60 }
-      let(:value) { "Now showing: #{movie.title} #{start_time.strftime("%H:%M")} - #{end_time.strftime("%H:%M")}" }
-      let(:params){ {genre: 'Comedy'} }
+#      let(:value) { "Now showing: #{movie.title} #{start_time.strftime("%H:%M")} - #{end_time.strftime("%H:%M")}" }
+      let(:value) { "#{movie.title} — современное кино: играют #{movie.actors.join(", ")}" }
+      let(:params){ {genre: 'Comedy', period: :modern} }
       it { expect( subject ).to eq(value) }
    end
  end
