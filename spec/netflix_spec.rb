@@ -34,3 +34,16 @@ describe '#show with payment' do
     its(:balance) { is_expected.to eq(initial_balance - movie.cost) }
   end
 end
+
+describe '#how_much?' do
+
+  subject { netflix.how_much?(params) }
+
+  context "when asked how much movie" do
+    let(:netflix) { Netflix.new("movies.txt") }
+    let(:movie) { netflix.filter(title: 'The Terminator').first }
+    let(:params) { {title: 'The Terminator'} }
+    it { expect( subject ).to eq(movie.cost) }
+  end
+
+end

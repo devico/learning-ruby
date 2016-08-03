@@ -32,3 +32,4 @@ describe '#self.create' do
   end
 
 end
+

@@ -12,13 +12,17 @@ class Netflix < MovieCollection
       puts movie.show
       @balance = self.balance - movie.cost
     else
-#      raise ArgumentError, "Не достаточно средств для просмотра"
+      raise ArgumentError, "Не достаточно средств для просмотра"
     end
 
   end
 
   def pay(payment)
     @balance = payment.to_f
+  end
+
+  def how_much?(movie)
+    self.filter(movie).first.cost
   end
 
 end
