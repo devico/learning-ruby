@@ -1,20 +1,24 @@
 require 'date'
 
 class Netflix < MovieCollection
-  attr_accessor :balance
+
+  def balance
+    @balance
+  end
 
   def show(params)
+    if self.balance >= 5.0
       movie = self.filter(params).first
-      @balance = @balance - movie.cost
-      if @balance > 0
-        puts movie.show
-      else
-       raise ArgumentError, "Не достаточно средств для просмотра"
-     end
+      puts movie.show
+      @balance = self.balance - movie.cost
+    else
+#      raise ArgumentError, "Не достаточно средств для просмотра"
+    end
+
   end
 
   def pay(payment)
-    @balance = payment
+    @balance = payment.to_f
   end
 
 end

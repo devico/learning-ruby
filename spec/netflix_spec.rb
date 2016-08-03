@@ -38,14 +38,14 @@ describe '#pay' do
 
 describe '#show with payment' do
 
-
   subject { netflix.show(params) }
 
     context 'when show movie balance decrease' do
       let(:netflix) { Netflix.new("movies.txt") }
-      let(:balance) { netflix.pay(25) }
+      let(:balance) { netflix.pay(25).to_f }
       let(:movie) { netflix.filter(genre: 'Comedy').first }
-      let(:value) { balance - movie.cost }
+      let(:cost)  {movie.cost}
+      let(:value) { balance - cost }
       let(:params){ {genre: 'Comedy', period: :modern} }
       it { expect( subject ).to eq(value) }
    end

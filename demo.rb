@@ -46,11 +46,10 @@ movies = MovieCollection.new(file_name)
 #онлайн кинотеатр
 netflix = Netflix.new(file_name)
 puts netflix.balance
-netflix.pay(27)
+netflix.pay(25)
 puts netflix.balance
-#puts netflix.show(genre: 'Comedy', period: :classic)
 puts netflix.show(genre: 'Comedy', period: :modern)
-puts netflix.balance
-#netflix.show_count
-# netflix.show(genre: 'Comedy', period: :classic)
-# puts netflix.show_count
+
+
+
+

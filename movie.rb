@@ -48,8 +48,8 @@ class Movie
 
   def show
     start_time = Time.now
-    end_time = @length.to_i
-    puts "Now showing: #{@title} #{start_time.strftime("%H:%M")} - #{end_time.strftime("%H:%M")}"
+    end_time = start_time + @length.to_i*60
+    "Now showing: #{@title} #{start_time.strftime("%H:%M")} - #{end_time.strftime("%H:%M")}"
   end
 
 end

@@ -1,16 +1,15 @@
 require 'csv'
 
 class MovieCollection
-  attr_accessor :collection, :balance, :show_count
+  attr_accessor :collection, :balance
 
   def initialize(file_name)
     @collection =  CSV.read(file_name, col_sep: '|', headers: %i[ link title year country date genre length rate author actors ] )
     .map { |film| film.to_hash }
     .map { |film| Movie.create(film[:link], film[:title], film[:year], film[:country], film[:date], film[:genre], film[:length], film[:rate], film[:author], film[:actors], self) }
-    @show_count = 0
+
     @balance = 0.0
   end
-
 
 
 # выводить список всех файлов
