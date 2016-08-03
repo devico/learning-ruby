@@ -1,4 +1,5 @@
 require "rspec"
+require "spec_helper"
 require_relative "../movie"
 require_relative "../ancient_movie"
 require_relative "../classic_movie"
@@ -38,15 +39,27 @@ describe '#pay' do
 
 describe '#show with payment' do
 
-  subject { netflix.show(params) }
+subject { netflix }
+before { subject.pay(initial_balance) }
+context 'after movie is shown' do
+  before { subject.show(movie) }
+  let(:netflix) { Netflix.new("movies.txt") }
 
-    context 'when show movie balance decrease' do
-      let(:netflix) { Netflix.new("movies.txt") }
-      let(:balance) { netflix.pay(25).to_f }
-      let(:movie) { netflix.filter(genre: 'Comedy').first }
-      let(:cost)  {movie.cost}
-      let(:value) { balance - cost }
-      let(:params){ {genre: 'Comedy', period: :modern} }
-      it { expect( subject ).to eq(value) }
-   end
- end
+  its(:balance) { is_expected.to eq(initial_balance - movie.cost) }
+end
+end
+
+ # describe '#show with payment' do
+
+ #  subject { netflix.show(params) }
+
+ #    context 'when show movie balance decrease' do
+ #      let(:netflix) { Netflix.new("movies.txt") }
+ #      let(:balance) { netflix.pay(25).to_f }
+ #      let(:movie) { netflix.filter(genre: 'Comedy').first }
+ #      let(:cost)  {movie.cost}
+ #      let(:value) { balance - cost }
+ #      let(:params){ {genre: 'Comedy', period: :modern} }
+ #      it { expect( subject ).to eq(value) }
+ #   end
+ # end
