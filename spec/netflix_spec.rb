@@ -36,12 +36,10 @@ describe Netflix do
 
   describe '#show with error' do
     subject { @netflix }
-    before { subject.pay(initial_balance) }
-    context '#show with pay after movie is shown' do
-      before { subject.show(params) }
-      let(:initial_balance) { 0 }
-      let(:params) { {genre: 'Comedy', period: :modern} }
-      it { expect { raise "Не достаточно средств для просмотра" }.to raise_error( ArgumentError, "Не достаточно средств для просмотра" ) }
+    before { subject.pay( 0 ) }
+    it 'matches the error message' do
+      expect { subject.show(genre: 'Comedy', period: :modern) }.
+        to raise_error( ArgumentError, "Не достаточно средств для просмотра" )
     end
   end
 
