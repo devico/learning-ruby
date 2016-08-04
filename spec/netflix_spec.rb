@@ -22,6 +22,12 @@ describe Netflix do
     end
   end
 
+  describe '#pay wrong payment' do
+    context 'when pay 0 or negative value show exception' do
+      it { expect { @netflix.pay( 0 ) }.to raise_error( ArgumentError, "Введена отрицательная сумма или ноль" ) }
+    end
+  end
+
   describe '#show' do
     subject { @netflix }
     before { subject.pay(initial_balance) }
@@ -36,7 +42,7 @@ describe Netflix do
 
   describe '#show with error' do
     subject { @netflix }
-    before { subject.pay( 0 ) }
+    before { subject.balance = 1.0 }
     it 'matches the error message' do
       expect { subject.show(genre: 'Comedy', period: :modern) }.
         to raise_error( ArgumentError, "Не достаточно средств для просмотра" )

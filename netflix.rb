@@ -18,10 +18,14 @@ class Netflix < MovieCollection
   end
 
   def pay(payment)
-    @balance = payment.to_f
+    if payment > 0
+      @balance = payment.to_f
+    else
+      raise ArgumentError, "Введена отрицательная сумма или ноль"
+    end
   end
 
-  def how_much?(movie)
+  def film_costs(movie)
     self.filter(movie).first.cost
   end
 
