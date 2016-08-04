@@ -49,7 +49,16 @@ describe Netflix do
     end
   end
 
-  describe 'Netflix#film_costs' do
+describe '#show no such movie' do
+    subject { @netflix }
+    before { subject.balance = 5.0 }
+    it 'matches the error message' do
+      expect { subject.show(title: 'The Tirmenator') }.
+        to raise_error( NoMethodError )
+    end
+end
+
+  describe '#film_costs' do
     subject { @netflix.film_costs(params) }
     context "#film_costs - when asked how much movie" do
       let(:movie) { @netflix.filter(title: 'The Terminator').first }
