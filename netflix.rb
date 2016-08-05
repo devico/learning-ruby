@@ -8,8 +8,8 @@ class Netflix < MovieCollection
 
   def show(params)
     raise ArgumentError, "Не достаточно средств для просмотра" if @balance <= 0.0
-    raise NameError, "В базе нет такого фильма" if self.filter(params).first.nil?
     movie = self.filter(params).first
+    raise NameError, "В базе нет такого фильма" if movie.nil?
     puts movie.show
     @balance -= movie.cost
 
