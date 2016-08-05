@@ -11,10 +11,16 @@ require "date"
 
 describe Netflix do
 
-  before { @netflix = Netflix.new("movies.txt") }
+  let(:netflix) { Netflix.new("movies.txt") }
+  describe '#balance status' do
+    subject { netflix }
+    context "initital balance" do
+     its(:balance) { is_expected.to eq(0.0) }
+    end
+  end
 
   describe '#pay' do
-    subject { @netflix.pay(params) }
+    subject { netflix.pay(params) }
     context '#pay when pay 25, balance increase to 25 ' do
       let(:params){ 25 }
       let(:balance) { 25 }
@@ -24,26 +30,25 @@ describe Netflix do
 
   describe '#pay wrong payment' do
     context 'when pay 0 or negative value show exception' do
-      it { expect { @netflix.pay( -2 ) }.
+      it { expect { netflix.pay( -2 ) }.
         to raise_error( ArgumentError, "Ожидается положительное число, получено -2" ) }
     end
   end
 
   describe '#show' do
-    subject { @netflix }
+    subject { netflix }
     before { subject.pay(initial_balance) }
     context '#show with pay after movie is shown' do
       before { subject.show(params) }
       let(:initial_balance) { 5 }
-      let(:movie) { @netflix.filter(genre: 'Comedy').first }
+      let(:movie) { netflix.filter(genre: 'Comedy').first }
       let(:params) { {genre: 'Comedy', period: :modern} }
       its(:balance) { is_expected.to eq(initial_balance - movie.cost) }
     end
   end
 
   describe '#show with pay error' do
-    subject { @netflix }
-    before { subject.balance = -1 }
+    subject { netflix }
     it 'not enough money to put' do
       expect { subject.show(genre: 'Comedy', period: :modern) }.
         to raise_error( ArgumentError, "Не достаточно средств для просмотра" )
@@ -51,18 +56,18 @@ describe Netflix do
   end
 
 describe '#show no such movie' do
-    subject { @netflix }
+    subject { netflix }
     before { subject.pay( 10.0 ) }
     it 'matches the error message' do
       expect { subject.show(title: 'The Tirmenator') }.
-        to raise_error( NameError, "В базе нет фильма \"The Tirmenator\"" )
+        to raise_error( NameError, "В базе нет такого фильма" )
     end
 end
 
   describe '#film_costs' do
-    subject { @netflix.film_costs(params) }
+    subject { netflix.film_costs(params) }
     context "#film_costs - when asked how much movie" do
-      let(:movie) { @netflix.filter(title: 'The Terminator').first }
+      let(:movie) { netflix.filter(title: 'The Terminator').first }
       let(:params) { {title: 'The Terminator'} }
       it { expect( subject ).to eq(movie.cost) }
     end
