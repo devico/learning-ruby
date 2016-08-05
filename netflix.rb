@@ -10,9 +10,14 @@ class Netflix < MovieCollection
     if self.balance < 5.0
       raise ArgumentError, "Не достаточно средств для просмотра"
     else
-      movie = self.filter(params).first
+      begin
+        movie = self.filter(params).first
+      rescue
+        raise NoMethodError.new("В базе нет фильма", show)
+      end
       puts movie.show
       @balance = self.balance - movie.cost
+
     end
 
   end
@@ -21,7 +26,7 @@ class Netflix < MovieCollection
     if payment <= 0
       raise ArgumentError, "Введена отрицательная сумма или ноль"
     else
-      @balance = payment.to_f
+      @balance = self.balance + payment.to_f
     end
   end
 
