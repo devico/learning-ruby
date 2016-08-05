@@ -1,30 +1,22 @@
 require 'date'
+require 'time'
 
 class Theatre < MovieCollection
 
-  def time_of_day?(time)
-   order_hour = time.split(':')[0]
-   time_of_day = case order_hour.to_i
-      when 8..12 then :morning
-      when 13..16 then :afternoon
-      when 17..23 then :evening
-      else :night
-    end
+  PERIOD_DAY = { morning: (8..12), afternoon: (13..16), evening: (17..23), night: (0..7) }
+  FILTERS_MOVIE = { morning: {period: :ancient}, afternoon: {genre: 'Comedy', genre: 'Adventure'}, evening: {genre: 'Drama', genre: 'Mystery'},
+    night: "В ночное время кинотеатр не работает" }
+
+  def time_to_show(time)
+    hour = DateTime.strptime(time, '%H').hour
+    PERIOD_DAY.select{ |k,v| v.include?(hour) }.keys[0]
   end
 
   def show(params)
-
-   order_time = self.time_of_day?(params)
-
-   order_movie = case order_time
-    when :morning then {period: :ancient}
-    when :afternoon then {genre: 'Comedy', genre: 'Adventure'}
-    when :evening then {genre: 'Drama', genre: 'Horrors'}
-    else "В ночное время кинотеатр не работает"
-    end
-
-   movie = self.filter(order_movie).first
-
+    order_time = time_to_show(params)
+    raise ArgumentError, "В ночное время кинотеатр не работает" if order_time == :night
+    order_movie = FILTERS_MOVIE.select{ |k,v| k == order_time }.values[0]
+    movie = self.filter(order_movie).sample
   end
 
 end
