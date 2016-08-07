@@ -1,8 +1,7 @@
 class Theatre < MovieCollection
 
   PERIOD_DAY = { morning: (8..12), afternoon: (13..16), evening: (17..23), night: (0..7) }
-  FILTERS_MOVIE = { morning: {period: :ancient}, afternoon: {genre: 'Comedy', genre: 'Adventure'}, evening: {genre: 'Drama', genre: 'Mystery'},
-    night: "В ночное время кинотеатр не работает" }
+  FILTERS_MOVIE = { morning: {period: :ancient}, afternoon: {genre: 'Comedy', genre: 'Adventure'}, evening: {genre: 'Drama', genre: 'Mystery'} }
 
   def time_to_show(time)
     hour = DateTime.strptime(time, '%H').hour
@@ -16,23 +15,9 @@ class Theatre < MovieCollection
     movie = self.filter(order_movie).sample
   end
 
-  def when?(title)
-    movie = self.filter(title).first
-    if movie.period == :ancient
-      :morning
-    else
-      movie.genre.map do |g|
-        time_for = case g
-          when 'Comedy' then :afternoon
-          when 'Adventure' then :afternoon
-          when 'Drama' then :evening
-          when 'Mystery' then :evening
-          when 'Sci-Fi' then :morning
-          when 'Action' then :evening
-        end
-        puts time_for
-       end
-    end
+  def when?(params)
+   FILTERS_MOVIE.select{ |key,value| self.filter(value).map{ |mov| mov.title }.select{ |titl| @time_of_day = key if titl == params[:title] } }
+   @time_of_day
   end
 
 end

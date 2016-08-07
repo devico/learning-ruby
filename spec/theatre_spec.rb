@@ -19,10 +19,6 @@ describe Theatre do
   end
 
   describe '#when?' do
-    subject { theatre.when?(params)}
-    context 'when show' do
-      let(:params) { {title: 'The Terminator'} }
-      it { expect( subject ).to eq([:evening, :morning]) }
-    end
+    it { expect( theatre.when?(title: 'Vertigo') ).to eq(:evening) }
   end
 end
