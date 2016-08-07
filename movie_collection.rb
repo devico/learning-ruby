@@ -1,7 +1,7 @@
 require 'csv'
 
 class MovieCollection
-  attr_accessor :collection, :balance
+  attr_accessor :collection
 
   def initialize(file_name)
     @collection =  CSV.read(file_name, col_sep: '|', headers: %i[ link title year country date genre length rate author actors ] )
@@ -30,7 +30,7 @@ end
 
 #выдать фильтрованный список фильмов — по полям: жанра и страны
   def filter(filters)
-    filters.reduce (@collection){ |filtered, (name, value) | filtered.select{ |f| f.match?(name, value) } }
+      filters.reduce (@collection){ |filtered, (name, value) | filtered.select{ |f| f.match?(name, value) } }
   end
 
 #выводить статистику по запроcу: режиссер, актер, год, месяц, страна, жанр

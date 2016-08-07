@@ -1,1 +1,10 @@
 require 'rspec/its'
+require_relative "../movie"
+require_relative "../ancient_movie"
+require_relative "../classic_movie"
+require_relative "../modern_movie"
+require_relative "../new_movie"
+require_relative "../movie_collection"
+require_relative "../netflix"
+require_relative "../theatre"
+require "date"

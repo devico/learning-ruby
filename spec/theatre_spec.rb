@@ -1,14 +1,3 @@
-require "rspec"
-require 'spec_helper'
-require_relative "../movie"
-require_relative "../ancient_movie"
-require_relative "../classic_movie"
-require_relative "../modern_movie"
-require_relative "../new_movie"
-require_relative "../movie_collection"
-require_relative "../theatre"
-require "date"
-
 describe Theatre do
 
   let(:theatre) { Theatre.new("movies.txt")}
@@ -29,4 +18,11 @@ describe Theatre do
     end
   end
 
+  describe '#when?' do
+    subject { theatre.when?(params)}
+    context 'when movie show, is an afternoon' do
+      let(:params) { {title: 'The Terminator'} }
+      it { expect( subject ).to eq(:afternoon) }
+    end
+  end
 end

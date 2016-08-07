@@ -19,4 +19,9 @@ class Theatre < MovieCollection
     movie = self.filter(order_movie).sample
   end
 
+  def when?(title)
+    type_movie = self.filter(title).first.genre
+    type_movie.map { |g| FILTERS_MOVIE.select{ |k,v| puts v } }
+  end
+
 end

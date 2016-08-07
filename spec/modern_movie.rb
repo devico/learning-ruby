@@ -1,3 +1,0 @@
-class ModernMovie < Movie
-
-end

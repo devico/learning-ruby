@@ -1,10 +1,3 @@
-require "rspec"
-require_relative "../movie"
-require_relative "../modern_movie"
-require_relative "../ancient_movie"
-require_relative "../classic_movie"
-require_relative "../new_movie"
-
 describe '#self.create' do
 
     let(:params) { ["http://imdb.com/title/tt0017925/?ref_=chttp_tt_136", "The General", year, "USA", "1927-02-24", "Action,Adventure,Comedy", "67 min", "8.3", "Clyde Bruckman", "Buster Keaton,Marion Mack,Glen Cavender", self] }

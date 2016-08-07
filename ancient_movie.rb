@@ -1,11 +1,11 @@
 class AncientMovie < Movie
 
   def cost
-    1.5
+    1.0
   end
 
   def period
-    :classic
+    :ancient
   end
 
   def show
