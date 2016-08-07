@@ -3,17 +3,18 @@ describe AncientMovie do
   let(:netflix) { Netflix.new("movies.txt") }
   let(:movie) { netflix.filter(period: :ancient).first }
 
+
   describe '#cost' do
-    subject { movie.cost }
+    subject { movie }
     context 'when ask cost that movie return 1.0' do
-      it { is_expected.to eq(1.0) }
+      its(:cost){ is_expected.to eq(1.0) }
     end
   end
 
   describe '#period' do
-    subject { movie.period }
+    subject { movie }
     context 'when ask type movie return :ancient' do
-      it { is_expected.to eq(:ancient) }
+      its(:period){ is_expected.to eq(:ancient) }
     end
   end
 

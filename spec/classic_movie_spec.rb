@@ -4,16 +4,16 @@ describe ClassicMovie do
   let(:movie) { netflix.filter(period: :classic).first }
 
   describe '#cost' do
-    subject { movie.cost }
+    subject { movie }
     context 'when ask cost that movie return 1.5' do
-      it { is_expected.to eq(1.5) }
+      its(:cost){ is_expected.to eq(1.5) }
     end
   end
 
   describe '#period' do
-    subject { movie.period }
+    subject { movie }
     context 'when ask type movie return :classic' do
-      it { is_expected.to eq(:classic) }
+      its(:period){ is_expected.to eq(:classic) }
     end
   end
 

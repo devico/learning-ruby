@@ -1,5 +1,3 @@
-require 'date'
-
 class NewMovie < Movie
 
   def cost
@@ -7,7 +5,7 @@ class NewMovie < Movie
   end
 
   def period
-    :new
+    self.class.to_s.chomp("Movie").downcase.to_sym
   end
 
   def show

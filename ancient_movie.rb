@@ -5,7 +5,7 @@ class AncientMovie < Movie
   end
 
   def period
-    :ancient
+    self.class.to_s.chomp("Movie").downcase.to_sym
   end
 
   def show

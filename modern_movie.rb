@@ -1,13 +1,11 @@
 class ModernMovie < Movie
 
-  attr_accessor :cost
-
   def cost
-    @cost = 3.0
+    3.0
   end
 
   def period
-    :modern
+    self.class.to_s.chomp("Movie").downcase.to_sym
   end
 
  def show

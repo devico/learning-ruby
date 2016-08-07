@@ -45,15 +45,13 @@ movies = MovieCollection.new(file_name)
 
 #онлайн кинотеатр
 netflix = Netflix.new(file_name)
-puts movie = netflix.filter(period: :modern).first
-puts movie.actors.join(', ')
+# movie = netflix.filter(period: :ancient).first
+#puts movie.period
 # netflix.pay(25)
 # puts netflix.balance
 # puts netflix.show(genre: 'Comedy', period: :modern)
 # netflix.pay(0)
 # puts netflix.show(title: 'The Trminator')
 theatre = Theatre.new(file_name)
-#puts theatre.show('15:20')
-#theatre.when?(title: 'The Terminator')
-# netflix.pay(1)
-# netflix.show(genre: 'Comedy', period: :modern)
+#puts theatre.show('10:20')
+theatre.when?(title: 'The Terminator')

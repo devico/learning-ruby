@@ -3,12 +3,7 @@ require 'date'
 class Netflix < MovieCollection
   attr_reader :balance
 
-  def balance
-    @balance
-  end
-
   def show(params)
-    raise ArgumentError, "Не достаточно средств для просмотра" if @balance <= 0.0
     movie = self.filter(params).first
     raise NameError, "В базе нет такого фильма" unless movie
     raise ArgumentError, "Для просмотра #{movie.title} нужно еще пополнить баланс на #{movie.cost - @balance}" if @balance < movie.cost
