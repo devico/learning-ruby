@@ -4,7 +4,7 @@ describe Theatre do
 
   describe '#time_to_show' do
     subject { theatre.time_to_show(params) }
-    context 'when time is 15:20 this is afternoon' do
+    context 'when is an afternoon' do
       let(:params) { '15:20' }
       it { expect( subject ).to eq(:afternoon) }
     end
@@ -12,7 +12,7 @@ describe Theatre do
 
   describe '#show' do
     subject{ theatre.show(params)}
-    context 'when time is 10:20 shown movie class must be AncientMovie' do
+    context 'when is morning' do
       let(:params) { '10:20' }
       it { is_expected.to be_a AncientMovie }
     end
@@ -20,9 +20,9 @@ describe Theatre do
 
   describe '#when?' do
     subject { theatre.when?(params)}
-    context 'when movie show, is an afternoon' do
+    context 'when show' do
       let(:params) { {title: 'The Terminator'} }
-      it { expect( subject ).to eq(:afternoon) }
+      it { expect( subject ).to eq([:evening, :morning]) }
     end
   end
 end

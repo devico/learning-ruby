@@ -1,6 +1,3 @@
-require 'date'
-require 'time'
-
 class Theatre < MovieCollection
 
   PERIOD_DAY = { morning: (8..12), afternoon: (13..16), evening: (17..23), night: (0..7) }
@@ -20,8 +17,22 @@ class Theatre < MovieCollection
   end
 
   def when?(title)
-    type_movie = self.filter(title).first.genre
-    type_movie.map { |g| FILTERS_MOVIE.select{ |k,v| puts v } }
+    movie = self.filter(title).first
+    if movie.period == :ancient
+      :morning
+    else
+      movie.genre.map do |g|
+        time_for = case g
+          when 'Comedy' then :afternoon
+          when 'Adventure' then :afternoon
+          when 'Drama' then :evening
+          when 'Mystery' then :evening
+          when 'Sci-Fi' then :morning
+          when 'Action' then :evening
+        end
+        puts time_for
+       end
+    end
   end
 
 end
