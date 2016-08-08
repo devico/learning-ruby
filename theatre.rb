@@ -18,10 +18,13 @@ class Theatre < MovieCollection
   end
 
   def when?(params)
-    FILTERS_MOVIE.each do |key,value|
-      @time_of_day = key if self.filter(value).include?(self.filter(params).first)
+    time_to_show = nil
+    movie = self.filter(params).first
+    FILTERS_MOVIE.detect do |key,value|
+      v = value.flatten
+      time_to_show = key if movie.match?(v[0], v[1])
     end
-    @time_of_day
+    time_to_show
   end
 
 end
