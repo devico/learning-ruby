@@ -18,7 +18,7 @@ class Theatre < MovieCollection
   end
 
   def when?(params)
-    FILTERS_MOVIE.find_all do |key,value|
+    FILTERS_MOVIE.each do |key,value|
       @time_of_day = key if self.filter(value).include?(self.filter(params).first)
     end
     @time_of_day
