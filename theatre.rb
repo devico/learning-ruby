@@ -17,14 +17,10 @@ class Theatre < MovieCollection
     movie = self.filter(order_movie).sample
   end
 
-  def when?(params)
-    time_to_show = nil
-    movie = self.filter(params).first
-    FILTERS_MOVIE.detect do |key,value|
-      v = value.flatten
-      time_to_show = key if movie.match?(v[0], v[1])
-    end
-    time_to_show
+  def when?(title)
+    movie = self.filter(title).first
+    period, filter = FILTERS_MOVIE.detect{ |per, fil| movie.matches_all?(fil) }
+    period
   end
 
 end

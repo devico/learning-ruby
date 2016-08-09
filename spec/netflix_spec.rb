@@ -10,32 +10,25 @@ describe Netflix do
   end
 
   describe '#pay' do
-
-    context 'when pay 25' do
-      it { expect( netflix.pay(25) ).to change { netflix.balance } }
-    end
-
-    context 'when pay 0 or negative value' do
-      it { expect { netflix.pay( -2 ) }.
-        to raise_error( ArgumentError, "Ожидается положительное число, получено -2" ) }
-    end
+    it { expect { netflix.pay(25) }.to change(netflix, :balance).from(0).to(25) }
+    it { expect { netflix.pay( -2 ) }.to raise_error( ArgumentError, "Ожидается положительное число, получено -2" ) }
   end
 
   describe '#show' do
     subject { netflix }
+    let(:movie) { subject.filter(genre: 'Comedy').first }
+    let(:params) { {genre: 'Comedy', period: :modern} }
 
     context 'when after show' do
       before { subject.pay(initial_balance) }
       before { subject.show(params) }
       let(:initial_balance) { 5 }
-      let(:movie) { netflix.filter(genre: 'Comedy').first }
-      let(:params) { {genre: 'Comedy', period: :modern} }
       its(:balance) { is_expected.to eq(initial_balance - movie.cost) }
     end
 
     context 'when not enough money' do
-      it { expect { subject.show(genre: 'Comedy', period: :modern) }.
-          to raise_error( ArgumentError, "Для просмотра Title нужно еще пополнить баланс на #{movie.cost - @balance}" ) }
+      it { expect (subject.show(params) ).
+        to raise_error( ArgumentError, "Для просмотра Life Is Beautiful нужно еще пополнить баланс на 3.0" ) }
     end
 
     context 'when not have movie in base' do

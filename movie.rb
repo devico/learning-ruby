@@ -33,12 +33,17 @@ class Movie
   end
 
   def match?(filter_name, filter_value)
+
     value = send(filter_name)
     if value.kind_of? Array
       value.include?(filter_value)
     else
       filter_value === value
     end
+  end
+
+  def matches_all?(filters)
+    filters.map{ |k, v| match?(k, v) }
   end
 
   def has_genre?(type_of_genre)
@@ -50,6 +55,10 @@ class Movie
     start_time = Time.now
     end_time = start_time + @length.to_i*60
     "Now showing: #{@title} #{start_time.strftime("%H:%M")} - #{end_time.strftime("%H:%M")}"
+  end
+
+  def period
+    self.class.to_s.chomp("Movie").downcase.to_sym
   end
 
 end
