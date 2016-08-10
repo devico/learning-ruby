@@ -13,8 +13,8 @@ describe Theatre do
   describe '#show' do
     subject{ theatre.show(params)}
     context 'when is morning' do
-      let(:params) { '10:20' }
-      it { is_expected.to be_a AncientMovie }
+      let(:params) { '13:20' }
+      it { is_expected.to be_a ModernMovie }
     end
   end
 

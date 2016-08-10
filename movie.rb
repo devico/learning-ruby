@@ -43,7 +43,15 @@ class Movie
   end
 
   def matches_all?(filters)
-    filters.map{ |k, v| match?(k, v) }
+    fs = []
+    filters.select do |k,v|
+        if v != :ancient
+          v.map{ |gen| fs << Hash[k, gen] }
+        else
+          fs << Hash[k,v]
+        end
+    end
+    fs.select{ |fil| match?(fil.keys[0], fil.values[0]) }.empty? ? false : true
   end
 
   def has_genre?(type_of_genre)
