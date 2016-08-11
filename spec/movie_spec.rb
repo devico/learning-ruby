@@ -30,9 +30,7 @@ describe Movie do
 
   describe '#matches_all?' do
     let(:theatre) { Theatre.new("movies.txt")}
-
     subject { movie.matches_all?(params) }
-    before { movie.match?( :genre, 'Adventure' ) }
     let(:movie) { theatre.filter(genre: 'Adventure').first }
     let(:params) { { genre: ['Comedy', 'Adventure'] } }
     it { expect( subject ).to be_truthy }

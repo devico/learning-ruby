@@ -56,12 +56,9 @@ theatre = Theatre.new(file_name)
 movie = theatre.filter(genre: 'Comedy').first
 #puts movie.match?(:genre, ['Comedy', 'Drama'])
 #puts movie.match?(:year, 1993...1998)
-#puts movie.genre
-#movie.match?( :genre, 'Adventure' )
 #puts movie.matches_all?( {genre: ['Comedy', 'Drama'], year: 1993...1998} )
-
 puts theatre.show('13:20')
-#puts theatre.when?(title: 'Vertigo')
-#puts theatre.filters_to_hash({ genre: ['Comedy', 'Adventure']}).inspect
-#genre: ['Comedy', 'Adventure']
+puts theatre.when?(title: 'Vertigo')
+#puts theatre.filters_to_hash({ genre: ['Comedy', 'Adventure']})
+
 

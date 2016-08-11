@@ -35,6 +35,7 @@ class Movie
   def match?(filter_name, filter_value)
     value = send(filter_name)
     if value.kind_of? Array
+      #value.any? { |v| v === filter_value }
       value.any? { |v| filter_value.include?(v) }
     else
       filter_value === value

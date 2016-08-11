@@ -25,12 +25,7 @@ class Theatre < MovieCollection
   end
 
   def filters_to_hash(hash_with_array)
-    fs = []
-    hash_with_array.select do |k,v|
-       v.map{ |gen| fs << Hash[k, gen] } if v.kind_of?(Array)
-       fs << Hash[k,v] unless v.kind_of?(Array)
-     end
-    fs
+    hash_with_array.map{ |k,v| v.kind_of?(Array) ? v.map{ |gen| Hash[k, gen] } : Hash[k,v] }.flatten
   end
 
 end
