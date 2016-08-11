@@ -14,16 +14,26 @@ class Theatre < MovieCollection
     order_time = time_to_show(params)
     raise ArgumentError, "В ночное время кинотеатр не работает" if order_time == :night
     order_filter = FILTERS_MOVIE.select{ |k,v| k == order_time }.values[0]
-    fs = []
-    order_filter.map{ |per, fil| fil.map{ |gen| fs << Hash[per, gen] } }
-    fs.map{ |fil_mov| self.filter(fil_mov) }.flatten.first
+    movie = filters_to_hash(order_filter).map{ |fil_mov| self.filter(fil_mov) }.first[0]
+    movie
   end
 
   def when?(title)
     movie = self.filter(title).first
-    period, filter = FILTERS_MOVIE.detect{ |per, fil| movie.matches_all?(fil) }
+    period = FILTERS_MOVIE.find_all{ |per, fil| filters_to_hash(fil).detect{ |k| movie.matches_all?(k) } }.flatten[0]
     period
   end
 
+  def filters_to_hash(hash_with_array)
+    fs = []
+    hash_with_array.select do |k,v|
+       if k != :period
+         v.map{ |gen| fs << Hash[k, gen] }
+       else
+         fs << Hash[k,v]
+       end
+     end
+    fs
+  end
 
 end

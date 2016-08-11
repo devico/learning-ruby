@@ -12,13 +12,19 @@ describe Theatre do
 
   describe '#show' do
     subject{ theatre.show(params)}
-    context 'when is morning' do
-      let(:params) { '13:20' }
-      it { is_expected.to be_a ModernMovie }
-    end
+    let(:params) { '13:20' }
+    it { is_expected.to be_a ModernMovie }
   end
 
   describe '#when?' do
     it { expect( theatre.when?(title: 'Vertigo') ).to eq(:evening) }
   end
+
+  describe '#filters_to_hash' do
+    subject { theatre.filters_to_hash(params) }
+    let(:params) { { genre: ['Comedy', 'Adventure']} }
+    let(:value) { [{:genre=>"Comedy"}, {:genre=>"Adventure"}] }
+    it { expect( subject ).to eq(value) }
+  end
+
 end

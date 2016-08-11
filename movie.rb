@@ -33,7 +33,6 @@ class Movie
   end
 
   def match?(filter_name, filter_value)
-
     value = send(filter_name)
     if value.kind_of? Array
       value.include?(filter_value)
@@ -43,15 +42,7 @@ class Movie
   end
 
   def matches_all?(filters)
-    fs = []
-    filters.select do |k,v|
-        if v != :ancient
-          v.map{ |gen| fs << Hash[k, gen] }
-        else
-          fs << Hash[k,v]
-        end
-    end
-    fs.select{ |fil| match?(fil.keys[0], fil.values[0]) }.empty? ? false : true
+    filters.detect{ |k, v| match?(k, v) }
   end
 
   def has_genre?(type_of_genre)

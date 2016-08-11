@@ -29,11 +29,11 @@ describe Movie do
   end
 
   describe '#matches_all?' do
-    subject { movie.matches_all?(fil) }
-    let(:movie) { Movie.create(*params) }
-    let(:params) { ["http://imdb.com/title/tt0266543/?ref_=chttp_tt_162", "Finding Nemo", "2003", "USA", "2003-05-30", "Animation,Adventure,Comedy", "100 min", "8.2", "Andrew Stanton", "Albert Brooks,Ellen DeGeneres,Alexander Gould", self] }
-    let(:fil) { { genre: ['Adventure', 'Mystery'] } }
-    it { expect( subject ).to be_truthy}
+    before { movie.match?( :genre, 'Adventure' ) }
+    let(:theatre) { Theatre.new("movies.txt")}
+    let(:movie) { theatre.filter(genre: 'Adventure').first }
+    let(:params) { { genre: ['Comedy', 'Adventure'] } }
+    it { expect( movie.matches_all?(params) ).to be_truthy }
   end
 
 end
