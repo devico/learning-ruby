@@ -35,14 +35,14 @@ class Movie
   def match?(filter_name, filter_value)
     value = send(filter_name)
     if value.kind_of? Array
-      value.include?(filter_value)
+      value.any? { |v| filter_value.include?(v) }
     else
       filter_value === value
     end
   end
 
   def matches_all?(filters)
-    filters.detect{ |k, v| match?(k, v) }
+    filters.all?{ |k,v| match?(k, v) }
   end
 
   def has_genre?(type_of_genre)

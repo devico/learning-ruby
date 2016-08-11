@@ -27,11 +27,8 @@ class Theatre < MovieCollection
   def filters_to_hash(hash_with_array)
     fs = []
     hash_with_array.select do |k,v|
-       if k != :period
-         v.map{ |gen| fs << Hash[k, gen] }
-       else
-         fs << Hash[k,v]
-       end
+       v.map{ |gen| fs << Hash[k, gen] } if v.kind_of?(Array)
+       fs << Hash[k,v] unless v.kind_of?(Array)
      end
     fs
   end
