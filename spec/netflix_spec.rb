@@ -2,17 +2,15 @@ describe Netflix do
 
   let(:netflix) { Netflix.new("movies.txt") }
 
-  describe '#balance status' do
-    subject { netflix }
-    context "when creare object" do
-     its(:balance) { is_expected.to eq(0.0) }
-    end
-  end
+  # describe '#balance status' do
+  #   subject { netflix }
+  #   its(:balance) { is_expected.to eq(0.0) }
+  # end
 
-  describe '#pay' do
-    it { expect { netflix.pay(25) }.to change(netflix, :balance).from(0).to(25) }
-    it { expect { netflix.pay( -2 ) }.to raise_error( ArgumentError, "Ожидается положительное число, получено -2" ) }
-  end
+  # describe '#pay' do
+  #   it { expect { netflix.pay(25) }.to change(netflix, :balance).from(0).to(25) }
+  #   it { expect { netflix.pay( -2 ) }.to raise_error( ArgumentError, "Ожидается положительное число, получено -2" ) }
+  # end
 
   describe '#show' do
     subject { netflix }
@@ -27,8 +25,9 @@ describe Netflix do
     end
 
     context 'when not enough money' do
-      it { expect (subject.show(params) ).
-        to raise_error( ArgumentError, "Для просмотра Life Is Beautiful нужно еще пополнить баланс на 3.0" ) }
+      let(:add_money) { movie.cost - balance }
+      let(:balance) { @balance }
+      it { expect(subject.show(params)).to raise_error( ArgumentError, "Для просмотра #{movie.title} нужно еще пополнить баланс на #{add_money}" ) }
     end
 
     context 'when not have movie in base' do
@@ -40,7 +39,6 @@ describe Netflix do
   end
 
   describe '#film_costs' do
-
     context "when send title" do
       subject { netflix.film_costs(params) }
       let(:movie) { netflix.filter(title: 'The Terminator').first }
