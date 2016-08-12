@@ -15,8 +15,7 @@ class Theatre < MovieCollection
     raise ArgumentError, "В ночное время кинотеатр не работает" if order_time == :night
     order_filter = FILTERS_MOVIE.select{ |k,v| k == order_time }.values[0]
     movies = filters_to_hash(order_filter).map{ |fil_mov| self.filter(fil_mov) }.flatten
-    rnd = Random.new
-    movies.sort_by{ |m| m.rate.to_f*rnd.rand(1000)}.last
+    movies.sort_by{ |m| m.rate.to_f*rand(1000)}.last
   end
 
   def when?(title)
