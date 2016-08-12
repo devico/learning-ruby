@@ -45,18 +45,21 @@ movies = MovieCollection.new(file_name)
 
 #онлайн кинотеатр
 netflix = Netflix.new(file_name)
-#movie = netflix.filter(title: 'The Avengers').first
+movie = netflix.filter(title: 'The Avengers').first
 #movie.matches_all?( { genre: ['Comedy', 'Adventure'] } )
 #netflix.pay(25)
-# puts netflix.balance
+puts netflix.balance
 #puts netflix.show(genre: 'Comedy', period: :modern)
 # netflix.pay(0)
-# puts netflix.show(title: 'The Trminator')
+#netflix.pay(25)
+netflix.show(title: 'The Terminator')
+#puts netflix.balance
+
 theatre = Theatre.new(file_name)
-movie = theatre.filter(genre: 'Comedy').first
+#movie = theatre.filter(genre: 'Comedy').first
 #puts movie.match?(:genre, ['Comedy', 'Drama'])
 #puts movie.match?(:year, 1993...1998)
-puts movie.matches_all?( {genre: ['Comedy', 'Drama'], year: 1993...1998} )
+#puts movie.matches_all?( {genre: ['Comedy', 'Drama'], year: 1993...1998} )
 #puts theatre.show('13:20')
 #puts theatre.when?(title: 'Vertigo')
 #puts theatre.filters_to_hash({ genre: ['Comedy', 'Adventure']})
