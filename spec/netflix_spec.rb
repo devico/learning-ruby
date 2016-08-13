@@ -25,7 +25,6 @@ describe Netflix do
     end
 
     context 'when not enough money' do
-
       let(:str) { /^Для просмотра.*нужно еще пополнить баланс на \d*\.\d/ }
       it { expect{ subject.show(params)}.to raise_error( ArgumentError, str ) }
     end

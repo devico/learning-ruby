@@ -19,7 +19,7 @@ describe ClassicMovie do
 
   describe '#show' do
     subject { movie.show }
-    context 'when show movie puts in format: Title — классический фильм, режиссёр author' do
+    context 'when show ClassicMovie' do
       let(:value) { "#{movie.title} — классический фильм, режиссёр #{movie.author}" }
       it { expect( subject ).to eq(value) }
     end

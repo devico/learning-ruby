@@ -46,6 +46,8 @@ movies = MovieCollection.new(file_name)
 #онлайн кинотеатр
 netflix = Netflix.new(file_name)
 movie = netflix.filter(genre: 'Comedy').first
+netflix.pay(25)
+puts netflix.show(genre: 'Comedy', period: :classic)
 #movie.matches_all?( { genre: ['Comedy', 'Adventure'] } )
 #netflix.pay(25)
 #puts netflix.balance
