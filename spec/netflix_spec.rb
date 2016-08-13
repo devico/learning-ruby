@@ -25,8 +25,8 @@ describe Netflix do
     end
 
     context 'when not enough money' do
-
-      it { expect{ subject.show(params)}.to raise_error( ArgumentError, "Для просмотра #{movie.title} нужно еще пополнить баланс на #{movie.cost}" ) }
+      let(:str) { sprintf("Для просмотра %s нужно еще пополнить баланс на %3.1f", movie.title, movie.cost ) }
+      it { expect{ subject.show(params)}.to raise_error( ArgumentError, str ) }
     end
 
     context 'when not have movie in base' do
