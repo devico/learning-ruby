@@ -14,7 +14,7 @@ describe Netflix do
 
   describe '#show' do
     subject { netflix }
-    let(:movie) { subject.filter(title: 'The Sting').first }
+    let(:movie) { subject.filter(genre: 'Comedy').first }
     let(:params) { {genre: 'Comedy', period: :modern} }
 
     context 'when after show' do
@@ -25,7 +25,8 @@ describe Netflix do
     end
 
     context 'when not enough money' do
-      let(:str) { sprintf("Для просмотра %s нужно еще пополнить баланс на %3.1f", movie.title, movie.cost ) }
+
+      let(:str) { /^Для просмотра.*нужно еще пополнить баланс на \d*\.\d/ }
       it { expect{ subject.show(params)}.to raise_error( ArgumentError, str ) }
     end
 
