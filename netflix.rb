@@ -6,7 +6,7 @@ class Netflix < MovieCollection
   def show(params)
     movie = self.filter(params).sort_by{ |m| m.rate.to_f*rand(1000)}.last
     raise NameError, "В базе нет такого фильма" unless movie
-    raise ArgumentError, "Для просмотра нужно еще пополнить баланс на #{movie.cost}" if @balance < movie.cost
+    raise ArgumentError, "Для просмотра #{movie.title} нужно еще пополнить баланс на #{movie.cost}" if @balance < movie.cost
     puts movie.show
     @balance -= movie.cost
 
