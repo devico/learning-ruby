@@ -9,7 +9,7 @@ class Netflix < MovieCollection
     raise ArgumentError, "Для просмотра #{movie.title} нужно еще пополнить баланс на #{movie.cost-@balance}" if @balance < movie.cost
     @balance -= movie.cost
     if movie.kind_of?(ClassicMovie)
-      movie.show + ", кроме этого еще #{self.filter(author: movie.author).length} фильмa(ов) #{movie.author} вошли в ТОП-250"
+      movie.show(self.filter(author: movie.author).length)
     else
       movie.show
     end

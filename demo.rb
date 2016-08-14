@@ -49,7 +49,7 @@ movie = netflix.filter(genre: 'Comedy').first
 #puts netflix.film_costs(title: 'There Is No Such Movie')
 #puts netflix.film_costs(title: 'The Terminator')
 netflix.pay(25)
-puts netflix.show(genre: 'Comedy', period: :classic)
+puts netflix.show(genre: 'Comedy', period: :modern)
 #movie.matches_all?( { genre: ['Comedy', 'Adventure'] } )
 #netflix.pay(25)
 #puts netflix.balance
