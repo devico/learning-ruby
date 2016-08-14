@@ -20,7 +20,7 @@ describe ClassicMovie do
   describe '#show' do
     subject { movie.show }
     context 'when show ClassicMovie' do
-      let(:value) { "#{movie.title} — классический фильм, режиссёр #{movie.author}" }
+      let(:value) { "#{movie.title} — классический фильм, режиссёр #{movie.author}"", кроме этого еще #{netflix.filter(author: movie.author).length} фильмa(ов) #{movie.author} вошли в ТОП-250" }
       it { expect( subject ).to eq(value) }
     end
   end
