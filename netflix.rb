@@ -8,12 +8,7 @@ class Netflix < MovieCollection
     raise NameError, "В базе нет такого фильма" unless movie
     raise ArgumentError, "Для просмотра #{movie.title} нужно еще пополнить баланс на #{movie.cost-@balance}" if @balance < movie.cost
     @balance -= movie.cost
-    if movie.kind_of?(ClassicMovie)
-      movie.show(self.filter(author: movie.author).length)
-    else
-      movie.show
-    end
-
+    movie.show
   end
 
   def pay(payment)

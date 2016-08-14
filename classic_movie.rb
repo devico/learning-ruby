@@ -4,8 +4,8 @@ class ClassicMovie < Movie
     1.5
   end
 
-  def show(num)
-    "#{@title} — классический фильм, режиссёр #{@author}"", кроме этого еще #{num} фильмa(ов) #{@author} вошли в ТОП-250"
+  def show
+    "#{@title} — классический фильм, режиссёр #{@author}"", кроме этого еще #{@collection.filter(author: @author).length} фильмa(ов) #{@author} вошли в ТОП-250"
   end
 
 
