@@ -5,8 +5,7 @@ class ClassicMovie < Movie
   end
 
   def show
-    puts "#{@title} — классический фильм, режиссёр #{@author}"
-    "Список фильмов режиссера #{@author}:"
+    "#{@title} — классический фильм, режиссёр #{@author}"
   end
 
 
