@@ -3,6 +3,7 @@ require 'csv'
 class MovieCollection
 
   include Enumerable
+  include CashBox
 
   attr_accessor :collection
 
@@ -44,6 +45,10 @@ end
   def genre_exists?(genre_film)
     @genres ||= @collection.map { |f| f.genre }.flatten.uniq
     @genres.include?(genre_film)
+  end
+
+  def cash
+    cashbox_money
   end
 
 end
