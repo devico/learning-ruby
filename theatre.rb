@@ -1,5 +1,7 @@
 class Theatre < MovieCollection
 
+  include Enumerable
+
   PERIOD_DAY = { morning: (8..12), afternoon: (13..16), evening: (17..23), night: (0..7) }
   FILTERS_MOVIE = { morning: { period: :ancient },
                     afternoon: { genre: ['Comedy', 'Adventure']},

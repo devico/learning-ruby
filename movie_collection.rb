@@ -1,6 +1,9 @@
 require 'csv'
 
 class MovieCollection
+
+  include Enumerable
+
   attr_accessor :collection
 
   def initialize(file_name)

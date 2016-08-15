@@ -1,6 +1,9 @@
 require 'date'
 
 class Netflix < MovieCollection
+
+  include Enumerable
+
   attr_reader :balance
 
   def show(params)
