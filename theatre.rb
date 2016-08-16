@@ -1,6 +1,9 @@
+require_relative 'cash_box'
+
 class Theatre < MovieCollection
 
   include Enumerable
+  include CashBox
 
   PERIOD_DAY = { morning: (8..12), afternoon: (13..16), evening: (17..23), night: (0..7) }
   FILTERS_MOVIE = { morning: { period: :ancient },
@@ -28,6 +31,18 @@ class Theatre < MovieCollection
 
   def filters_to_hash(hash_with_array)
     hash_with_array.map{ |k,v| v.kind_of?(Array) ? v.map{ |gen| Hash[k, gen] } : Hash[k,v] }.flatten
+  end
+
+  def buy_ticket(film)
+    puts "вы купили билет на #{film[:title]}"
+    period = when?(film)
+    check = case period
+      when :morning then 3.0
+      when :afternoon then 5.0
+      when :evening then 10.0
+      else raise ArgumentError, "Касса не работает"
+    end
+    put_to_cashbox(check)
   end
 
 end

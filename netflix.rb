@@ -1,8 +1,10 @@
 require 'date'
+require_relative 'cash_box'
 
 class Netflix < MovieCollection
 
   include Enumerable
+  include CashBox
 
   attr_reader :balance
 
@@ -16,7 +18,8 @@ class Netflix < MovieCollection
 
   def pay(payment)
     raise ArgumentError, "Ожидается положительное число, получено #{payment}" if payment <= 0
-    @balance += payment
+    put_to_cashbox(payment)
+#   @balance += payment
   end
 
   def film_costs(movie)
@@ -24,5 +27,7 @@ class Netflix < MovieCollection
     raise NameError, "В базе нет такого фильма" unless movie
     movie.cost
   end
+
+
 
 end

@@ -1,0 +1,4 @@
+describe CashBox do
+
+
+end
