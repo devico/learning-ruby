@@ -44,7 +44,7 @@ movies = MovieCollection.new(file_name)
 
 #онлайн кинотеатр
 netflix = Netflix.new(file_name)
-#netflix.cash
+puts netflix.cash
 #movie = netflix.filter(genre: 'Comedy').first
 #puts netflix.film_costs(title: 'There Is No Such Movie')
 #puts netflix.film_costs(title: 'The Terminator')
@@ -65,11 +65,11 @@ netflix = Netflix.new(file_name)
 #puts netflix.balance
 
 theatre = Theatre.new(file_name)
-theatre.cash
-theatre.buy_ticket(title: 'Vertigo')
-theatre.cash
-theatre.take('Bank')
-theatre.cash
+#puts theatre.cash
+# theatre.buy_ticket(title: 'Vertigo')
+# theatre.cash
+# theatre.take('Bank')
+# theatre.cash
 # theatre.cash
 # theatre.buy_ticket(title: 'The Maltese')
 # theatre.cash

@@ -3,9 +3,6 @@ require_relative 'cash_box'
 
 class Netflix < MovieCollection
 
-  include Enumerable
-  include CashBox
-
   attr_reader :balance
 
   def show(params)

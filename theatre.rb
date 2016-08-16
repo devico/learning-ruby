@@ -2,10 +2,8 @@ require_relative 'cash_box'
 
 class Theatre < MovieCollection
 
-  include Enumerable
-  include CashBox
-
   PERIOD_DAY = { morning: (8..12), afternoon: (13..16), evening: (17..23), night: (0..7) }
+  DAY_PRICE = { morning: 3.0, afternoon: 5.0, evening: 10.0 }
   FILTERS_MOVIE = { morning: { period: :ancient },
                     afternoon: { genre: ['Comedy', 'Adventure']},
                     evening: { genre: ['Drama', 'Mystery'] } }
