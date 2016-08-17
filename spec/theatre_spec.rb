@@ -27,4 +27,20 @@ describe Theatre do
     it { expect( subject ).to eq(value) }
   end
 
+  describe '#buy_ticket' do
+
+    context 'when morning' do
+      it { expect { theatre.buy_ticket('10:15') }.to change(theatre, :cashbox_balance).from(0).to(3) }
+    end
+
+    context 'when afternoon' do
+      it { expect { theatre.buy_ticket('14:35') }.to change(theatre, :cashbox_balance).from(0).to(5) }
+    end
+
+    context 'when evening' do
+      it { expect { theatre.buy_ticket('21:00') }.to change(theatre, :cashbox_balance).from(0).to(10) }
+    end
+
+  end
+
 end

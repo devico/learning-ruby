@@ -31,15 +31,11 @@ class Theatre < MovieCollection
     hash_with_array.map{ |k,v| v.kind_of?(Array) ? v.map{ |gen| Hash[k, gen] } : Hash[k,v] }.flatten
   end
 
-  def buy_ticket(film)
-    puts "вы купили билет на #{film[:title]}"
-    period = when?(film)
-    check = case period
-      when :morning then 3.0
-      when :afternoon then 5.0
-      when :evening then 10.0
-      else raise ArgumentError, "Касса не работает"
-    end
+  def buy_ticket(time_show)
+    movie = show(time_show)
+    puts "Вы купили билет на #{movie.title}"
+    order_time = time_to_show(time_show)
+    check = DAY_PRICE.select{ |k,v| k == order_time }.values[0]
     put_to_cashbox(check)
   end
 
