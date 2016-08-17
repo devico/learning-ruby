@@ -43,8 +43,13 @@ movies = MovieCollection.new(file_name)
 #movies.first.has_genre?('Camedy')
 
 #онлайн кинотеатр
-netflix = Netflix.new(file_name)
-#puts netflix.cash
+netflix1 = Netflix.new(file_name)
+netflix2 = Netflix.new(file_name)
+netflix3 = Netflix.new(file_name)
+netflix1.pay(5)
+netflix2.pay(10)
+netflix3.pay(15)
+puts Netflix.cash
 #puts netflix.pay(25)
 #puts netflix.cash
 #movie = netflix.filter(genre: 'Comedy').first
@@ -80,9 +85,9 @@ theatre = Theatre.new(file_name)
 #puts movie.match?(:genre, ['Comedy', 'Drama'])
 #puts movie.match?(:year, 1993...1998)
 #puts movie.matches_all?( {genre: ['Comedy', 'Drama'], year: 1993...1998} )
-puts theatre.cashbox_balance
-theatre.buy_ticket('13:20')
-puts theatre.cashbox_balance
+# puts theatre.cashbox_balance
+# theatre.buy_ticket('13:20')
+# puts theatre.cashbox_balance
 #theatre.when?(title: 'Vertigo')
 #puts theatre.filters_to_hash({ genre: ['Comedy', 'Adventure']})
 

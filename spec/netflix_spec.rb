@@ -53,6 +53,9 @@ describe Netflix do
 
   end
 
+  describe '#cash' do
 
+
+  end
 
 end

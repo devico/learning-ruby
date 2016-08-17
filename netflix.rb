@@ -25,6 +25,8 @@ class Netflix < MovieCollection
     movie.cost
   end
 
-
+  def self.cash
+    @@cashbox_netflix
+  end
 
 end
