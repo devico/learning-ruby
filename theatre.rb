@@ -35,7 +35,7 @@ class Theatre < MovieCollection
     movie = show(time_show)
     puts "Вы купили билет на #{movie.title}"
     order_time = time_to_show(time_show)
-    check = DAY_PRICE.select{ |k,v| k == order_time }.values[0]
+    check = DAY_PRICE[order_time]
     put_to_cashbox(check)
   end
 

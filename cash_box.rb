@@ -8,4 +8,10 @@ module CashBox
     @cashbox_balance += money
   end
 
+  def take(who)
+    raise ArgumentError, "Нарушение безопасности, вызвана полиция" unless who == 'Bank'
+    puts "Проведена инкассация"
+    @cashbox_balance = 0.0
+  end
+
 end
