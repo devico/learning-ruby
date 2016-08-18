@@ -48,10 +48,12 @@ netflix2 = Netflix.new(file_name)
 netflix3 = Netflix.new(file_name)
 netflix1.pay(5)
 netflix2.pay(10)
-netflix3.pay(115)
+netflix3.pay(114)
 puts Netflix.cash
 #puts netflix.pay(25)
-#puts netflix.cash
+puts netflix1.cash
+puts netflix2.cash
+puts netflix3.cash
 #movie = netflix.filter(genre: 'Comedy').first
 #puts netflix.film_costs(title: 'There Is No Such Movie')
 #puts netflix.film_costs(title: 'The Terminator')

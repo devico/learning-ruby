@@ -3,6 +3,10 @@ require_relative 'cash_box'
 
 class Netflix < MovieCollection
 
+  def self.cash
+    cashbox_balance
+  end
+
   attr_reader :balance
 
   def show(params)
@@ -14,10 +18,9 @@ class Netflix < MovieCollection
   end
 
   def pay(payment)
-    @@cashbox_netflix ||= 0.0
     raise ArgumentError, "Ожидается положительное число, получено #{payment}" if payment <= 0
     put_to_cashbox(payment)
-    @@cashbox_netflix += payment
+    Netflix.put_to_cashbox(payment)
     @balance += payment
   end
 
@@ -27,8 +30,6 @@ class Netflix < MovieCollection
     movie.cost
   end
 
-  def self.cash
-    @@cashbox_netflix
-  end
+
 
 end
