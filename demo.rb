@@ -48,7 +48,7 @@ netflix2 = Netflix.new(file_name)
 netflix3 = Netflix.new(file_name)
 netflix1.pay(5)
 netflix2.pay(10)
-netflix3.pay(15)
+netflix3.pay(115)
 puts Netflix.cash
 #puts netflix.pay(25)
 #puts netflix.cash

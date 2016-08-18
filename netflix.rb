@@ -14,9 +14,11 @@ class Netflix < MovieCollection
   end
 
   def pay(payment)
+    @@cashbox_netflix ||= 0.0
     raise ArgumentError, "Ожидается положительное число, получено #{payment}" if payment <= 0
     put_to_cashbox(payment)
-#   @balance += payment
+    @@cashbox_netflix += payment
+    @balance += payment
   end
 
   def film_costs(movie)

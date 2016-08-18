@@ -54,8 +54,7 @@ describe Netflix do
   end
 
   describe '#cash' do
-
-
+   it { expect( Netflix.cash ).to eq(50) }
   end
 
 end
