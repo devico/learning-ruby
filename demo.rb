@@ -46,23 +46,23 @@ movies = MovieCollection.new(file_name)
 netflix1 = Netflix.new(file_name)
 netflix2 = Netflix.new(file_name)
 netflix3 = Netflix.new(file_name)
-netflix1.pay(5)
-netflix2.pay(10)
-netflix3.pay(114)
+puts netflix1.pay(1)
+puts netflix2.pay(10)
+puts netflix3.pay(114)
 puts Netflix.cash
 #puts netflix.pay(25)
-puts netflix1.cash
-puts netflix2.cash
-puts netflix3.cash
+#puts netflix1.cash
+#puts netflix2.cash
+#puts netflix3.cash
 #movie = netflix.filter(genre: 'Comedy').first
-#puts netflix.film_costs(title: 'There Is No Such Movie')
+puts netflix1.film_costs(title: 'The Terminator')
 #puts netflix.film_costs(title: 'The Terminator')
 # netflix.pay(25)
 # netflix.cash
 # netflix.pay(25)
 # netflix.cash
 
-#puts netflix.show(genre: 'Comedy', period: :classic)
+puts netflix1.show(genre: 'Comedy', period: :classic)
 
 #movie.matches_all?( { genre: ['Comedy', 'Adventure'] } )
 #netflix.pay(25)
@@ -70,10 +70,11 @@ puts netflix3.cash
 #puts netflix.show(genre: 'Comedy', period: :modern)
 # netflix.pay(0)
 #netflix.pay(25)
-#netflix.show(title: 'The Terminator')
+#netflix1.show(title: 'The Terminator')
 #puts netflix.balance
 
 theatre = Theatre.new(file_name)
+
 #theatre.cash
 # theatre.buy_ticket(title: 'Vertigo')
 # theatre.cash

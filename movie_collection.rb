@@ -1,5 +1,6 @@
 require 'csv'
 require_relative 'cash_box'
+require 'money'
 
 class MovieCollection
 
@@ -12,7 +13,7 @@ class MovieCollection
     @collection =  CSV.read(file_name, col_sep: '|', headers: %i[ link title year country date genre length rate author actors ] )
     .map { |film| film.to_hash }
     .map { |film| Movie.create(film[:link], film[:title], film[:year], film[:country], film[:date], film[:genre], film[:length], film[:rate], film[:author], film[:actors], self) }
-    @balance = 0.0
+    @balance = Money.new(0, "UAH")
   end
 
 

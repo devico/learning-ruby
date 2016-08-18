@@ -28,17 +28,18 @@ describe Theatre do
   end
 
   describe '#buy_ticket' do
+    let(:start_value) { Money.new(0, "UAH") }
 
     context 'when morning' do
-      it { expect { theatre.buy_ticket('10:15') }.to change(theatre, :cashbox_balance).from(0).to(3) }
+      it { expect { theatre.buy_ticket('10:15') }.to change(theatre, :cashbox_balance).from(start_value).to(Money.new(3, "UAH")) }
     end
 
     context 'when afternoon' do
-      it { expect { theatre.buy_ticket('14:35') }.to change(theatre, :cashbox_balance).from(0).to(5) }
+      it { expect { theatre.buy_ticket('14:35') }.to change(theatre, :cashbox_balance).from(start_value).to(Money.new(5, "UAH")) }
     end
 
     context 'when evening' do
-      it { expect { theatre.buy_ticket('21:00') }.to change(theatre, :cashbox_balance).from(0).to(10) }
+      it { expect { theatre.buy_ticket('21:00') }.to change(theatre, :cashbox_balance).from(start_value).to(Money.new(10, "UAH")) }
     end
 
   end

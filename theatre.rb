@@ -1,5 +1,3 @@
-require_relative 'cash_box'
-
 class Theatre < MovieCollection
 
   PERIOD_DAY = { morning: (8..12), afternoon: (13..16), evening: (17..23), night: (0..7) }
@@ -35,7 +33,7 @@ class Theatre < MovieCollection
     movie = show(time_show)
     puts "Вы купили билет на #{movie.title}"
     order_time = time_to_show(time_show)
-    check = DAY_PRICE[order_time]
+    check = Money.new(DAY_PRICE[order_time], "UAH")
     put_to_cashbox(check)
   end
 
