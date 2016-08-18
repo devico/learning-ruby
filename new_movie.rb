@@ -1,12 +1,16 @@
-class NewMovie < Movie
+module TopMovies
 
-  def cost
-    5.0
-  end
+  class NewMovie < Movie
 
-  def show
-    start_time = Time.now
-    "#{@title} — новинка, вышло #{start_time.year - @year} лет назад!"
+    def cost
+      5.0
+    end
+
+    def show
+      start_time = Time.now
+      "#{@title} — новинка, вышло #{start_time.year - @year} лет назад!"
+    end
+
   end
 
 end
