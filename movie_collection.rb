@@ -1,8 +1,8 @@
-module TopMovies
-
   require 'csv'
   require_relative 'cash_box'
   require 'money'
+
+module TopMovies
 
   class MovieCollection
 

@@ -33,13 +33,18 @@ module TopMovies
     end
 
     def match?(filter_name, filter_value)
-      value = send(filter_name)
+      if filter_value.kind_of? Symbol
+        value = send(filter_name).to_s[11..-1].to_sym
+      else
+        value = send(filter_name)
+      end
+
       if value.kind_of? Array
         #value.any? { |v| v === filter_value }
         value.any? { |v| filter_value.include?(v) }
-      else
-        filter_value === value
-      end
+       else
+         filter_value === value
+       end
     end
 
     def matches_all?(filters)

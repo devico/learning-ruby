@@ -2,13 +2,13 @@ module TopMovies
 
   describe AncientMovie do
 
-    let(:netflix) { Netflix.new("movies.txt") }
+    let(:netflix) { TopMovies::Netflix.new("movies.txt") }
     let(:movie) { netflix.filter(period: :ancient).first }
 
     describe '#cost and #period' do
       subject { movie }
       its(:cost){ is_expected.to eq(1.0) }
-      its(:period){ is_expected.to eq(:ancient) }
+      its(:period){ is_expected.to eq(:"topmovies::ancient") }
     end
 
     describe '#show' do

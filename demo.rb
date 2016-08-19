@@ -19,7 +19,7 @@ else
 end
 
 # создаем коллекцию фильмов из файла
-movies = MovieCollection.new(file_name)
+movies = TopMovies::MovieCollection.new(file_name)
 
 # выводим весь список файлов
 
@@ -43,26 +43,27 @@ movies = MovieCollection.new(file_name)
 #movies.first.has_genre?('Camedy')
 
 #онлайн кинотеатр
-netflix1 = Netflix.new(file_name)
-netflix2 = Netflix.new(file_name)
-netflix3 = Netflix.new(file_name)
-puts netflix1.pay(1)
-puts netflix2.pay(10)
-puts netflix3.pay(114)
-puts Netflix.cash
+netflix = TopMovies::Netflix.new(file_name)
+#movie = netflix.filter(period: :classic).first
+#puts movie.class
+# netflix2 = TopMovies::Netflix.new(file_name)
+# netflix3 = TopMovies::Netflix.new(file_name)
+# puts netflix1.pay(1)
+# puts netflix2.pay(10)
+# puts netflix3.pay(114)
+# puts TopMovies::Netflix.cash
 #puts netflix.pay(25)
 #puts netflix1.cash
 #puts netflix2.cash
 #puts netflix3.cash
 #movie = netflix.filter(genre: 'Comedy').first
-puts netflix1.film_costs(title: 'The Terminator')
+#puts netflix1.film_costs(title: 'The Terminator')
 #puts netflix.film_costs(title: 'The Terminator')
 # netflix.pay(25)
 # netflix.cash
 # netflix.pay(25)
 # netflix.cash
-
-puts netflix1.show(genre: 'Comedy', period: :classic)
+#puts netflix1.show(genre: 'Comedy', period: :classic)
 
 #movie.matches_all?( { genre: ['Comedy', 'Adventure'] } )
 #netflix.pay(25)
@@ -73,8 +74,9 @@ puts netflix1.show(genre: 'Comedy', period: :classic)
 #netflix1.show(title: 'The Terminator')
 #puts netflix.balance
 
-theatre = Theatre.new(file_name)
-
+theatre = TopMovies::Theatre.new(file_name)
+movie = theatre.filter(genre: 'Comedy').first
+puts movie
 #theatre.cash
 # theatre.buy_ticket(title: 'Vertigo')
 # theatre.cash
@@ -84,7 +86,7 @@ theatre = Theatre.new(file_name)
 # theatre.buy_ticket(title: 'The Maltese')
 # theatre.cash
 
-#movie = theatre.filter(genre: 'Comedy').first
+
 #puts movie.match?(:genre, ['Comedy', 'Drama'])
 #puts movie.match?(:year, 1993...1998)
 #puts movie.matches_all?( {genre: ['Comedy', 'Drama'], year: 1993...1998} )
