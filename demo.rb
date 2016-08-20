@@ -19,8 +19,7 @@ else
 end
 
 # создаем коллекцию фильмов из файла
-movies = MovieCollection.new(file_name)
-
+movies = TopMovies::MovieCollection.new(file_name)
 
 # выводим весь список файлов
 
@@ -44,28 +43,57 @@ movies = MovieCollection.new(file_name)
 #movies.first.has_genre?('Camedy')
 
 #онлайн кинотеатр
-netflix = Netflix.new(file_name)
-movie = netflix.filter(genre: 'Comedy').first
-#puts netflix.film_costs(title: 'There Is No Such Movie')
+netflix = TopMovies::Netflix.new(file_name)
+#movie = netflix.filter(period: :classic).first
+#puts movie.class
+# netflix2 = TopMovies::Netflix.new(file_name)
+# netflix3 = TopMovies::Netflix.new(file_name)
+# puts netflix1.pay(1)
+# puts netflix2.pay(10)
+# puts netflix3.pay(114)
+# puts TopMovies::Netflix.cash
+#puts netflix.pay(25)
+#puts netflix1.cash
+#puts netflix2.cash
+#puts netflix3.cash
+#movie = netflix.filter(genre: 'Comedy').first
+#puts netflix1.film_costs(title: 'The Terminator')
 #puts netflix.film_costs(title: 'The Terminator')
-netflix.pay(25)
-puts netflix.show(genre: 'Comedy', period: :classic)
+# netflix.pay(25)
+# netflix.cash
+# netflix.pay(25)
+# netflix.cash
+#puts netflix1.show(genre: 'Comedy', period: :classic)
+
 #movie.matches_all?( { genre: ['Comedy', 'Adventure'] } )
 #netflix.pay(25)
 #puts netflix.balance
 #puts netflix.show(genre: 'Comedy', period: :modern)
 # netflix.pay(0)
 #netflix.pay(25)
-#netflix.show(title: 'The Terminator')
+#netflix1.show(title: 'The Terminator')
 #puts netflix.balance
 
-theatre = Theatre.new(file_name)
-#movie = theatre.filter(genre: 'Comedy').first
+theatre = TopMovies::Theatre.new(file_name)
+movie = theatre.filter(genre: 'Comedy').first
+puts movie
+#theatre.cash
+# theatre.buy_ticket(title: 'Vertigo')
+# theatre.cash
+# theatre.take('Bank')
+# theatre.cash
+# theatre.cash
+# theatre.buy_ticket(title: 'The Maltese')
+# theatre.cash
+
+
 #puts movie.match?(:genre, ['Comedy', 'Drama'])
 #puts movie.match?(:year, 1993...1998)
 #puts movie.matches_all?( {genre: ['Comedy', 'Drama'], year: 1993...1998} )
-#puts theatre.show('13:20')
-#puts theatre.when?(title: 'Vertigo')
+# puts theatre.cashbox_balance
+# theatre.buy_ticket('13:20')
+# puts theatre.cashbox_balance
+#theatre.when?(title: 'Vertigo')
 #puts theatre.filters_to_hash({ genre: ['Comedy', 'Adventure']})
 
 
