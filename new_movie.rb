@@ -1,7 +1,5 @@
 module TopMovies
-
   class NewMovie < Movie
-
     def cost
       5.0
     end
@@ -10,7 +8,5 @@ module TopMovies
       start_time = Time.now
       "#{@title} — новинка, вышло #{start_time.year - @year} лет назад!"
     end
-
   end
-
 end
