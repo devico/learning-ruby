@@ -15,25 +15,18 @@ module TopMovies
     end
 
     describe '#show' do
-      subject { netflix }
-      let(:movie) { subject.filter(genre: 'Comedy').first }
-      let(:params) { {genre: 'Comedy', period: :modern} }
 
       context 'when after show' do
-        before { subject.pay(initial_balance) }
-        before { subject.show(params) }
-        let(:initial_balance) { 5 }
-        its(:balance) { is_expected.to eq( Money.new((initial_balance - movie.cost)*100, "UAH" ) ) }
-      end
-
-      context 'when not enough money' do
-        let(:str) { /^Для просмотра.*нужно еще пополнить баланс на \d+\.\d+/ }
-        it { expect{ subject.show(params)}.to raise_error( ArgumentError, str ) }
+        before { netflix.pay( 10 ) }
+        subject { netflix.show(params) }
+        let(:params) { {genre: 'Comedy', period: :modern} }
+        let(:str) { /(.*)современное кино: играют(.*)/ }
+        it { expect(subject).to (eq /.*современное кино: играют.*/) }
       end
 
       context 'when not have movie in base' do
-        before { subject.pay( 10.0 ) }
-        it { expect { subject.show(title: 'The Tirmenator') }.
+        let(:params) { {title: 'The Tirmenator'} }
+        it { expect { netflix.show(params) }.
             to raise_error( NameError, "В базе нет такого фильма" ) }
       end
 
@@ -56,8 +49,30 @@ module TopMovies
     end
 
     describe '#cash' do
-     let(:value) {Money.new(5500, "UAH")}
+     let(:value) {Money.new(4500, "UAH")}
      it { expect( Netflix.cash ).to eq(value) }
+    end
+
+    describe '#find_movie' do
+      subject { netflix.find_movie(params) }
+      let(:params) { {genre: 'Comedy', period: :modern} }
+      it { is_expected.to be_a ModernMovie }
+    end
+
+    describe '#payment' do
+      subject { netflix }
+      let(:movie) { subject.filter(title: 'The Terminator').first }
+
+      context 'when payment successful' do
+        before { subject.pay(10) }
+        it { expect{ subject.payment(movie) }.to change(netflix, :balance).from(Money.new(1000, 'UAH')).to(Money.new(700, 'UAH'))}
+      end
+
+      context 'when balance less than cost' do
+        let(:str) { /^Для просмотра.*нужно еще пополнить баланс на \d+\.\d+/ }
+        it { expect{ subject.payment(movie)}.to raise_error( ArgumentError, str ) }
+      end
+
     end
 
   end

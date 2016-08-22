@@ -3,32 +3,29 @@ module TopMovies
     attr_accessor :link, :title, :year, :country, :date, :genre, :length, :rate,
                   :author, :actors, :period
 
-    def initialize(link, title, year, country, date, genre, length, rate,
-                   author, actors, movie_collection)
-      @link = link
-      @title = title
-      @year = year.to_i
-      @country = country
-      @date = date
-      @genre = genre.split(',')
-      @length = length
-      @rate = rate
-      @author = author
-      @actors = actors.split(',')
-      @collection = movie_collection
+    def initialize(params)
+      @link = params[:link]
+      @title = params[:title]
+      @year = params[:year].to_i
+      @country = params[:country]
+      @date = params[:date]
+      @genre = params[:genre].split(',')
+      @length = params[:length]
+      @rate = params[:rate]
+      @author = params[:author]
+      @actors = params[:actors].split(',')
+      @collection = params[:collection]
     end
 
-    def self.create(link, title, year, country, date, genre, length, rate,
-                    author, actors, movie_collection)
-      mov_type = case year.to_i
+    def self.create(params)
+      mov_type = case params[:year].to_i
                  when 1900...1945 then AncientMovie
                  when 1945...1968 then ClassicMovie
                  when 1968...2000 then ModernMovie
                  when 2000..2015 then NewMovie
                  else raise ArgumentError, 'Фильма такого класса нет'
                  end
-      mov_type.new(link, title, year, country, date, genre, length, rate,
-                   author, actors, movie_collection)
+      mov_type.new(params)
     end
 
     def match?(filter_name, filter_value)

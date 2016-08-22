@@ -13,9 +13,11 @@ module TopMovies
       @collection = CSV.read(file_name, col_sep: '|', headers:
         %i(link title year country date genre length rate author actors))
                        .map(&:to_hash).map do |film|
-        Movie.create(film[:link], film[:title], film[:year], film[:country],
-                     film[:date], film[:genre], film[:length], film[:rate],
-                     film[:author], film[:actors], self)
+        params = { link: film[:link], title: film[:title], year: film[:year],
+                   country: film[:country], date: film[:date], genre: film[:genre],
+                   length: film[:length], rate: film[:rate], author: film[:author],
+                   actors: film[:actors], collection: self }
+        Movie.create(params)
       end
       @balance = Money.new(0, 'UAH')
     end

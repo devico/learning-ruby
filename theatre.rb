@@ -16,9 +16,9 @@ module TopMovies
       order_time = time_to_show(params)
       raise ArgumentError,
             'В ночное время кинотеатр не работает' if order_time == :night
-      order = FILTERS_MOVIE.select { |k, _v| k == order_time }.values[0]
-      movies = filters_to_hash(order).map { |fil_mov| filter(fil_mov) }.flatten
-      movies.sort_by { |m| m.rate.to_f * rand(1000) }.last
+      filters_to_hash(FILTERS_MOVIE.select { |k, _v| k == order_time }.values[0])
+        .map { |fil_mov| filter(fil_mov) }.flatten
+        .sort_by { |m| m.rate.to_f * rand(1000) }.last
     end
 
     def when?(title)
