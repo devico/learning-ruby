@@ -60,7 +60,7 @@ puts online.show { |movie| !movie.title.include?('Terminator') && movie.genre.in
 # movie.matches_all?(genre: %w(Comedy Adventure))
 # online.pay(25)
 # puts online.balance
-#puts online.show(genre: 'Comedy', period: :modern)
+puts online.show(genre: 'Comedy', period: :modern)
 #puts online.cash
 #  online.pay(0)
 # online.pay(25)
