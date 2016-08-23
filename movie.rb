@@ -3,7 +3,14 @@ module TopMovies
     attr_accessor :link, :title, :year, :country, :date, :genre, :length, :rate,
                   :author, :actors, :period
 
-    def initialize(params)
+    require_relative './ancient_movie'
+    require_relative './classic_movie'
+    require_relative './modern_movie'
+    require_relative './new_movie'
+    MOVIE_TYPE = { AncientMovie => (1900..1944), ClassicMovie => (1945..1967),
+                   ModernMovie => (1968..1999), NewMovie => (2000..2015) }.freeze
+
+    def initialize(params) # rubocop:disable Metrics/AbcSize
       @link = params[:link]
       @title = params[:title]
       @year = params[:year].to_i
@@ -18,13 +25,9 @@ module TopMovies
     end
 
     def self.create(params)
-      mov_type = case params[:year].to_i
-                 when 1900...1945 then AncientMovie
-                 when 1945...1968 then ClassicMovie
-                 when 1968...2000 then ModernMovie
-                 when 2000..2015 then NewMovie
-                 else raise ArgumentError, 'Фильма такого класса нет'
-                 end
+      mov_type = MOVIE_TYPE.select { |_k, v| v.include?(params[:year].to_i) }
+                           .keys[0]
+      raise ArgumentError, 'Фильма такого класса нет' unless mov_type
       mov_type.new(params)
     end
 
