@@ -38,7 +38,9 @@ module TopMovies
       if value.is_a? Array
         value.any? { |v| filter_value.include?(v) }
       else
+        # rubocop:disable CaseEquality
         filter_value === value
+        # rubocop:enable CaseEquality
       end
     end
 

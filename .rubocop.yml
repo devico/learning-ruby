@@ -5,5 +5,3 @@ Documentation:
   Enabled: false
 ParameterLists:
   CountKeywordArgs: false
-Style/CaseEquality:
-  Enabled: false

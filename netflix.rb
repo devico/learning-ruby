@@ -11,10 +11,12 @@ module TopMovies
     attr_reader :balance
 
     def find_movie(params)
-      filter(params).sort_by { |m| m.rate.to_f * rand(1000) }.last
+      movie = filter(params).sort_by { |m| m.rate.to_f * rand(1000) }.last
+      raise NameError, 'В базе нет такого фильма' unless movie
+      movie
     end
 
-    def payment(movie)
+    def make_payment(movie)
       if @balance.to_f < movie.cost
         raise ArgumentError, "Для просмотра #{movie.title} нужно еще пополнить \
 баланс на #{movie.cost - @balance.to_f}"
@@ -25,8 +27,7 @@ module TopMovies
 
     def show(params)
       movie = find_movie(params)
-      raise NameError, 'В базе нет такого фильма' unless movie
-      payment(movie)
+      make_payment(movie)
       movie.show
     end
 

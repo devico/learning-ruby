@@ -59,8 +59,8 @@ puts online.cash
 # movie.matches_all?(genre: %w(Comedy Adventure))
 # online.pay(25)
 # puts online.balance
-online.show(genre: 'Comedy', period: :modern)
-online.cash
+puts online.show(genre: 'Comedy', period: :modern)
+puts online.cash
 #  online.pay(0)
 # online.pay(25)
 # online1.show(title: 'The Terminator')

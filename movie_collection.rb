@@ -10,16 +10,25 @@ module TopMovies
     attr_accessor :collection
 
     def initialize(file_name)
-      @collection = CSV.read(file_name, col_sep: '|', headers:
-        %i(link title year country date genre length rate author actors))
-                       .map(&:to_hash).map do |film|
-        params = { link: film[:link], title: film[:title], year: film[:year],
-                   country: film[:country], date: film[:date], genre: film[:genre],
-                   length: film[:length], rate: film[:rate], author: film[:author],
-                   actors: film[:actors], collection: self }
-        Movie.create(params)
-      end
+      @collection = make_collection(file_name)
       @balance = Money.new(0, 'UAH')
+    end
+
+    def make_collection(name_file)
+      CSV.read(name_file, col_sep: '|', headers:
+         %i(link title year country date genre length rate author actors))
+         .map(&:to_hash).map do |film|
+        Movie.create(
+          { link: film[:link], title: film[:title], year: film[:year],
+            country: film[:country], date: film[:date], genre: film[:genre],
+            length: film[:length], rate: film[:rate], author: film[:author],
+            actors: film[:actors] }.merge(collection: self)
+        )
+      end
+    end
+
+    def make_movie
+      @collection
     end
 
     def all

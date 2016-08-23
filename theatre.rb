@@ -9,14 +9,15 @@ module TopMovies
 
     def time_to_show(time)
       hour = DateTime.strptime(time, '%H').hour
-      PERIOD_DAY.select { |_k, v| v.include?(hour) }.keys[0]
+      period = PERIOD_DAY.select { |_k, v| v.include?(hour) }.keys[0]
+      raise ArgumentError,
+            'В ночное время кинотеатр не работает' if period == :night
+      period
     end
 
     def show(params)
-      order_time = time_to_show(params)
-      raise ArgumentError,
-            'В ночное время кинотеатр не работает' if order_time == :night
-      filters_to_hash(FILTERS_MOVIE.select { |k, _v| k == order_time }.values[0])
+      filters_to_hash(FILTERS_MOVIE.select { |k, _v| k == time_to_show(params) }
+        .values[0])
         .map { |fil_mov| filter(fil_mov) }.flatten
         .sort_by { |m| m.rate.to_f * rand(1000) }.last
     end
