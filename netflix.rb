@@ -25,11 +25,15 @@ module TopMovies
       end
     end
 
-    def show(params)
-      movie = find_movie(params)
-      make_payment(movie)
-      movie.show
+    def show
+      self.collection.select { |movie| yield(movie) }
     end
+
+    # def show(params)
+    #   movie = find_movie(params)
+    #   make_payment(movie)
+    #   movie.show
+    # end
 
     def pay(payment)
       money = Money.new(payment * 100, 'UAH')

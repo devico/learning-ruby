@@ -46,6 +46,7 @@ online = TopMovies::Netflix.new(file_name)
 #  puts TopMovies::Netflix.cash
 online.pay(32)
 puts online.cash
+puts online.show { |movie| !movie.title.include?('Terminator') && movie.genre.include?('Action') && movie.year > 2003}
 # puts online2.cash
 # puts online3.cash
 # movie = online.filter(genre: 'Comedy').first
@@ -59,8 +60,8 @@ puts online.cash
 # movie.matches_all?(genre: %w(Comedy Adventure))
 # online.pay(25)
 # puts online.balance
-puts online.show(genre: 'Comedy', period: :modern)
-puts online.cash
+#puts online.show(genre: 'Comedy', period: :modern)
+#puts online.cash
 #  online.pay(0)
 # online.pay(25)
 # online1.show(title: 'The Terminator')
