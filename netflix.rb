@@ -25,15 +25,15 @@ module TopMovies
       end
     end
 
-    def show
-      self.collection.select { |movie| yield(movie) }
+    def show(params = nil)
+      if block_given?
+        self.collection.select { |movie| yield(movie) }
+      else
+        movie = find_movie(params)
+        make_payment(movie)
+        movie.show
+      end
     end
-
-    # def show(params)
-    #   movie = find_movie(params)
-    #   make_payment(movie)
-    #   movie.show
-    # end
 
     def pay(payment)
       money = Money.new(payment * 100, 'UAH')
