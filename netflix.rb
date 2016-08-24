@@ -25,13 +25,27 @@ module TopMovies
       end
     end
 
-    def show(params = nil)
+    def define_filter(filter_name, &block)
+      @filter = { filter_name => block }
+    end
+
+    def show(filter_name = nil)
       if block_given?
-        self.collection.select { |movie| yield(movie) }
+        @collection.select { |movie| yield(movie) }
       else
-        movie = find_movie(params)
+        show_with_filters(filter_name)
+      end
+    end
+
+    def show_with_filters(filter_name)
+      if !@filter
+        movie = find_movie(filter_name)
         make_payment(movie)
         movie.show
+      elsif @filter.include?(filter_name.keys[0]) && filter_name.values[0]
+        @collection.select { |film| @filter.values[0].call(film) }
+      else
+        raise ArgumentError, 'Не найдено ни одного фильма'
       end
     end
 

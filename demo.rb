@@ -46,7 +46,20 @@ online = TopMovies::Netflix.new(file_name)
 #  puts TopMovies::Netflix.cash
 online.pay(32)
 puts online.cash
-puts online.show { |movie| !movie.title.include?('Terminator') && movie.genre.include?('Action') && movie.year > 2003}
+puts online.show(genre: 'Comedy', period: :classic)
+movies = online.show do |movie|
+  !movie.title.include?('Terminator') && \
+    movie.genre.include?('Action') && \
+    movie.year > 2003
+end
+puts movies
+online.define_filter(:new_sci_fi) do |movie|
+  movie.genre.include?('Sci-Fi') && \
+    !movie.author.include?('Steven Spielberg') && \
+    !movie.country.include?('UK')
+end
+puts online.show(new_sci_fi: true)
+
 # puts online2.cash
 # puts online3.cash
 # movie = online.filter(genre: 'Comedy').first
@@ -60,8 +73,8 @@ puts online.show { |movie| !movie.title.include?('Terminator') && movie.genre.in
 # movie.matches_all?(genre: %w(Comedy Adventure))
 # online.pay(25)
 # puts online.balance
-puts online.show(genre: 'Comedy', period: :modern)
-#puts online.cash
+# puts online.show(genre: 'Comedy', period: :modern)
+# puts online.cash
 #  online.pay(0)
 # online.pay(25)
 # online1.show(title: 'The Terminator')

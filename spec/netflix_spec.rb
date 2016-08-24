@@ -15,11 +15,33 @@ module TopMovies
     end
 
     describe '#show' do
+
+      context 'with block' do
+        subject { movies.first }
+        let(:movies) { netflix.show { |movie| !movie.title.include?('Terminator') && movie.genre.include?('Action') && movie.year > 2003}}
+        it { is_expected.to be_a TopMovies::NewMovie }
+      end
+
+    end
+
+    describe '#show_with_filters' do
+
+      context 'with saved filter' do
+        before { netflix.define_filter(:new_sci_fi) { |movie| movie.genre.include?('Sci-Fi') && !movie.author.include?('Steven Spielberg') && !movie.country.include?('UK') }}
+        subject { movie.genre }
+        let(:movie) { netflix.show(new_sci_fi: true).first }
+        let(:value) { 'Sci-Fi' }
+        it { expect(subject).to include(value) }
+      end
+
+      context 'with params' do
         before { netflix.pay( 10 ) }
-        let(:movie) { netflix.filter(genre: 'Comedy', period: :modern).first }
-        subject { movie.show }
+        subject { netflix.show(params) }
+        let(:params) { {genre: 'Comedy', period: :modern} }
         let(:str) { /.*современное кино: играют.*/ }
         it { expect(subject).to match(str) }
+      end
+
     end
 
     describe '#film_costs' do
