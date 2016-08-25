@@ -29,24 +29,44 @@ module TopMovies
       @filter = { filter_name => block }
     end
 
-    def show(filter_name = nil)
-      if block_given?
-        @collection.select { |movie| yield(movie) }
-      else
-        show_with_filters(filter_name)
+    def show(filter_name = {}, &block)
+      if !block_given? && filter_name.empty?
+        raise ArgumentError, 'Необходимо указать параметры поиска'
+      elsif !filter_name.empty?
+        filter_name.each do |k, v|
+          if @filter
+            show_with_filters if @filter.include?(k) && v
+          else
+            show_without_filters(k => v)
+          end
+        end
+        show_with_blocks(&block) if block_given?
+      elsif block_given?
+        show_with_blocks(&block)
       end
     end
 
-    def show_with_filters(filter_name)
-      if !@filter
-        movie = find_movie(filter_name)
-        make_payment(movie)
-        movie.show
-      elsif @filter.include?(filter_name.keys[0]) && filter_name.values[0]
-        @collection.select { |film| @filter.values[0].call(film) }
-      else
-        raise ArgumentError, 'Не найдено ни одного фильма'
-      end
+    def show_with_blocks(&block)
+      movie = rand_high_rate(@collection.select(&block))
+      make_payment(movie)
+      puts movie.show
+    end
+
+    def show_with_filters
+      movies = @collection.select { |film| @filter.values[0].call(film) }
+      movie = rand_high_rate(movies)
+      make_payment(movie)
+      puts movie.show
+    end
+
+    def show_without_filters(filter_name)
+      movie = find_movie(filter_name)
+      make_payment(movie)
+      puts movie.show
+    end
+
+    def rand_high_rate(col_movies)
+      col_movies.sort_by { |m| m.rate.to_f * rand(1000) }.last
     end
 
     def pay(payment)
