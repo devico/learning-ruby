@@ -10,12 +10,6 @@ module TopMovies
 
     attr_reader :balance
 
-    def find_movie(params)
-      movie = filter(params).sort_by { |m| m.rate.to_f * rand(1000) }.last
-      raise NameError, 'В базе нет такого фильма' unless movie
-      movie
-    end
-
     def make_payment(movie)
       if @balance.to_f < movie.cost
         raise ArgumentError, "Для просмотра #{movie.title} нужно еще пополнить \
@@ -30,39 +24,18 @@ module TopMovies
     end
 
     def show(filter_name = {}, &block)
-      if !block_given? && filter_name.empty?
-        raise ArgumentError, 'Необходимо указать параметры поиска'
-      elsif !filter_name.empty?
-        filter_name.each do |k, v|
-          if @filter
-            show_with_filters if @filter.include?(k) && v
-          else
-            show_without_filters(k => v)
-          end
+      movies = @collection.select(&block) if block_given?
+      movies = filter_name.map { |k, v| movies.map { |film| @filter.v.call(film) } } if @filter && block_given?
+      if @filter
+        filter_name.each do |item_filter|
+          movies = filter(item_filter) if !@filter.include?(item_filter[0])
         end
-        show_with_blocks(&block) if block_given?
-      elsif block_given?
-        show_with_blocks(&block)
+      else
+        movies = filter(filter_name)
       end
-    end
-
-    def show_with_blocks(&block)
-      movie = rand_high_rate(@collection.select(&block))
+      movie = movies.sort_by { |m| m.rate.to_f * rand(1000) }.last
       make_payment(movie)
-      puts movie.show
-    end
-
-    def show_with_filters
-      movies = @collection.select { |film| @filter.values[0].call(film) }
-      movie = rand_high_rate(movies)
-      make_payment(movie)
-      puts movie.show
-    end
-
-    def show_without_filters(filter_name)
-      movie = find_movie(filter_name)
-      make_payment(movie)
-      puts movie.show
+      movie.show
     end
 
     def rand_high_rate(col_movies)

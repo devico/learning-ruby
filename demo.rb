@@ -46,19 +46,19 @@ online = TopMovies::Netflix.new(file_name)
 #  puts TopMovies::Netflix.cash
 online.pay(32)
 puts online.cash
-online.show(genre: 'Comedy', period: :classic)
+puts online.show(genre: 'Comedy', period: :classic)
 movies = online.show do |movie|
   !movie.title.include?('Terminator') && \
     movie.genre.include?('Action') && \
     movie.year > 2003
 end
 puts movies
-online.define_filter(:new_sci_fi) do |movie|
+ online.define_filter(:new_sci_fi) do |movie|
   movie.genre.include?('Sci-Fi') && \
     !movie.author.include?('Steven Spielberg') && \
     !movie.country.include?('UK')
 end
-online.show(new_sci_fi: true)
+puts online.show(new_sci_fi: true)
 
  # online.define_filter(:country) do |movie|
  #    movie.genre.include?('Sci-Fi') && \
