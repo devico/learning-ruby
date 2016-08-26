@@ -23,17 +23,38 @@ module TopMovies
       @filter = { filter_name => block }
     end
 
-    def show(filter_name = {}, &block)
-      movies = @collection.select(&block) if block_given?
-      movies = filter_name.map { |k, v| movies.map { |film| @filter.v.call(film) } } if @filter && block_given?
-      if @filter
-        filter_name.each do |item_filter|
-          movies = filter(item_filter) if !@filter.include?(item_filter[0])
-        end
-      else
-        movies = filter(filter_name)
-      end
+    def filter_movie(filters, &block)
+      movies = @collection.dup
+      movies = find_by_block(movies, &block)
+      movies = find_by_custom_filters(movies, filters)
+      movies = find_by_inner_filters(movies, filters)
       movie = movies.sort_by { |m| m.rate.to_f * rand(1000) }.last
+      movie
+    end
+
+    def find_by_block(movies, &block)
+      movies = movies.select(&block) if block_given?
+      movies
+    end
+
+    def find_by_custom_filters(movies, _filters)
+      movies = movies.select { |film| @filter.values[0].call(film) } if @filter
+      movies
+    end
+
+    def find_by_inner_filters(movies, filters)
+      if !filters.empty? && @filter
+          movies = movies.select { |m| m.matches_all?(filters) } unless @filter.include?(filters.keys[0])
+      elsif !@filter
+          movies = movies.select { |m| m.matches_all?(filters) }
+      else
+        movies
+      end
+      movies
+    end
+
+    def show(filter_name = {}, &block)
+      movie = filter_movie(filter_name, &block)
       make_payment(movie)
       movie.show
     end
