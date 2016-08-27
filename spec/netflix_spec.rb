@@ -15,33 +15,78 @@ module TopMovies
     end
 
     describe '#show' do
+      subject { netflix }
+      let(:movie) { subject.filter(genre: 'Comedy').first }
+      let(:params) { {genre: 'Comedy', period: :modern} }
 
-      context 'with block' do
-        subject { movies.first }
-        let(:movies) { netflix.show { |movie| !movie.title.include?('Terminator') && movie.genre.include?('Action') && movie.year > 2003}}
-        it { is_expected.to be_a TopMovies::NewMovie }
+      context 'when after show' do
+        before { subject.pay(initial_balance) }
+        before { subject.show(params) }
+        let(:params) { {genre: 'Comedy', period: :modern} }
+        let(:initial_balance) { 5 }
+        its(:balance) { is_expected.to eq( Money.new((initial_balance - movie.cost)*100, "UAH" ) ) }
+      end
+
+      context 'when not enough money' do
+        before { netflix.pay( 10 ) }
+        subject { netflix.show(params) }
+        let(:params) { {genre: 'Comedy', period: :modern} }
+        let(:str) { /(.*)современное кино: играют(.*)/ }
+        it { expect(subject).to match(str) }
+      end
+
+      context 'when not have movie in base' do
+        before { subject.pay( 10.0 ) }
+        let(:params) { {title: 'The Tirmenator'} }
+        it { expect { netflix.show(params) }.
+          to raise_error( NameError, "В базе нет такого фильма" ) }
       end
 
     end
 
-    describe '#show_with_filters' do
+    describe '#filter_movie' do
+      subject { movies.sort_by { |m| m.rate.to_f * rand(1000) }.last }
+      let(:movies) { netflix.all.select { |m| blok.call(m) } }
+      let(:filters) { {genre: 'Comedy', period: :modern} }
+      let(:blok) { Proc.new { |movie| !movie.title.include?('Terminator') && movie.genre.include?('Action') && movie.year > 2003} }
+      it { is_expected.to be_a TopMovies::NewMovie }
+    end
 
-      context 'with saved filter' do
-        before { netflix.define_filter(:new_sci_fi) { |movie| movie.genre.include?('Sci-Fi') && !movie.author.include?('Steven Spielberg') && !movie.country.include?('UK') }}
-        subject { movie.genre }
-        let(:movie) { netflix.show(new_sci_fi: true).first }
-        let(:value) { 'Sci-Fi' }
-        it { expect(subject).to include(value) }
-      end
+    describe '#find_by_block' do
+      before { netflix.pay( 10 ) }
+      subject { movies.first }
+      let(:blok) { Proc.new { |movie| !movie.title.include?('Terminator') && movie.genre.include?('Action') && movie.year > 2003} }
+      let(:movies) { netflix.all.select { |m| blok.call(m) } }
+      it { is_expected.to be_a TopMovies::NewMovie }
+    end
 
-      context 'with params' do
-        before { netflix.pay( 10 ) }
-        subject { netflix.show(params) }
-        let(:params) { {genre: 'Comedy', period: :modern} }
-        let(:str) { /.*современное кино: играют.*/ }
-        it { expect(subject).to match(str) }
-      end
+    describe 'find_by_custom_filters' do
+      before { netflix.pay( 10 ) }
+      before { netflix.define_filter(:new_sci_fi) { |movie| movie.genre.include?('Sci-Fi') && !movie.author.include?('Steven Spielberg') && !movie.country.include?('UK') } }
+      subject { movie.genre }
+      let(:first_blok) { Proc.new { |movie| !movie.title.include?('Terminator') && movie.genre.include?('Action') && movie.year > 2003} }
+      let(:films) { netflix.all.select { |m| first_blok.call(m) } }
+      let(:blok) { Proc.new { |movie| movie.genre.include?('Sci-Fi') && !movie.author.include?('Steven Spielberg') && !movie.country.include?('UK') } }
+      let(:movies) { films.select { |m| blok.call(m) } }
+      let(:movie) { movies.first }
+      let(:value) { 'Sci-Fi' }
+      it { expect(subject).to include(value) }
+    end
 
+    describe '#find_by_inner_filters' do
+      before { netflix.pay( 10 ) }
+      subject { netflix.show(params) }
+      let(:params) { {genre: 'Comedy', period: :modern} }
+      let(:str) { /.*современное кино: играют.*/ }
+      it { expect(subject).to match(str) }
+    end
+
+    describe 'define_filter' do
+      subject { filter }
+      let(:filter) { {filter_name => blok} }
+      let(:filter_name) { :new_sci_fi }
+      let(:blok) { Proc.new { |movie| movie.genre.include?('Sci-Fi') && !movie.author.include?('Steven Spielberg') && !movie.country.include?('UK') } }
+      it { is_expected.to be_a Hash }
     end
 
     describe '#film_costs' do
@@ -62,24 +107,8 @@ module TopMovies
     end
 
     describe '#cash' do
-     let(:value) {Money.new(5000, "UAH")}
+     let(:value) {Money.new(9000, "UAH")}
      it { expect( Netflix.cash ).to eq(value) }
-    end
-
-    describe '#find_movie' do
-      subject { netflix.find_movie(params) }
-
-      context 'when movie not found' do
-        let(:params) { {title: 'The Tirmenator'} }
-        it { expect { netflix.show(params) }.
-            to raise_error( NameError, "В базе нет такого фильма" ) }
-      end
-
-      context 'when movie find' do
-        subject { netflix.find_movie(genre: 'Comedy', period: :modern) }
-        it { is_expected.to be_a(TopMovies::ModernMovie) }
-      end
-
     end
 
     describe '#make_payment' do

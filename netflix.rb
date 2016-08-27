@@ -44,9 +44,11 @@ module TopMovies
 
     def find_by_inner_filters(movies, filters)
       if !filters.empty? && @filter
-          movies = movies.select { |m| m.matches_all?(filters) } unless @filter.include?(filters.keys[0])
-      elsif !@filter
+        unless @filter.include?(filters.keys[0])
           movies = movies.select { |m| m.matches_all?(filters) }
+        end
+      elsif !@filter
+        movies = movies.select { |m| m.matches_all?(filters) }
       else
         movies
       end
@@ -55,6 +57,7 @@ module TopMovies
 
     def show(filter_name = {}, &block)
       movie = filter_movie(filter_name, &block)
+      raise NameError, 'В базе нет такого фильма' unless movie
       make_payment(movie)
       movie.show
     end
