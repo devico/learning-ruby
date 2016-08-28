@@ -20,7 +20,8 @@ module TopMovies
     end
 
     def define_filter(filter_name, &block)
-      @filter = { filter_name => block }
+      @filter ||= {}
+      @filter.store(filter_name, block)
     end
 
     def filter_movie(filters, &block)
@@ -37,21 +38,25 @@ module TopMovies
       movies
     end
 
-    def find_by_custom_filters(movies, _filters)
-      movies = movies.select { |film| @filter.values[0].call(film) } if @filter
+    def find_by_custom_filters(movies, filters)
+      @filter.select { |k, v| movies = movies.select { |film| v.call(film) } } if @filter
       movies
     end
 
     def find_by_inner_filters(movies, filters)
       if !filters.empty? && @filter
-        unless @filter.include?(filters.keys[0])
-          movies = movies.select { |m| m.matches_all?(filters) }
+        filters.each do |flt|
+          unless @filter.include?(flt[0])
+            movies = movies.select { |m| m.matches_all?(flt) }
+          end
+          movies
         end
-      elsif !@filter
-        movies = movies.select { |m| m.matches_all?(filters) }
-      else
         movies
-      end
+      elsif !@filter
+         movies = movies.select { |m| m.matches_all?(filters) }
+      else
+         movies
+       end
       movies
     end
 
