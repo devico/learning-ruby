@@ -11,6 +11,7 @@ module TopMovies
     attr_reader :balance
 
     def make_payment(movie)
+      raise ArgumentError, 'В базе нет такого фильма' unless movie
       if @balance.to_f < movie.cost
         raise ArgumentError, "Для просмотра #{movie.title} нужно еще пополнить \
 баланс на #{movie.cost - @balance.to_f}"
@@ -39,30 +40,29 @@ module TopMovies
     end
 
     def find_by_custom_filters(movies, filters)
-      @filter.select { |k, v| movies = movies.select { |film| v.call(film) } } if @filter
+      if @filter
+        custom_filters = filters.select { |flt| @filter.include?(flt) }
+        custom_filters.each do |k, _v|
+          movies = movies.select { |film| @filter[k].call(film) }
+        end
+      else
+        movies
+      end
       movies
     end
 
     def find_by_inner_filters(movies, filters)
-      if !filters.empty? && @filter
-        filters.each do |flt|
-          unless @filter.include?(flt[0])
-            movies = movies.select { |m| m.matches_all?(flt) }
-          end
-          movies
-        end
-        movies
-      elsif !@filter
-         movies = movies.select { |m| m.matches_all?(filters) }
+      if @filter
+        inner_filters = filters.select { |flt| !@filter.include?(flt) }
+        inner_filters.each { |flt| movies = movies.select { |m| m.matches_all?(flt) } }
       else
-         movies
-       end
+        movies
+      end
       movies
     end
 
     def show(filter_name = {}, &block)
       movie = filter_movie(filter_name, &block)
-      raise NameError, 'В базе нет такого фильма' unless movie
       make_payment(movie)
       movie.show
     end

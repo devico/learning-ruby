@@ -45,8 +45,8 @@ online = TopMovies::Netflix.new(file_name)
 #  puts online2.pay(10)
 #  puts online3.pay(114)
 #  puts TopMovies::Netflix.cash
-online.pay(32)
-puts online.cash
+online.pay(30)
+# puts online.cash
 puts online.show(genre: 'Drama', period: :new)
 movies = online.show do |movie|
   !movie.title.include?('Terminator') && \
@@ -58,14 +58,18 @@ online.define_filter(:new_sci_fi) do |movie|
     !movie.country.include?('UK')
 end
 puts online.show(new_sci_fi: true)
-online.define_filter(:not_spielberg) { |movie| !movie.author.include?('Steven Spielberg') }
+online.define_filter(:not_spielberg) do |movie|
+  !movie.author.include?('Steven Spielberg')
+end
 puts online.show(new_sci_fi: true, not_spielberg: true)
-#puts online.show(new_sci_fi: true)
+#puts online.show(title: 'The Tirminator')
+# puts online.show(new_sci_fi: true)
 # online.define_filter(:country) do |movie|
 #    movie.genre.include?('Sci-Fi') && \
 #      !movie.author.include?('Steven Spielberg') && \
 #      !movie.country.include?('UK')
 # end
+# puts online.show(title: 'The Terminator')
 # puts online.show(new_sci_fi: true)
 # puts online2.cash
 # puts online3.cash
