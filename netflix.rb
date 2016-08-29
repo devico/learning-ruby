@@ -25,12 +25,11 @@ module TopMovies
     end
 
     def parse_filters(filters, flag)
-      custom_filters = filters.select { |flt| @filter.include?(flt) }
-      inner_filters = filters.select { |flt| !@filter.include?(flt) }
+      custom_filters, inner_filters = filters.partition { |flt| @filter.include?(flt[0]) }
       parsed_filters = if flag
-                         custom_filters
+                         custom_filters.to_h
                        else
-                         inner_filters
+                         inner_filters.to_h
                        end
       parsed_filters
     end

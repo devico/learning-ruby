@@ -62,6 +62,7 @@ online.define_filter(:not_spielberg) do |movie|
   !movie.author.include?('Steven Spielberg')
 end
 puts online.show(new_sci_fi: true, not_spielberg: true)
+puts online.show(genre: 'Drama', not_spielberg: true)
 # puts online.show(title: 'The Tirminator')
 # puts online.show(new_sci_fi: true)
 # online.define_filter(:country) do |movie|
