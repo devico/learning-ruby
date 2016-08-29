@@ -24,14 +24,10 @@ module TopMovies
       @filter.store(filter_name, block)
     end
 
-    def parse_filters(filters, flag)
-      custom_filters, inner_filters = filters.partition { |flt| @filter.include?(flt[0]) }
-      parsed_filters = if flag
-                         custom_filters.to_h
-                       else
-                         inner_filters.to_h
-                       end
-      parsed_filters
+    def parse_filters(filters)
+      @custom_filters, @inner_filters = filters.partition do |flt|
+        @filter.include?(flt[0])
+      end
     end
 
     def filter_movie(filters, &block)
@@ -49,11 +45,11 @@ module TopMovies
     end
 
     def find_by_custom_filters(movies, filters)
-      custom_filters = parse_filters(filters, true)
-      if custom_filters.nil?
+      parse_filters(filters)
+      if @custom_filters.empty?
         movies
       else
-        custom_filters.each do |k, _v|
+        @custom_filters.each do |k, _v|
           movies = movies.select { |film| @filter[k].call(film) }
         end
       end
@@ -61,12 +57,11 @@ module TopMovies
     end
 
     def find_by_inner_filters(movies, filters)
-      inner_filters = parse_filters(filters, false)
-      if inner_filters.nil?
+      parse_filters(filters)
+      if @inner_filters.empty?
         movies
       else
-        movies = movies.select { |m| m.matches_all?(inner_filters) }
-
+        movies = movies.select { |m| m.matches_all?(@inner_filters) }
       end
       movies
     end
