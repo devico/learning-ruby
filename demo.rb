@@ -57,12 +57,14 @@ online.define_filter(:new_sci_fi) do |movie|
   movie.genre.include?('Sci-Fi') && \
     !movie.country.include?('UK')
 end
-puts online.show(new_sci_fi: true)
+ puts online.show(new_sci_fi: true)
 online.define_filter(:not_spielberg) do |movie|
   !movie.author.include?('Steven Spielberg')
 end
 puts online.show(new_sci_fi: true, not_spielberg: true)
 puts online.show(genre: 'Drama', not_spielberg: true)
+online.define_filter(:new_sci_fi) { |movie, year| movie.year > year }
+puts online.show(new_sci_fi: 2010)
 # puts online.show(title: 'The Tirminator')
 # puts online.show(new_sci_fi: true)
 # online.define_filter(:country) do |movie|

@@ -49,8 +49,10 @@ module TopMovies
       if @custom_filters.empty?
         movies
       else
-        @custom_filters.each do |k, _v|
-          movies = movies.select { |film| @filter[k].call(film) }
+        @custom_filters.each do |k, v|
+          movies = movies.select do |film|
+            @filter[k].call(film, v)
+          end
         end
       end
       movies
