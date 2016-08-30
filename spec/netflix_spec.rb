@@ -89,17 +89,25 @@ module TopMovies
         subject { filter }
         let(:filter) { {filter_name => blok} }
 
-        context 'custom filter' do
+        context 'custom filter no params' do
           let(:filter_name) { :new_sci_fi }
           let(:blok) { Proc.new { |movie| movie.genre.include?('Sci-Fi') && !movie.author.include?('Steven Spielberg') && !movie.country.include?('UK') } }
           it { is_expected.to be_a Hash }
         end
 
-        context 'custom filter' do
+        context 'custom filter with params' do
           let(:filter_name) { {new_sci_fi: 2010} }
           let(:blok) { Proc.new { |movie, year| movie.year > year } }
           it { is_expected.to be_a Hash }
         end
+
+        context 'user filter' do
+          before { netflix.define_filter(:new_sci_fi) { |movie, year| movie.year > year } }
+          let(:filter_name) { :newest_sci_fi }
+          let(:blok) { netflix.define_filter(:newest_sci_fi, from: :new_sci_fi, arg: 2014) }
+          it { is_expected.to be_a Hash }
+        end
+
       end
 
       context 'several filters' do
@@ -131,7 +139,7 @@ module TopMovies
     end
 
     describe '#cash' do
-     let(:value) {Money.new(20000, "UAH")}
+     let(:value) {Money.new(21000, "UAH")}
      it { expect( Netflix.cash ).to eq(value) }
     end
 

@@ -20,8 +20,15 @@ module TopMovies
       end
     end
 
-    def define_filter(filter_name, &block)
-      @filter.store(filter_name, block)
+    def define_filter(filter_name, from: 'default', arg: 123, &blk)
+      if block_given?
+        blk
+      elsif from != 'default' &&  arg != 123
+        blk = proc { |film, year| @filter[from].call(film, year) }
+      else
+        raise ArgumentError, 'Невозможно создать пользовательский фильтр'
+      end
+      @filter.store(filter_name, blk)
     end
 
     def parse_filters(filters)
