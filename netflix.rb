@@ -1,7 +1,5 @@
 module TopMovies
-
   class Netflix < MovieCollection
-
     extend CashBox
 
     Money.use_i18n = false
@@ -12,29 +10,98 @@ module TopMovies
 
     attr_reader :balance
 
-    def show(params)
-      movie = self.filter(params).sort_by{ |m| m.rate.to_f*rand(1000)}.last
-      raise NameError, "В базе нет такого фильма" unless movie
-      diff = Money.new((movie.cost - @balance.to_f)*100, "UAH")
-      raise ArgumentError, "Для просмотра #{movie.title} нужно еще пополнить баланс на #{diff }" if @balance.to_f < movie.cost
-      @balance -= Money.new(movie.cost*100, "UAH")
+    def make_payment(movie)
+      raise ArgumentError, 'В базе нет такого фильма' unless movie
+      if @balance.to_f < movie.cost
+        raise ArgumentError, "Для просмотра #{movie.title} нужно еще пополнить \
+баланс на #{movie.cost - @balance.to_f}"
+      else
+        @balance -= to_money(movie.cost)
+      end
+    end
+
+    def define_filter(filter_name, from: nil, arg: nil, &blk)
+      @filter[filter_name] =
+        if block_given?
+          blk
+        elsif !from.nil? && !arg.nil?
+          proc { |film, value| @filter[from].call(film, value) }
+        else
+          raise ArgumentError, 'Невозможно создать пользовательский фильтр'
+        end
+    end
+
+    def parse_filters(filters)
+      @custom_filters, @inner_filters = filters.partition do |flt|
+        @filter.include?(flt[0])
+      end
+    end
+
+    def filter_movie(filters, &block)
+      movies = @collection.dup
+      movies = find_by_block(movies, &block)
+      movies = find_by_custom_filters(movies, filters)
+      movies = find_by_inner_filters(movies, filters)
+      movie = movies.sort_by { |m| m.rate.to_f * rand(1000) }.last
+      movie
+    end
+
+    def find_by_block(movies, &block)
+      movies = movies.select(&block) if block_given?
+      movies
+    end
+
+    def find_by_custom_filters(movies, filters)
+      parse_filters(filters)
+      if @custom_filters.empty?
+        movies
+      else
+        @custom_filters.each do |k, v|
+          movies = movies.select do |film|
+            @filter[k].call(film, v)
+          end
+        end
+      end
+      movies
+    end
+
+    def find_by_inner_filters(movies, filters)
+      parse_filters(filters)
+      if @inner_filters.empty?
+        movies
+      else
+        movies = movies.select { |m| m.matches_all?(@inner_filters) }
+      end
+      movies
+    end
+
+    def show(filter_name = {}, &block)
+      movie = filter_movie(filter_name, &block)
+      make_payment(movie)
       movie.show
     end
 
+    def rand_high_rate(col_movies)
+      col_movies.sort_by { |m| m.rate.to_f * rand(1000) }.last
+    end
+
     def pay(payment)
-      money = Money.new(payment*100, "UAH")
-      raise ArgumentError, "Ожидается положительное число, получено #{money}" if payment <= 0
+      money = Money.new(payment * 100, 'UAH')
+      raise ArgumentError,
+            "Ожидается положительное число, получено #{money}" if payment <= 0
       put_to_cashbox(money)
       self.class.put_to_cashbox(money)
       @balance += money
     end
 
     def film_costs(title)
-      movie = self.filter(title).first
-      raise NameError, "В базе нет такого фильма" unless movie
-      Money.new(movie.cost*100, "UAH")
+      movie = filter(title).first
+      raise NameError, 'В базе нет такого фильма' unless movie
+      to_money(movie.cost)
     end
 
+    def to_money(price)
+      Money.new(price * 100, 'UAH')
+    end
   end
-
 end

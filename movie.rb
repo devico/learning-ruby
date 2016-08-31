@@ -1,70 +1,71 @@
 module TopMovies
-
   class Movie
+    attr_accessor :link, :title, :year, :country, :date, :genre, :length, :rate,
+                  :author, :actors, :period
 
-    attr_accessor :link, :title, :year, :country, :date, :genre, :length, :rate, :author, :actors, :period
+    require_relative './ancient_movie'
+    require_relative './classic_movie'
+    require_relative './modern_movie'
+    require_relative './new_movie'
+    MOVIE_TYPE = { AncientMovie => (1900..1944), ClassicMovie => (1945..1967),
+                   ModernMovie => (1968..1999), NewMovie => (2000..2015) }.freeze
 
-    def initialize(link, title, year, country, date, genre, length, rate, author, actors, movie_collection)
-      @link = link
-      @title = title
-      @year = year.to_i
-      @country = country
-      @date = date
-      @genre = genre.split(',')
-      @length = length
-      @rate  = rate
-      @author = author
-      @actors = actors.split(',')
-      @collection = movie_collection
+    def initialize(params) # rubocop:disable Metrics/AbcSize
+      @link = params[:link]
+      @title = params[:title]
+      @year = params[:year].to_i
+      @country = params[:country]
+      @date = params[:date]
+      @genre = params[:genre].split(',')
+      @length = params[:length]
+      @rate = params[:rate]
+      @author = params[:author]
+      @actors = params[:actors].split(',')
+      @collection = params[:collection]
     end
 
-    def self.create(link, title, year, country, date, genre, length, rate, author, actors, movie_collection)
-      period = year.to_i
-      movie_type = case period
-        when 1900...1945 then AncientMovie
-        when 1945...1968 then ClassicMovie
-        when 1968...2000 then ModernMovie
-        when 2000..2015 then NewMovie
-        else raise ArgumentError, "Фильм не относится ни к одному классу"
-      end
-
-      movie_type.new(link, title, year, country, date, genre, length, rate, author, actors, movie_collection)
-
+    def self.create(params)
+      mov_type = MOVIE_TYPE.select { |_k, v| v.include?(params[:year].to_i) }
+                           .keys[0]
+      raise ArgumentError, 'Фильма такого класса нет' unless mov_type
+      mov_type.new(params)
     end
 
     def match?(filter_name, filter_value)
-      if filter_value.kind_of? Symbol
-        value = send(filter_name).to_s[11..-1].to_sym
-      else
-        value = send(filter_name)
-      end
+      value = if filter_value.is_a? Symbol
+                send(filter_name).to_s[11..-1].to_sym
+              else
+                send(filter_name)
+              end
 
-      if value.kind_of? Array
-        #value.any? { |v| v === filter_value }
+      if value.is_a? Array
         value.any? { |v| filter_value.include?(v) }
-       else
-         filter_value === value
-       end
+      else
+        # rubocop:disable CaseEquality
+        filter_value === value
+        # rubocop:enable CaseEquality
+      end
     end
 
     def matches_all?(filters)
-      filters.all?{ |k,v| match?(k, v) }
+      filters.all? { |k, v| match?(k, v) }
     end
 
-    def has_genre?(type_of_genre)
-      raise ArgumentError, "Жанра #{type_of_genre} в коллекции нет!" unless @collection.genre_exists?(type_of_genre)
+    def genre?(type_of_genre)
+      raise ArgumentError, "Жанра #{type_of_genre} в коллекции нет!" unless
+        @collection.genre_exists?(type_of_genre)
       @genre.include?(type_of_genre)
     end
 
     def show
       start_time = Time.now
-      end_time = start_time + @length.to_i*60
-      "Now showing: #{@title} #{start_time.strftime("%H:%M")} - #{end_time.strftime("%H:%M")}"
+      end_time = start_time + @length.to_i * 60
+      "Now showing: #{@title} #{start_time.strftime('%H:%M')}
+        - #{end_time.strftime('%H:%M')}"
     end
 
     def period
-      self.class.to_s.chomp("Movie").downcase.to_sym
+      self.class.to_s.chomp('Movie').downcase.to_sym
     end
   end
-
 end

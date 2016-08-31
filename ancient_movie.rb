@@ -1,7 +1,5 @@
 module TopMovies
-
   class AncientMovie < Movie
-
     def cost
       1.0
     end
@@ -9,7 +7,5 @@ module TopMovies
     def show
       "#{@title} — старый фильм (#{@year} год)"
     end
-
   end
-
 end

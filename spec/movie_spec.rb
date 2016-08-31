@@ -4,9 +4,12 @@ module TopMovies
 
     describe '#self.create' do
 
-        let(:params) { ["http://imdb.com/title/tt0017925/?ref_=chttp_tt_136", "The General", year, "USA", "1927-02-24", "Action,Adventure,Comedy", "67 min", "8.3", "Clyde Bruckman", "Buster Keaton,Marion Mack,Glen Cavender", self] }
+        let(:params) { { link: "http://imdb.com/title/tt0017925/?ref_=chttp_tt_136",
+                         title: "The General", year: year, coountry: "USA", date: "1927-02-24",
+                         genre: "Action,Adventure,Comedy", length: "67 min", rate: "8.3",
+                         author: "Clyde Bruckman", actors: "Buster Keaton,Marion Mack,Glen Cavender", collection: self} }
 
-      subject { Movie.create(*params) }
+      subject { Movie.create(params) }
 
       context 'when year is 1900-1945' do
         let(:year) { 1926 }

@@ -1,0 +1,11 @@
+AllCops:
+  Exclude:
+    - spec/*.rb
+Documentation:
+  Enabled: false
+ParameterLists:
+  CountKeywordArgs: false
+Metrics/LineLength:
+  Max: 90
+Metrics/MethodLength:
+  Max: 12

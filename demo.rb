@@ -9,91 +9,110 @@ require_relative 'netflix'
 require_relative 'theatre'
 require 'date'
 
-file_name = ARGV[0] || "movies.txt"
+file_name = ARGV[0] || 'movies.txt'
 
 if File.exist?(file_name)
-  file = File.open(file_name)
+  File.open(file_name)
 else
-  puts "Ошибка. Файл отсутствует!"
+  puts 'Ошибка. Файл отсутствует!'
   exit
 end
 
-# создаем коллекцию фильмов из файла
-movies = TopMovies::MovieCollection.new(file_name)
+# movies = TopMovies::MovieCollection.new(file_name)
 
-# выводим весь список файлов
+# movies.filter(genre: 'Comedy')
+# movies.filter(year: 2000)
+# movies.filter(year: 1980..2000)
 
-#выдать фильтрованный список фильмов — по полям: года и страны
-#movies.filter(genre: 'Comedy')
-#movies.filter(year: 2000)
-#movies.filter(year: 1980..2000)
+# movies.sort_by(:year)
 
-#выдать сортированный список фильмов для любого поля
-#movies.sort_by(:year)
+# movies.stats(:author)
 
-#выводить статистику по запроcу: режиссер, актер, год, месяц, страна, жанр
-#movies.stats(:author)
+# movie = movies.all.first
+# movie.actors.count
+# movie.actors.include?('Arnold Shwarzenegger')
 
-#выдать любое поле, в разумном формате
-#movie = movies.all.first
-#movie.actors.count
-#movie.actors.include?('Arnold Shwarzenegger')
+# movies.first.has_genre?('Camedy')
 
-#ответить на запрос has_genre?('Comedy')
-#movies.first.has_genre?('Camedy')
+online = TopMovies::Netflix.new(file_name)
+# puts online.all.class
+# puts movies.class
+# movie = online.filter(period: :classic).first
+# puts online.pay(25)
+#  online2 = TopMovies::Netflix.new(file_name)
+#  online3 = TopMovies::Netflix.new(file_name)
+#  puts online1.pay(1)
+#  puts online2.pay(10)
+#  puts online3.pay(114)
+#  puts TopMovies::Netflix.cash
+online.pay(40)
+# puts online.cash
+puts online.show(genre: 'Drama', period: :new)
+movies = online.show do |movie|
+  !movie.title.include?('Terminator') && \
+    movie.genre.include?('Action') && movie.year > 2003
+end
+puts movies
+online.define_filter(:new_sci_fi) do |movie|
+  movie.genre.include?('Sci-Fi') && \
+    !movie.country.include?('UK')
+end
+puts online.show(new_sci_fi: true)
+online.define_filter(:not_spielberg) do |movie|
+  !movie.author.include?('Steven Spielberg')
+end
+puts online.show(new_sci_fi: true, not_spielberg: true)
+puts online.show(genre: 'Drama', not_spielberg: true)
+online.define_filter(:new_sci_fi) { |movie, year| movie.year > year }
+puts online.show(new_sci_fi: 2010)
+online.define_filter(:newest_sci_fi, from: :new_sci_fi, arg: 2014).class
+puts online.show(newest_sci_fi: 2014)
+# puts online.show(title: 'The Tirminator')
+# puts online.show(new_sci_fi: true)
+# online.define_filter(:country) do |movie|
+#    movie.genre.include?('Sci-Fi') && \
+#      !movie.author.include?('Steven Spielberg') && \
+#      !movie.country.include?('UK')
+# end
+# puts online.show(title: 'The Terminator')
+# puts online.show(new_sci_fi: true)
+# puts online2.cash
+# puts online3.cash
+# movie = online.filter(genre: 'Comedy').first
+# puts online1.film_costs(title: 'The Terminator')
+# puts online.film_costs(title: 'The Terminator')
+#  online.pay(25)
+#  online.cash
+#  online.pay(25)
+#  online.cash
+# puts online1.show(genre: 'Comedy', period: :classic)
+# movie.matches_all?(genre: %w(Comedy Adventure))
+# online.pay(25)
+# puts online.balance
+# puts online.show(genre: 'Comedy', period: :modern)
+# puts online.cash
+#  online.pay(0)
+# online.pay(25)
+# online1.show(title: 'The Terminator')
+# puts online.balance
 
-#онлайн кинотеатр
-netflix = TopMovies::Netflix.new(file_name)
-#movie = netflix.filter(period: :classic).first
-#puts movie.class
-# netflix2 = TopMovies::Netflix.new(file_name)
-# netflix3 = TopMovies::Netflix.new(file_name)
-# puts netflix1.pay(1)
-# puts netflix2.pay(10)
-# puts netflix3.pay(114)
-# puts TopMovies::Netflix.cash
-#puts netflix.pay(25)
-#puts netflix1.cash
-#puts netflix2.cash
-#puts netflix3.cash
-#movie = netflix.filter(genre: 'Comedy').first
-#puts netflix1.film_costs(title: 'The Terminator')
-#puts netflix.film_costs(title: 'The Terminator')
-# netflix.pay(25)
-# netflix.cash
-# netflix.pay(25)
-# netflix.cash
-#puts netflix1.show(genre: 'Comedy', period: :classic)
-
-#movie.matches_all?( { genre: ['Comedy', 'Adventure'] } )
-#netflix.pay(25)
-#puts netflix.balance
-#puts netflix.show(genre: 'Comedy', period: :modern)
-# netflix.pay(0)
-#netflix.pay(25)
-#netflix1.show(title: 'The Terminator')
-#puts netflix.balance
-
-theatre = TopMovies::Theatre.new(file_name)
-movie = theatre.filter(genre: 'Comedy').first
-puts movie
-#theatre.cash
-# theatre.buy_ticket(title: 'Vertigo')
+# theatre = TopMovies::Theatre.new(file_name)
+# movie = theatre.filter(genre: 'Comedy').first
+# theatre.show('15:20')
+# puts movie
 # theatre.cash
-# theatre.take('Bank')
-# theatre.cash
-# theatre.cash
-# theatre.buy_ticket(title: 'The Maltese')
-# theatre.cash
-
-
-#puts movie.match?(:genre, ['Comedy', 'Drama'])
-#puts movie.match?(:year, 1993...1998)
-#puts movie.matches_all?( {genre: ['Comedy', 'Drama'], year: 1993...1998} )
-# puts theatre.cashbox_balance
-# theatre.buy_ticket('13:20')
-# puts theatre.cashbox_balance
-#theatre.when?(title: 'Vertigo')
-#puts theatre.filters_to_hash({ genre: ['Comedy', 'Adventure']})
-
-
+#  theatre.buy_ticket(title: 'Vertigo')
+#  theatre.cash
+#  theatre.take('Bank')
+#  theatre.cash
+#  theatre.cash
+#  theatre.buy_ticket(title: 'The Maltese')
+#  theatre.cash
+# puts movie.match?(:genre, ['Comedy', 'Drama'])
+# puts movie.match?(:year, 1993...1998)
+# puts movie.matches_all?( {genre: ['Comedy', 'Drama'], year: 1993...1998} )
+#  puts theatre.cashbox_balance
+#  theatre.buy_ticket('13:20')
+#  puts theatre.cashbox_balance
+# theatre.when?(title: 'Vertigo')
+# puts theatre.filters_to_hash({ genre: ['Comedy', 'Adventure']})
