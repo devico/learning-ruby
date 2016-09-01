@@ -12,6 +12,7 @@ module TopMovies
     def initialize(file_name)
       @collection = make_collection(file_name)
       @balance = Money.new(0, 'UAH')
+      @filter = {}
     end
 
     def make_collection(name_file)

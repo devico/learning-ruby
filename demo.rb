@@ -33,11 +33,10 @@ end
 # movie.actors.include?('Arnold Shwarzenegger')
 
 # movies.first.has_genre?('Camedy')
-
 online = TopMovies::Netflix.new(file_name)
-# puts online.all.class
+#puts online.link.class
 # puts movies.class
-# movie = online.filter(period: :classic).first
+puts movie = online.filter(period: :classic).first
 # puts online.pay(25)
 #  online2 = TopMovies::Netflix.new(file_name)
 #  online3 = TopMovies::Netflix.new(file_name)
@@ -62,11 +61,11 @@ online.define_filter(:not_spielberg) do |movie|
   !movie.author.include?('Steven Spielberg')
 end
 puts online.show(new_sci_fi: true, not_spielberg: true)
-puts online.show(genre: 'Drama', not_spielberg: true)
-online.define_filter(:new_sci_fi) { |movie, year| movie.year > year }
-puts online.show(new_sci_fi: 2010)
-online.define_filter(:newest_sci_fi, from: :new_sci_fi, arg: 2014).class
-puts online.show(newest_sci_fi: 2014)
+# puts online.show(genre: 'Drama', not_spielberg: true)
+# online.define_filter(:new_sci_fi) { |movie, year| movie.year > year }
+# puts online.show(new_sci_fi: 2010)
+# online.define_filter(:newest_sci_fi, from: :new_sci_fi, arg: 2014).class
+# puts online.show(newest_sci_fi: 2014)
 # puts online.show(title: 'The Tirminator')
 # puts online.show(new_sci_fi: true)
 # online.define_filter(:country) do |movie|

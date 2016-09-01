@@ -1,5 +1,6 @@
 module TopMovies
   class Movie
+    require "virtus"
     include Virtus.model
 
       attribute :link, String
@@ -12,10 +13,9 @@ module TopMovies
       attribute :rate, String
       attribute :author, String
       attribute :actors, String
-      attribute :collection, Array
 
-    # attr_accessor :link, :title, :year, :country, :date, :genre, :length, :rate,
-    #               :author, :actors, :period
+    attr_accessor :link, :title, :year, :country, :date, :genre, :length, :rate,
+                  :author, :actors, :period
 
     require_relative './ancient_movie'
     require_relative './classic_movie'
@@ -23,20 +23,6 @@ module TopMovies
     require_relative './new_movie'
     MOVIE_TYPE = { AncientMovie => (1900..1944), ClassicMovie => (1945..1967),
                    ModernMovie => (1968..1999), NewMovie => (2000..2015) }.freeze
-
-    # def initialize(params) # rubocop:disable Metrics/AbcSize
-    #   @link = params[:link]
-    #   @title = params[:title]
-    #   @year = params[:year].to_i
-    #   @country = params[:country]
-    #   @date = params[:date]
-    #   @genre = params[:genre].split(',')
-    #   @length = params[:length]
-    #   @rate = params[:rate]
-    #   @author = params[:author]
-    #   @actors = params[:actors].split(',')
-    #   @collection = params[:collection]
-    # end
 
     def self.create(params)
       mov_type = MOVIE_TYPE.select { |_k, v| v.include?(params[:year].to_i) }
@@ -52,7 +38,7 @@ module TopMovies
                    :rate => params[:rate],
                    :author => params[:author],
                    :actors => params[:actors].split(','),
-                   :collection => params[:collection])
+                   @collection => params[:collection])
     end
 
     def match?(filter_name, filter_value)
@@ -77,14 +63,14 @@ module TopMovies
 
     def genre?(type_of_genre)
       raise ArgumentError, "Жанра #{type_of_genre} в коллекции нет!" unless
-        @collection.genre_exists?(type_of_genre)
-      @genre.include?(type_of_genre)
+        :collection.genre_exists?(type_of_genre)
+      :genre.include?(type_of_genre)
     end
 
     def show
       start_time = Time.now
-      end_time = start_time + @length.to_i * 60
-      "Now showing: #{@title} #{start_time.strftime('%H:%M')}
+      end_time = start_time + :length.to_i * 60
+      "Now showing: #{:title} #{start_time.strftime('%H:%M')}
         - #{end_time.strftime('%H:%M')}"
     end
 
