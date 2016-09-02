@@ -5,14 +5,15 @@ module TopMovies
 
       attribute :link, String
       attribute :title, String
-      attribute :year, Fixnum
+      attribute :year, Integer
       attribute :country, String
       attribute :date, String
       attribute :genre, Array
       attribute :length, String
       attribute :rate, String
       attribute :author, String
-      attribute :actors, String
+      attribute :actors, Array
+      attribute :collection, @collection
 
     attr_accessor :link, :title, :year, :country, :date, :genre, :length, :rate,
                   :author, :actors, :period
@@ -28,17 +29,7 @@ module TopMovies
       mov_type = MOVIE_TYPE.select { |_k, v| v.include?(params[:year].to_i) }
                            .keys[0]
       raise ArgumentError, 'Фильма такого класса нет' unless mov_type
-      mov_type.new(:link => params[:link],
-                   :title => params[:title],
-                   :year => params[:year].to_i,
-                   :country => params[:country],
-                   :date => params[:date],
-                   :genre => params[:genre].split(','),
-                   :length => params[:length],
-                   :rate => params[:rate],
-                   :author => params[:author],
-                   :actors => params[:actors].split(','),
-                   @collection => params[:collection])
+      mov_type.new(params)
     end
 
     def match?(filter_name, filter_value)
