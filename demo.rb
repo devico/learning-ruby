@@ -34,6 +34,9 @@ end
 
 # movies.first.has_genre?('Camedy')
 online = TopMovies::Netflix.new(file_name)
+puts online.by_genre.comedy
+# puts online.methods
+
 # puts movies.class
 # movie = online.filter(period: :new).first
 
@@ -53,29 +56,29 @@ online = TopMovies::Netflix.new(file_name)
 # puts online2.pay(10)
 # puts online3.pay(114)
 # puts TopMovies::Netflix.cash
-online.pay(40)
+# online.pay(40)
 # puts online.cash
 # puts online.cash
-puts online.show(genre: 'Drama', period: :new)
-movies = online.show do |movie|
-  !movie.title.include?('Terminator') && \
-    movie.genre[0].include?('Action') && \
-    movie.year > 2003
-end
-puts movies
-online.define_filter(:new_sci_fi) do |movie|
-  movie.genre[0].include?('Sci-Fi') && \
-    !movie.country.include?('UK')
-end
-puts online.show(new_sci_fi: true)
-online.define_filter(:not_spielberg) do |movie|
-  !movie.author.include?('Steven Spielberg')
-end
-puts online.show(new_sci_fi: true, not_spielberg: true)
-online.define_filter(:new_sci_fi) { |movie, year| movie.year > year }
-puts online.show(new_sci_fi: 2010)
-online.define_filter(:newest_sci_fi, from: :new_sci_fi, arg: 2014).class
-puts online.show(newest_sci_fi: 2014)
+# puts online.show(genre: 'Drama', period: :new)
+# movies = online.show do |movie|
+#   !movie.title.include?('Terminator') && \
+#     movie.genre[0].include?('Action') && \
+#     movie.year > 2003
+# end
+# puts movies
+# online.define_filter(:new_sci_fi) do |movie|
+#   movie.genre[0].include?('Sci-Fi') && \
+#     !movie.country.include?('UK')
+# end
+# puts online.show(new_sci_fi: true)
+# online.define_filter(:not_spielberg) do |movie|
+#   !movie.author.include?('Steven Spielberg')
+# end
+# puts online.show(new_sci_fi: true, not_spielberg: true)
+# online.define_filter(:new_sci_fi) { |movie, year| movie.year > year }
+# puts online.show(new_sci_fi: 2010)
+# online.define_filter(:newest_sci_fi, from: :new_sci_fi, arg: 2014).class
+# puts online.show(newest_sci_fi: 2014)
 # puts online.show(title: 'The Tirminator')
 # puts online.show(new_sci_fi: true)
 # online.define_filter(:country) do |movie|

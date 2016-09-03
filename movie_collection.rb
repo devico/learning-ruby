@@ -65,5 +65,13 @@ module TopMovies
     def cash
       cashbox_balance
     end
+
+    def by_genre
+      @genres ||= @collection.map { |gs| gs.genre.join(",").split(",") }.flatten.uniq
+      @genres.map do |dm|
+        self.class.send(:define_method, dm.downcase) { filter(genre: dm)}
+      end
+      self
+    end
   end
 end
