@@ -1,22 +1,19 @@
 module TopMovies
   class Movie
-    require "virtus"
+    require 'virtus'
     include Virtus.model
 
-      attribute :link, String
-      attribute :title, String
-      attribute :year, Integer
-      attribute :country, String
-      attribute :date, String
-      attribute :genre, Array
-      attribute :length, String
-      attribute :rate, String
-      attribute :author, String
-      attribute :actors, Array
-      attribute :collection, @collection
-
-    attr_accessor :link, :title, :year, :country, :date, :genre, :length, :rate,
-                  :author, :actors, :period
+    attribute :link, String
+    attribute :title, String
+    attribute :year, Fixnum
+    attribute :country, String
+    attribute :date, String
+    attribute :genre, Array
+    attribute :length, String
+    attribute :rate, String
+    attribute :author, String
+    attribute :actors, Array
+    attribute :collection, @collection
 
     require_relative './ancient_movie'
     require_relative './classic_movie'
@@ -38,9 +35,10 @@ module TopMovies
               else
                 send(filter_name)
               end
-
       if value.is_a? Array
-        value.any? { |v| filter_value.include?(v) }
+        value.any? do |v|
+          filter_value.is_a?(Array) ? filter_value.include?(v) : v.include?(filter_value)
+        end
       else
         # rubocop:disable CaseEquality
         filter_value === value

@@ -9,3 +9,5 @@ Metrics/LineLength:
   Max: 90
 Metrics/MethodLength:
   Max: 12
+LiteralInInterpolation:
+  Enabled: false

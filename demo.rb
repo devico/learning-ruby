@@ -35,38 +35,47 @@ end
 # movies.first.has_genre?('Camedy')
 online = TopMovies::Netflix.new(file_name)
 # puts movies.class
-movie = online.filter(period: :classic).first
-puts movie.year.class
+# movie = online.filter(period: :new).first
 
+# movie = online.filter(genre: 'Comedy', period: :modern).first
+# puts movie
+# puts movie.matches_all?( {genre: ['Comedy, Drama'], year: 1993...1998} )
+
+# puts movies.genre[0].inspect
+# puts !movie.title.include?('Terminator')
+# p movie.genre
+# puts movie.year > 2003
+# puts movie.year.class
 # puts online.pay(25)
-#  online2 = TopMovies::Netflix.new(file_name)
-#  online3 = TopMovies::Netflix.new(file_name)
-#  puts online1.pay(1)
-#  puts online2.pay(10)
-#  puts online3.pay(114)
-#  puts TopMovies::Netflix.cash
-# online.pay(40)
+# online2 = TopMovies::Netflix.new(file_name)
+# online3 = TopMovies::Netflix.new(file_name)
+# puts online1.pay(1)
+# puts online2.pay(10)
+# puts online3.pay(114)
+# puts TopMovies::Netflix.cash
+online.pay(40)
 # puts online.cash
-# puts online.show(genre: 'Drama', period: :new)
-# movies = online.show do |movie|
-#   !movie.title.include?('Terminator') && \
-#     movie.genre.include?('Action') && movie.year > 2003
-# end
-# puts movies
-# online.define_filter(:new_sci_fi) do |movie|
-#   movie.genre.include?('Sci-Fi') && \
-#     !movie.country.include?('UK')
-# end
-# puts online.show(new_sci_fi: true)
-# online.define_filter(:not_spielberg) do |movie|
-#   !movie.author.include?('Steven Spielberg')
-# end
-# puts online.show(new_sci_fi: true, not_spielberg: true)
-# puts online.show(genre: 'Drama', not_spielberg: true)
-# online.define_filter(:new_sci_fi) { |movie, year| movie.year > year }
-# puts online.show(new_sci_fi: 2010)
-# online.define_filter(:newest_sci_fi, from: :new_sci_fi, arg: 2014).class
-# puts online.show(newest_sci_fi: 2014)
+# puts online.cash
+puts online.show(genre: 'Drama', period: :new)
+movies = online.show do |movie|
+  !movie.title.include?('Terminator') && \
+    movie.genre[0].include?('Action') && \
+    movie.year > 2003
+end
+puts movies
+online.define_filter(:new_sci_fi) do |movie|
+  movie.genre[0].include?('Sci-Fi') && \
+    !movie.country.include?('UK')
+end
+puts online.show(new_sci_fi: true)
+online.define_filter(:not_spielberg) do |movie|
+  !movie.author.include?('Steven Spielberg')
+end
+puts online.show(new_sci_fi: true, not_spielberg: true)
+online.define_filter(:new_sci_fi) { |movie, year| movie.year > year }
+puts online.show(new_sci_fi: 2010)
+online.define_filter(:newest_sci_fi, from: :new_sci_fi, arg: 2014).class
+puts online.show(newest_sci_fi: 2014)
 # puts online.show(title: 'The Tirminator')
 # puts online.show(new_sci_fi: true)
 # online.define_filter(:country) do |movie|
@@ -110,7 +119,6 @@ puts movie.year.class
 #  theatre.cash
 # puts movie.match?(:genre, ['Comedy', 'Drama'])
 # puts movie.match?(:year, 1993...1998)
-# puts movie.matches_all?( {genre: ['Comedy', 'Drama'], year: 1993...1998} )
 #  puts theatre.cashbox_balance
 #  theatre.buy_ticket('13:20')
 #  puts theatre.cashbox_balance
