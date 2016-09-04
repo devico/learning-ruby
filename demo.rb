@@ -35,16 +35,14 @@ end
 # movies.first.has_genre?('Camedy')
 online = TopMovies::Netflix.new(file_name)
 puts online.by_genre.comedy
-# puts online.methods
-
+## puts online.methods
+# puts online.by_genre
 # puts movies.class
 # movie = online.filter(period: :new).first
 
-# movie = online.filter(genre: 'Comedy', period: :modern).first
-# puts movie
+# movie = online.filter(genre: 'Comedy', period: :classic).first
 # puts movie.matches_all?( {genre: ['Comedy, Drama'], year: 1993...1998} )
-
-# puts movies.genre[0].inspect
+# puts movie.genre.inspect
 # puts !movie.title.include?('Terminator')
 # p movie.genre
 # puts movie.year > 2003

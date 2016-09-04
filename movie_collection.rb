@@ -58,7 +58,7 @@ module TopMovies
     end
 
     def genre_exists?(genre_film)
-      @genres ||= @collection.map(&:genre).flatten.uniq
+      @genres ||= obtain_genres
       @genres.include?(genre_film)
     end
 
@@ -66,10 +66,13 @@ module TopMovies
       cashbox_balance
     end
 
+    def obtain_genres
+      @genres ||= @collection.map(&:genre).flatten.uniq
+    end
+
     def by_genre
-      @genres ||= @collection.map { |gs| gs.genre.join(",").split(",") }.flatten.uniq
-      @genres.map do |dm|
-        self.class.send(:define_method, dm.downcase) { filter(genre: dm)}
+      obtain_genres.map do |dm|
+        self.class.send(:define_method, dm.downcase) { filter(genre: dm) }
       end
       self
     end

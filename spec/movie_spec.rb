@@ -4,10 +4,11 @@ module TopMovies
 
     describe '#self.create' do
 
-        let(:params) { { :link => "http://imdb.com/title/tt0017925/?ref_=chttp_tt_136",
-                         :title => "The General", :year => year, :country => "USA", :date => "1927-02-24",
-                         :genre => ["Action,Adventure,Comedy"], :length => "67 min", :rate => "8.3",
-                         :author => "Clyde Bruckman", :actors => ["Buster Keaton,Marion Mack,Glen Cavender"], :collection => self} }
+        let(:params) { { :link=>"http://imdb.com/title/tt0017925/?ref_=chttp_tt_136",
+                         :title=>"The General", :year=>year, :country=>"USA",
+                         :date=>"1927-02-24", :genre=>"Action,Adventure,Comedy",
+                         :length=>"67 min", :rate=>"8.3", :author=>"Clyde Bruckman",
+                         :actors=>"Buster Keaton,Marion Mack,Glen Cavender", :collection=>self} }
 
       subject { Movie.create(params) }
 

@@ -3,16 +3,22 @@ module TopMovies
     require 'virtus'
     include Virtus.model
 
+    class SplitArray < Virtus::Attribute
+      def coerce(value)
+        value.split(',')
+      end
+    end
+
     attribute :link, String
     attribute :title, String
     attribute :year, Fixnum
     attribute :country, String
     attribute :date, String
-    attribute :genre, Array
+    attribute :genre, SplitArray
     attribute :length, String
     attribute :rate, String
-    attribute :author, String
-    attribute :actors, Array
+    attribute :author, Array
+    attribute :actors, SplitArray
     attribute :collection, @collection
 
     require_relative './ancient_movie'
