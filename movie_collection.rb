@@ -71,10 +71,13 @@ module TopMovies
     end
 
     def by_genre
+      filter_genre = FilterGenre.new(@collection)
       obtain_genres.map do |dm|
-        self.class.send(:define_method, dm.downcase) { filter(genre: dm) }
+        filter_genre.class.send(:define_method, dm.downcase) do
+          filter(genre: dm)
+        end
       end
-      self
+      filter_genre
     end
   end
 end
