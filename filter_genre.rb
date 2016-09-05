@@ -16,5 +16,10 @@ module TopMovies
         end
       end
     end
+
+    def method_missing name, *args, &block
+      self.class.send(:define_method, name, proc { filter(country: name.to_s) } )
+    end
+
   end
 end

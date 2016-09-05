@@ -1,6 +1,7 @@
 require 'csv'
 require_relative 'cash_box'
 require_relative 'filter_genre'
+require_relative 'country_filter'
 require 'money'
 
 module TopMovies
@@ -74,6 +75,11 @@ module TopMovies
     def by_genre
       filter_genre = FilterGenre.new(@collection)
       filter_genre
+    end
+
+    def by_country
+      country_filter = CountryFilter.new(@collection)
+      country_filter
     end
 
   end

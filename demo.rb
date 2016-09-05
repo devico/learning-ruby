@@ -5,6 +5,7 @@ require_relative 'modern_movie'
 require_relative 'new_movie'
 require_relative 'movie_collection'
 require_relative 'filter_genre'
+require_relative 'country_filter'
 require_relative 'netflix'
 require_relative 'theatre'
 require 'date'
@@ -35,7 +36,7 @@ end
 # movies.first.has_genre?('Camedy')
 online = TopMovies::Netflix.new(file_name)
 puts online.by_genre.comedy
-# puts online.by_country.class
+puts online.by_country.uk
 #puts online.by_country.class.methods
 
 # puts online.methods
