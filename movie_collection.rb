@@ -73,7 +73,6 @@ module TopMovies
 
     def by_genre
       filter_genre = FilterGenre.new(@collection)
-      filter_genre.obtain_genre_methods
       filter_genre
     end
 

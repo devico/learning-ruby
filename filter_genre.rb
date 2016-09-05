@@ -5,6 +5,7 @@ module TopMovies
 
     def initialize(collection)
       @collect = collection
+      obtain_genre_methods
     end
 
     def obtain_genre_methods
