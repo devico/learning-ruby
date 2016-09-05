@@ -1,5 +1,6 @@
 require 'csv'
 require_relative 'cash_box'
+require_relative 'filter_genre'
 require 'money'
 
 module TopMovies
@@ -72,12 +73,9 @@ module TopMovies
 
     def by_genre
       filter_genre = FilterGenre.new(@collection)
-      obtain_genres.map do |dm|
-        filter_genre.class.send(:define_method, dm.downcase) do
-          filter(genre: dm)
-        end
-      end
+      filter_genre.obtain_genre_methods
       filter_genre
     end
+
   end
 end
