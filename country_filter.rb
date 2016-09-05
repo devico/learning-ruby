@@ -8,7 +8,8 @@ module TopMovies
     end
 
     def method_missing name, *args, &block
-      self.class.send(:define_method, name, proc { @collect.select { |c| c.country.include?(name.to_s.capitalize) } } )
+      films = @collect.select { |c| c.country.include?(name.to_s.upcase) }
+      films
     end
 
   end

@@ -35,7 +35,7 @@ end
 
 # movies.first.has_genre?('Camedy')
 online = TopMovies::Netflix.new(file_name)
-puts online.by_genre.comedy
+#puts online.by_genre.comedy
 puts online.by_country.uk
 #puts online.by_country.class.methods
 
