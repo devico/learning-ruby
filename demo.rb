@@ -111,8 +111,44 @@ end
 # online.pay(25)
 # online1.show(title: 'The Terminator')
 # puts online.balance
+description = Proc.new do |file_name|
+      theater =
+        TopMovies::Theatre.new(file_name) do
+          hall :red, title: 'Красный зал', places: 100
+          hall :blue, title: 'Синий зал', places: 50
+          hall :green, title: 'Зелёный зал (deluxe)', places: 12
 
- TopMovies::Theatre.new('movies.txt')
+          period '09:00'..'11:00' do
+            description 'Утренний сеанс'
+            filters genre: 'Comedy', year: 1900..1980
+            price 10
+            hall :red, :blue
+          end
+
+          period '11:00'..'16:00' do
+            description 'Спецпоказ'
+            title 'The Terminator'
+            price 50
+            hall :green
+          end
+
+          period '16:00'..'20:00' do
+            description 'Вечерний сеанс'
+            filters genre: ['Action', 'Drama'], year: 2007..Time.now.year
+            price 20
+            hall :red, :blue
+          end
+
+          period '19:00'..'22:00' do
+            description 'Вечерний сеанс для киноманов'
+            filters year: 1900..1945, exclude_country: 'USA'
+            price 30
+            hall :green
+          end
+        end
+    end
+
+ TopMovies::Theatre.new(file_name, &description)
  # puts theatre.accept_description
 # movie = theatre.filter(genre: 'Comedy').first
 # theatre.show('15:20')

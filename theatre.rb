@@ -3,10 +3,8 @@ module TopMovies
 
     attr_accessor :theatre
 
-    def initialize(file_name)
-      super(file_name)
-      #accept_description
-
+    def initialize(file_name, &block)
+      block.call(file_name)
     end
 
     PERIOD_DAY = { morning: (8..12), afternoon: (13..16), evening: (17..23),
@@ -15,43 +13,6 @@ module TopMovies
     FILTERS_MOVIE = { morning: { period: :ancient },
                       afternoon: { genre: %w(Comedy Adventure) },
                       evening: { genre: %w(Drama Mystery) } }.freeze
-
-    def accept_description
-      theater =
-        TopMovies::Theatre.new do
-          hall :red, title: 'Красный зал', places: 100
-          hall :blue, title: 'Синий зал', places: 50
-          hall :green, title: 'Зелёный зал (deluxe)', places: 12
-
-          period '09:00'..'11:00' do
-            description 'Утренний сеанс'
-            filters genre: 'Comedy', year: 1900..1980
-            price 10
-            hall :red, :blue
-          end
-
-          period '11:00'..'16:00' do
-            description 'Спецпоказ'
-            title 'The Terminator'
-            price 50
-            hall :green
-          end
-
-          period '16:00'..'20:00' do
-            description 'Вечерний сеанс'
-            filters genre: ['Action', 'Drama'], year: 2007..Time.now.year
-            price 20
-            hall :red, :blue
-          end
-
-          period '19:00'..'22:00' do
-            description 'Вечерний сеанс для киноманов'
-            filters year: 1900..1945, exclude_country: 'USA'
-            price 30
-            hall :green
-          end
-        end
-    end
 
     def time_to_show(time)
       hour = DateTime.strptime(time, '%H').hour
