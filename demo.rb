@@ -20,7 +20,7 @@ else
 end
 
 # movies = TopMovies::MovieCollection.new(file_name)
-
+# puts movies.class
 # movies.filter(genre: 'Comedy')
 # movies.filter(year: 2000)
 # movies.filter(year: 1980..2000)
@@ -34,9 +34,9 @@ end
 # movie.actors.include?('Arnold Shwarzenegger')
 
 # movies.first.has_genre?('Camedy')
-online = TopMovies::Netflix.new(file_name)
+# online = TopMovies::Netflix.new(file_name)
 #puts online.by_genre.comedy
-puts online.by_country.uk
+# puts online.by_country.uk
 #puts online.by_country.class.methods
 
 # puts online.methods
@@ -112,7 +112,8 @@ puts online.by_country.uk
 # online1.show(title: 'The Terminator')
 # puts online.balance
 
-# theatre = TopMovies::Theatre.new(file_name)
+ TopMovies::Theatre.new('movies.txt')
+ # puts theatre.accept_description
 # movie = theatre.filter(genre: 'Comedy').first
 # theatre.show('15:20')
 # puts movie
