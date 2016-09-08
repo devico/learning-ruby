@@ -1,10 +1,20 @@
 module TopMovies
   class Theatre < MovieCollection
 
-    attr_accessor :theatre
+    attr_accessor :halls, :periods
 
-    def initialize(file_name, &block)
-      block.call(file_name)
+    def initialize(&block)
+      @halls = {}
+      @periods = {}
+      instance_eval &block
+    end
+
+    def hall(name, description)
+      @halls[name] = description
+    end
+
+    def period(name, &block)
+      @periods[name] = block
     end
 
     PERIOD_DAY = { morning: (8..12), afternoon: (13..16), evening: (17..23),
