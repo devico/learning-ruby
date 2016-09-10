@@ -101,7 +101,7 @@ end
 #  online.cash
 #  online.pay(25)
 #  online.cash
-# puts online1.show(genre: 'Comedy', period: :classic)
+# puts online1.show(genr/e: 'Comedy', period: :classic)
 # movie.matches_all?(genre: %w(Comedy Adventure))
 # online.pay(25)
 # puts online.balance
@@ -118,14 +118,14 @@ theatre =
         hall :blue, title: 'Синий зал', places: 50
         hall :green, title: 'Зелёный зал (deluxe)', places: 12
 
-        period '09:00'..'11:00' do
+        period '09:00'..'10:00' do
           description 'Утренний сеанс'
           filters genre: 'Comedy', year: 1900..1980
           price 10
           hall :red, :blue
         end
 
-        period '11:00'..'16:00' do
+        period '13:00'..'16:00' do
           description 'Спецпоказ'
           title 'The Terminator'
           price 50
@@ -136,7 +136,7 @@ theatre =
           description 'Вечерний сеанс'
           filters genre: ['Action', 'Drama'], year: 2007..Time.now.year
           price 20
-            hall :red, :blue
+          hall :red, :blue
           end
 
         period '19:00'..'22:00' do
@@ -145,8 +145,17 @@ theatre =
           price 30
           hall :green
         end
-       end
- # puts theatre.accept_description
+      end
+
+theatre.period '11:00'..'12:00' do
+          description 'Еще один сеанс'
+          filters genre: 'Sci-Fi', year: 1900..1980
+          price 13
+          hall :red
+        end
+
+# puts theatre.periods.keys.class
+# puts theatre.accept_description
 # movie = theatre.filter(genre: 'Comedy').first
 # theatre.show('15:20')
 # puts movie

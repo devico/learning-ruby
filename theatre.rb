@@ -6,6 +6,7 @@ module TopMovies
     def initialize(&block)
       @halls = {}
       @periods = {}
+      @blck = {}
       instance_eval &block
     end
 
@@ -14,7 +15,14 @@ module TopMovies
     end
 
     def period(name, &block)
-      @periods[name] = block
+      if @periods.empty?
+        @periods[name] = block
+      else
+        v = @periods.keys.any? do |k|
+          k.include?(name.first && name.last)
+        end
+        @periods[name] = block unless v
+      end
     end
 
     PERIOD_DAY = { morning: (8..12), afternoon: (13..16), evening: (17..23),
