@@ -1,3 +1,5 @@
+require_relative 'period'
+
 module TopMovies
   class Theatre < MovieCollection
 
@@ -5,7 +7,7 @@ module TopMovies
 
     def initialize(&block)
       @halls = {}
-      @periods = {}
+      @periods = []
       @blck = {}
       instance_eval &block
     end
@@ -16,12 +18,14 @@ module TopMovies
 
     def period(name, &block)
       if @periods.empty?
-        @periods[name] = block
+        puts "**************"
+        @periods.push(TopMovies::Period.new(name, &block))
       else
-        v = @periods.keys.any? do |k|
-          k.include?(name.first && name.last)
+        p = TopMovies::Period.new(name, &block)
+        v = @periods.any? do |k|
+          k.saloon.any? { |s| p.saloon.include?(s) } if k.seance.include?(name.first && name.last)
         end
-        @periods[name] = block unless v
+        @periods.push(p) unless v
       end
     end
 

@@ -147,11 +147,11 @@ theatre =
         end
       end
 
-theatre.period '11:00'..'12:00' do
+theatre.period '20:00'..'21:00' do
           description 'Еще один сеанс'
           filters genre: 'Sci-Fi', year: 1900..1980
           price 13
-          hall :red
+          hall :green
         end
 
 # puts theatre.periods.keys.class
