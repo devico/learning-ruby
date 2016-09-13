@@ -118,14 +118,14 @@ theatre =
         hall :blue, title: 'Синий зал', places: 50
         hall :green, title: 'Зелёный зал (deluxe)', places: 12
 
-        period '09:00'..'10:00' do
+        period '09:00'..'12:00' do
           description 'Утренний сеанс'
           filters genre: 'Comedy', year: 1900..1980
           price 10
           hall :red, :blue
         end
 
-        period '13:00'..'16:00' do
+        period '12:00'..'16:00' do
           description 'Спецпоказ'
           title 'The Terminator'
           price 50
@@ -147,30 +147,31 @@ theatre =
         end
       end
 
-theatre.period '20:00'..'21:00' do
-          description 'Еще один сеанс'
-          filters genre: 'Sci-Fi', year: 1900..1980
-          price 13
-          hall :green
-        end
+# theatre.period '20:00'..'21:00' do
+#           description 'Еще один сеанс'
+#           filters genre: 'Sci-Fi', year: 1900..1980
+#           price 13
+#           hall :green
+#         end
 
 # puts theatre.periods.keys.class
 # puts theatre.accept_description
-# movie = theatre.filter(genre: 'Comedy').first
+# movie = theatre.filter(title: "The Terminator").first
+# puts theatre.time_to_show('15:20')
 # theatre.show('15:20')
-# puts movie
+# puts movie.title
+# puts theatre
+theatre.buy_ticket('19:20')
+# puts theatre.cash
+# theatre.take('Bank')
 # theatre.cash
-#  theatre.buy_ticket(title: 'Vertigo')
-#  theatre.cash
-#  theatre.take('Bank')
-#  theatre.cash
-#  theatre.cash
-#  theatre.buy_ticket(title: 'The Maltese')
-#  theatre.cash
+# theatre.cash
+# theatre.buy_ticket(title: 'The Maltese')
+# theatre.cash
 # puts movie.match?(:genre, ['Comedy', 'Drama'])
 # puts movie.match?(:year, 1993...1998)
-#  puts theatre.cashbox_balance
-#  theatre.buy_ticket('13:20')
-#  puts theatre.cashbox_balance
-# theatre.when?(title: 'Vertigo')
+# puts theatre.cashbox_balance
+# theatre.buy_ticket('13:20')
+# puts theatre.cashbox_balance
+# puts theatre.when?(title: 'Vertigo')
 # puts theatre.filters_to_hash({ genre: ['Comedy', 'Adventure']})
