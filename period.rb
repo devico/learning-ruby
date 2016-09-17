@@ -1,7 +1,7 @@
 module TopMovies
   class Period
 
-    attr_accessor :seance, :specification, :filtry, :cost, :saloon, :name
+    attr_accessor :seance, :specification, :filtres, :cost, :saloon, :name
 
     def initialize(period, &block)
       @seance = period
@@ -12,8 +12,9 @@ module TopMovies
       @specification = descr
     end
 
-    def filters(fltrs)
-      @filtry = fltrs
+    def filters(value = nil)
+      return @filters unless value
+      @filtres = value
     end
 
     def price(price)
@@ -28,5 +29,12 @@ module TopMovies
       @name = ttl
     end
 
+    def intersect?(current)
+        if seance.include?(current.seance.first && current.seance.last)
+          saloon.any? { |s| current.saloon.include?(s) }
+        else
+          return false
+        end
+    end
   end
 end

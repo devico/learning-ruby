@@ -151,17 +151,20 @@ theatre =
 #           description 'Еще один сеанс'
 #           filters genre: 'Sci-Fi', year: 1900..1980
 #           price 13
-#           hall :green
+#           hall :red
 #         end
 
-# puts theatre.periods.keys.class
+# period = theatre.periods[0]
 # puts theatre.accept_description
 # movie = theatre.filter(title: "The Terminator").first
 # puts theatre.time_to_show('15:20')
-# theatre.show('15:20')
+# theatre.show(period)
 # puts movie.title
 # puts theatre
-theatre.buy_ticket('19:20')
+puts theatre.buy_ticket('10:20')
+puts theatre.buy_ticket('13:20')
+puts theatre.buy_ticket('17:20')
+puts theatre.buy_ticket('19:20', hall: :green)
 # puts theatre.cash
 # theatre.take('Bank')
 # theatre.cash

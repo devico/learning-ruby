@@ -21,14 +21,12 @@ module TopMovies
       if @periods.empty?
         @periods.push(TopMovies::Period.new(name, &block))
       else
-        p = TopMovies::Period.new(name, &block)
-        v = @periods.any? do |k|
-          k.saloon.any? { |s| p.saloon.include?(s) } if k.seance.include?(name.first && name.last)
-        end
-        if v
+        new_period = TopMovies::Period.new(name, &block)
+        verified_period = @periods.any? { |other| other.intersect?(new_period) }
+        if verified_period
           raise ArgumentError, 'Невозможно добавить период, так как этот зал занят'
         else
-          @periods.push(p)
+          @periods.push(new_period)
         end
       end
     end
@@ -67,52 +65,42 @@ module TopMovies
       flts.flatten
     end
 
-    def buy_ticket(time_show)
-      period = select_period(time_show)
+    def buy_ticket(time_show, hall = nil)
+      period = select_period(time_show, hall)
       movie = show(period)
-      check = Money.new(period.cost*100, 'UAH')
+      check = Money.new(period.cost * 100, 'UAH')
       put_to_cashbox(check)
-      puts "#{period.specification} - #{period.seance}"
-      puts "Фильм: #{movie.title}"
-      puts "Стоимость: #{check.format}"
+      result = "#{period.specification} - #{period.seance} : \
+Фильм: #{movie.title} - #{check.format}"
+      result
     end
 
-    def select_period(arg)
-      period = @periods.select { |p| p.seance.include?(arg) }
-      period = if period.size > 1
-        puts "В это время есть #{period.size} сеанса: "
-        period.each { |p| puts "- #{p.seance}" }
-        puts "сделайте свой выбор: 1-#{period.size}"
-        v = gets.chomp.to_i
-        period[v-1]
-      else
-        period[0]
-      end
-      period
+    def select_period(time, hall)
+      period = @periods.select { |p| p.seance.include?(time) }
+      pr = if period.size > 1
+             period.select { |p| p.saloon.include?(hall[:hall])}
+           else
+             period[0]
+           end
+      selected_period = hall.nil? ? pr : pr[0]
+      selected_period
     end
 
     def show(period)
-      movie = if period.name
-        filter(title: period.name).first
-      else
-        movies = period.filtry.map do |k, v|
-          if k == :exclude_country
-            filter_exlude(country: v)
-          else
-            filter(k => v)
+      movie =
+        if period.name
+          filter(title: period.name).first
+        else
+          movies = period.filtres.map do |k, v|
+            if k == :exclude_country
+              filter(country: v).reject { |mov| mov.country.include?(v) }
+            else
+              filter(k => v)
+            end
           end
+          movies.flatten.sort_by { |m| m.rate.to_f * rand(1000) }.last
         end
-        movies.flatten
-              .sort_by { |m| m.rate.to_f * rand(1000) }.last
-      end
       movie
     end
-
-    def filter_exlude(filters)
-      filters.reduce(@collection) do |filtered, (name, value)|
-        filtered.reject { |f| f.match?(name, value) }
-      end
-    end
-
   end
 end
