@@ -51,8 +51,8 @@ module TopMovies
       let(:period) { theatre.select_period(time_show, hall) }
       let(:time_show) { '19:20' }
       let(:hall) { {hall: :red} }
-      it { expect(subject.genre.include?('Action')).to be_truthy }
       its(:year) { is_expected.to be > 2007 }
+      it { expect(subject.genre.include?('Action')).to be_truthy }
     end
 
     describe '#when?' do

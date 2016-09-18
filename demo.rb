@@ -158,7 +158,7 @@ theatre =
 # puts theatre.accept_description
 # movie = theatre.filter(title: "The Terminator").first
 # puts theatre.time_to_show('15:20')
-# theatre.show(period)
+# puts theatre.show(period).genre
 # puts movie.title
 # puts theatre
 puts theatre.buy_ticket('10:20')

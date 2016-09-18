@@ -91,12 +91,14 @@ module TopMovies
         if period.name
           filter(title: period.name).first
         else
-          movies = period.filtres.map do |k, v|
-            if k == :exclude_country
-              filter(country: v).reject { |mov| mov.country.include?(v) }
+          mov = @collection.dup
+          movies = period.filtres.inject(mov) do |films, fil|
+            if fil[0] == :exclude_country
+              films = films.reject { |f| f.matches_all?(country: fil[1]) }
             else
-              filter(k => v)
+              films = films.select { |f| f.matches_all?(fil[0] => fil[1]) }
             end
+            films
           end
           movies.flatten.sort_by { |m| m.rate.to_f * rand(1000) }.last
         end
