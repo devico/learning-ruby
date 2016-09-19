@@ -81,6 +81,5 @@ module TopMovies
       country_filter = CountryFilter.new(@collection)
       country_filter
     end
-
   end
 end

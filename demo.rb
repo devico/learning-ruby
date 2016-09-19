@@ -24,28 +24,22 @@ end
 # movies.filter(genre: 'Comedy')
 # movies.filter(year: 2000)
 # movies.filter(year: 1980..2000)
-
 # movies.sort_by(:year)
-
 # movies.stats(:author)
-
 # movie = movies.all.first
 # movie.actors.count
 # movie.actors.include?('Arnold Shwarzenegger')
-
 # movies.first.has_genre?('Camedy')
 # online = TopMovies::Netflix.new(file_name)
-#puts online.by_genre.comedy
+# puts online.by_genre.comedy
 # puts online.by_country.uk
-#puts online.by_country.class.methods
-
+# puts online.by_country.class.methods
 # puts online.methods
 # puts online.by_genre.comedy
 # puts online.drama
 # puts online.by_genre
 # puts movies.class
 # movie = online.filter(period: :new).first
-
 # movie = online.filter(genre: 'Comedy', period: :classic).first
 # puts movie.matches_all?( {genre: ['Comedy, Drama'], year: 1993...1998} )
 # puts movie.genre.inspect
@@ -97,10 +91,10 @@ end
 # movie = online.filter(genre: 'Comedy').first
 # puts online1.film_costs(title: 'The Terminator')
 # puts online.film_costs(title: 'The Terminator')
-#  online.pay(25)
-#  online.cash
-#  online.pay(25)
-#  online.cash
+# online.pay(25)
+# online.cash
+# online.pay(25)
+# online.cash
 # puts online1.show(genr/e: 'Comedy', period: :classic)
 # movie.matches_all?(genre: %w(Comedy Adventure))
 # online.pay(25)
@@ -111,50 +105,50 @@ end
 # online.pay(25)
 # online1.show(title: 'The Terminator')
 # puts online.balance
-#theatre = TopMovies::Theatre.new
+# theatre = TopMovies::Theatre.new
 theatre =
-      TopMovies::Theatre.new do
-        hall :red, title: 'Красный зал', places: 100
-        hall :blue, title: 'Синий зал', places: 50
-        hall :green, title: 'Зелёный зал (deluxe)', places: 12
+  TopMovies::Theatre.new do
+    hall :red, title: 'Красный зал', places: 100
+    hall :blue, title: 'Синий зал', places: 50
+    hall :green, title: 'Зелёный зал (deluxe)', places: 12
 
-        period '09:00'..'12:00' do
-          description 'Утренний сеанс'
-          filters genre: 'Comedy', year: 1900..1980
-          price 10
-          hall :red, :blue
-        end
+    period '09:00'..'12:00' do
+      description 'Утренний сеанс'
+      filters genre: 'Comedy', year: 1900..1980
+      price 10
+      hall :red, :blue
+    end
 
-        period '12:00'..'16:00' do
-          description 'Спецпоказ'
-          title 'The Terminator'
-          price 50
-          hall :green
-        end
+    period '12:00'..'16:00' do
+      description 'Спецпоказ'
+      title 'The Terminator'
+      price 50
+      hall :green
+    end
 
-        period '16:00'..'20:00' do
-          description 'Вечерний сеанс'
-          filters genre: ['Action', 'Drama'], year: 2007..Time.now.year
-          price 20
-          hall :red, :blue
-          end
+    period '16:00'..'20:00' do
+      description 'Вечерний сеанс'
+      filters genre: %w(Action Drama), year: 2007..Time.now.year
+      price 20
+      hall :red, :blue
+    end
 
-        period '19:00'..'22:00' do
-          description 'Вечерний сеанс для киноманов'
-          filters year: 1900..1945, exclude_country: 'USA'
-          price 30
-          hall :green
-        end
-      end
+    period '19:00'..'22:00' do
+      description 'Вечерний сеанс для киноманов'
+      filters year: 1900..1945, exclude_country: 'USA'
+      price 30
+      hall :green
+    end
+  end
 
-# theatre.period '20:00'..'21:00' do
-#           description 'Еще один сеанс'
-#           filters genre: 'Sci-Fi', year: 1900..1980
-#           price 13
-#           hall :red
-#         end
+theatre.period '20:00'..'21:00' do
+  description 'Еще один сеанс'
+  filters genre: 'Sci-Fi', year: 1900..1980
+  price 13
+  hall :red
+end
 
-# period = theatre.periods[0]
+# puts theatre.periods
 # puts theatre.accept_description
 # movie = theatre.filter(title: "The Terminator").first
 # puts theatre.time_to_show('15:20')

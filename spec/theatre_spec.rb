@@ -52,7 +52,7 @@ module TopMovies
       let(:time_show) { '19:20' }
       let(:hall) { {hall: :red} }
       its(:year) { is_expected.to be > 2007 }
-      it { expect(subject.genre.include?('Action')).to be_truthy }
+      its(:genre) {is_expected.to include('Drama' || 'Action') }
     end
 
     describe '#when?' do
@@ -80,24 +80,5 @@ module TopMovies
       let(:hall) { {hall: :red} }
       it { is_expected.to be_a TopMovies::Period }
     end
-
-    # describe '#buy_ticket' do
-    #   let(:start_value) { Money.new(0, "UAH") }
-
-    #   context 'when morning' do
-    #     it { expect { theatre.buy_ticket('10:15') }.to change(theatre, :cashbox_balance).from(start_value).to(Money.new(3, "UAH")) }
-    #   end
-
-    #   context 'when afternoon' do
-    #     it { expect { theatre.buy_ticket('14:35') }.to change(theatre, :cashbox_balance).from(start_value).to(Money.new(5, "UAH")) }
-    #   end
-
-    #   context 'when evening' do
-    #     it { expect { theatre.buy_ticket('21:00') }.to change(theatre, :cashbox_balance).from(start_value).to(Money.new(10, "UAH")) }
-    #   end
-
-    # end
-
   end
-
 end

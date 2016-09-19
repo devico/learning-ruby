@@ -1,11 +1,10 @@
 module TopMovies
   class Period
-
     attr_accessor :seance, :specification, :filtres, :cost, :saloon, :name
 
     def initialize(period, &block)
       @seance = period
-      instance_eval &block
+      instance_eval(&block)
     end
 
     def description(descr)
@@ -29,12 +28,12 @@ module TopMovies
       @name = ttl
     end
 
-    def intersect?(current)
-        if seance.include?(current.seance.first && current.seance.last)
-          saloon.any? { |s| current.saloon.include?(s) }
-        else
-          return false
-        end
+    def seance_intersect?(current)
+      seance.include?(current.seance.first && current.seance.last)
+    end
+
+    def saloon_intersect?(current)
+      !(saloon & current.saloon).empty?
     end
   end
 end

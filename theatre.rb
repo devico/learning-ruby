@@ -2,7 +2,6 @@ require_relative 'period'
 
 module TopMovies
   class Theatre < MovieCollection
-
     attr_accessor :halls, :periods
 
     def initialize(&block)
@@ -10,7 +9,7 @@ module TopMovies
       @halls = {}
       @periods = []
       @blck = {}
-      instance_eval &block
+      instance_eval(&block)
     end
 
     def hall(name, description)
@@ -18,16 +17,19 @@ module TopMovies
     end
 
     def period(name, &block)
+      new_period = TopMovies::Period.new(name, &block)
       if @periods.empty?
-        @periods.push(TopMovies::Period.new(name, &block))
+        @periods.push(new_period)
+      elsif verify_period(new_period)
+        raise ArgumentError, 'Невозможно добавить период, так как этот зал занят'
       else
-        new_period = TopMovies::Period.new(name, &block)
-        verified_period = @periods.any? { |other| other.intersect?(new_period) }
-        if verified_period
-          raise ArgumentError, 'Невозможно добавить период, так как этот зал занят'
-        else
-          @periods.push(new_period)
-        end
+        @periods.push(new_period)
+      end
+    end
+
+    def verify_period(period)
+      @periods.any? do |other|
+        other.seance_intersect?(period) && other.saloon_intersect?(period)
       end
     end
 
@@ -78,7 +80,7 @@ module TopMovies
     def select_period(time, hall)
       period = @periods.select { |p| p.seance.include?(time) }
       pr = if period.size > 1
-             period.select { |p| p.saloon.include?(hall[:hall])}
+             period.select { |p| p.saloon.include?(hall[:hall]) }
            else
              period[0]
            end
@@ -87,22 +89,20 @@ module TopMovies
     end
 
     def show(period)
-      movie =
-        if period.name
-          filter(title: period.name).first
-        else
-          mov = @collection.dup
-          movies = period.filtres.inject(mov) do |films, fil|
-            if fil[0] == :exclude_country
-              films = films.reject { |f| f.matches_all?(country: fil[1]) }
-            else
-              films = films.select { |f| f.matches_all?(fil[0] => fil[1]) }
-            end
-            films
-          end
-          movies.flatten.sort_by { |m| m.rate.to_f * rand(1000) }.last
-        end
-      movie
+      if period.name
+        filter(title: period.name).first
+      else
+        get_movie_from_filters(period)
+      end
+    end
+
+    def get_movie_from_filters(period)
+      mov = @collection.dup
+      movies = period.filtres.inject(mov) do |films, (key, value)|
+        key = :country if key == :exclude_country
+        films.select { |f| f.matches_all?(key => value) }
+      end
+      movies.flatten.sort_by { |m| m.rate.to_f * rand(1000) }.last
     end
   end
 end

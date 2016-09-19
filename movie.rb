@@ -58,14 +58,14 @@ module TopMovies
 
     def genre?(type_of_genre)
       raise ArgumentError, "Жанра #{type_of_genre} в коллекции нет!" unless
-        :collection.genre_exists?(type_of_genre)
-      :genre.include?(type_of_genre)
+        collection.genre_exists?(type_of_genre)
+      genre.include?(type_of_genre)
     end
 
     def show
       start_time = Time.now
-      end_time = start_time + :length.to_i * 60
-      "Now showing: #{:title} #{start_time.strftime('%H:%M')}
+      end_time = start_time + length.to_i * 60
+      "Now showing: #{title} #{start_time.strftime('%H:%M')}
         - #{end_time.strftime('%H:%M')}"
     end
 
