@@ -29,7 +29,7 @@ module TopMovies
     end
 
     def seance_intersect?(current)
-      seance.include?(current.seance.first && current.seance.last)
+      seance.include?(current.seance.first) || seance.include?(current.seance.last)
     end
 
     def saloon_intersect?(current)

@@ -33,6 +33,7 @@ end
 # online = TopMovies::Netflix.new(file_name)
 # puts online.by_genre.comedy
 # puts online.by_country.uk
+# online.respond_to?(uk)
 # puts online.by_country.class.methods
 # puts online.methods
 # puts online.by_genre.comedy
@@ -141,14 +142,13 @@ theatre =
     end
   end
 
-theatre.period '20:00'..'21:00' do
+theatre.period '21:00'..'23:00' do
   description 'Еще один сеанс'
   filters genre: 'Sci-Fi', year: 1900..1980
   price 13
   hall :red
 end
 
-# puts theatre.periods
 # puts theatre.accept_description
 # movie = theatre.filter(title: "The Terminator").first
 # puts theatre.time_to_show('15:20')

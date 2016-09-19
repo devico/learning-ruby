@@ -29,7 +29,7 @@ module TopMovies
 
     def verify_period(period)
       @periods.any? do |other|
-        other.seance_intersect?(period) && other.saloon_intersect?(period)
+        other.seance_intersect?(period) if other.saloon_intersect?(period)
       end
     end
 
