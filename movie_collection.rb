@@ -60,7 +60,7 @@ module TopMovies
     end
 
     def genre_exists?(genre_film)
-      @genres ||= obtain_genres
+      @genres ||= setup_genre_methods
       @genres.include?(genre_film)
     end
 

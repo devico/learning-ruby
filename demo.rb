@@ -30,9 +30,10 @@ end
 # movie.actors.count
 # movie.actors.include?('Arnold Shwarzenegger')
 # movies.first.has_genre?('Camedy')
-# online = TopMovies::Netflix.new(file_name)
+online = TopMovies::Netflix.new(file_name)
 # puts online.by_genre.comedy
-# puts online.by_country.uk
+puts online.by_country.usa?
+# puts TopMovies::Movie.respond_to?(:uk)
 # online.respond_to?(uk)
 # puts online.by_country.class.methods
 # puts online.methods

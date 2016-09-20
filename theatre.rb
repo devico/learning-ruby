@@ -27,10 +27,8 @@ module TopMovies
       end
     end
 
-    def verify_period(period)
-      @periods.any? do |other|
-        other.seance_intersect?(period) if other.saloon_intersect?(period)
-      end
+    def verify_period(current)
+      @periods.any? { |p| p.intersects?(current) }
     end
 
     PERIOD_DAY = { morning: (8..12), afternoon: (13..16), evening: (17..23),

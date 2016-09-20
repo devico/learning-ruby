@@ -28,6 +28,10 @@ module TopMovies
       @name = ttl
     end
 
+    def intersects?(period)
+      seance_intersect?(period) if saloon_intersect?(period)
+    end
+
     def seance_intersect?(current)
       seance.include?(current.seance.first) || seance.include?(current.seance.last)
     end
