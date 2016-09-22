@@ -6,7 +6,7 @@ module TopMovies
 
     def show
       start_time = Time.now
-      "#{@title} — новинка, вышло #{start_time.year - @year} лет назад!"
+      "#{title} — новинка, вышло #{start_time.year - year.to_i} лет назад!"
     end
   end
 end

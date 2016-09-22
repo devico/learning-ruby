@@ -1,5 +1,7 @@
 require 'csv'
 require_relative 'cash_box'
+require_relative 'filter_genre'
+require_relative 'country_filter'
 require 'money'
 
 module TopMovies
@@ -12,6 +14,7 @@ module TopMovies
     def initialize(file_name)
       @collection = make_collection(file_name)
       @balance = Money.new(0, 'UAH')
+      @filter = {}
     end
 
     def make_collection(name_file)
@@ -57,12 +60,26 @@ module TopMovies
     end
 
     def genre_exists?(genre_film)
-      @genres ||= @collection.map(&:genre).flatten.uniq
+      @genres ||= setup_genre_methods
       @genres.include?(genre_film)
     end
 
     def cash
       cashbox_balance
+    end
+
+    def obtain_genres
+      @genres ||= @collection.map(&:genre).flatten.uniq
+    end
+
+    def by_genre
+      filter_genre = FilterGenre.new(@collection)
+      filter_genre
+    end
+
+    def by_country
+      country_filter = CountryFilter.new(@collection)
+      country_filter
     end
   end
 end

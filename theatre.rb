@@ -1,5 +1,36 @@
+require_relative 'period'
+
 module TopMovies
   class Theatre < MovieCollection
+    attr_accessor :halls, :periods
+
+    def initialize(&block)
+      super('movies.txt')
+      @halls = {}
+      @periods = []
+      @blck = {}
+      instance_eval(&block)
+    end
+
+    def hall(name, description)
+      @halls[name] = description
+    end
+
+    def period(name, &block)
+      new_period = TopMovies::Period.new(name, &block)
+      if @periods.empty?
+        @periods.push(new_period)
+      elsif verify_period(new_period)
+        raise ArgumentError, 'Невозможно добавить период, так как этот зал занят'
+      else
+        @periods.push(new_period)
+      end
+    end
+
+    def verify_period(current)
+      @periods.any? { |p| p.intersects?(current) }
+    end
+
     PERIOD_DAY = { morning: (8..12), afternoon: (13..16), evening: (17..23),
                    night: (0..7) }.freeze
     DAY_PRICE = { morning: 3.0, afternoon: 5.0, evening: 10.0 }.freeze
@@ -13,13 +44,6 @@ module TopMovies
       raise ArgumentError,
             'В ночное время кинотеатр не работает' if period == :night
       period
-    end
-
-    def show(params)
-      filters_to_hash(FILTERS_MOVIE.select { |k, _v| k == time_to_show(params) }
-        .values[0])
-        .map { |fil_mov| filter(fil_mov) }.flatten
-        .sort_by { |m| m.rate.to_f * rand(1000) }.last
     end
 
     def when?(title)
@@ -41,12 +65,42 @@ module TopMovies
       flts.flatten
     end
 
-    def buy_ticket(time_show)
-      movie = show(time_show)
-      puts "Вы купили билет на #{movie.title}"
-      order_time = time_to_show(time_show)
-      check = Money.new(DAY_PRICE[order_time], 'UAH')
+    def buy_ticket(time_show, hall = nil)
+      period = select_period(time_show, hall)
+      movie = show(period)
+      check = Money.new(period.cost * 100, 'UAH')
       put_to_cashbox(check)
+      result = "#{period.specification} - #{period.seance} : \
+Фильм: #{movie.title} - #{check.format}"
+      result
+    end
+
+    def select_period(time, hall)
+      period = @periods.select { |p| p.seance.include?(time) }
+      pr = if period.size > 1
+             period.select { |p| p.saloon.include?(hall[:hall]) }
+           else
+             period[0]
+           end
+      selected_period = hall.nil? ? pr : pr[0]
+      selected_period
+    end
+
+    def show(period)
+      if period.name
+        filter(title: period.name).first
+      else
+        get_movie_from_filters(period)
+      end
+    end
+
+    def get_movie_from_filters(period)
+      mov = @collection.dup
+      movies = period.filtres.inject(mov) do |films, (key, value)|
+        key = :country if key == :exclude_country
+        films.select { |f| f.matches_all?(key => value) }
+      end
+      movies.flatten.sort_by { |m| m.rate.to_f * rand(1000) }.last
     end
   end
 end

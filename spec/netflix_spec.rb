@@ -47,7 +47,7 @@ module TopMovies
         subject { netflix.find_by_block(netflix.all, &blok).first }
         let(:blok) { Proc.new { |movie| !movie.title.include?('Terminator') && movie.genre.include?('Action') && movie.year > 2003} }
         its(:title) { is_expected.not_to eq('Terminator') }
-        its(:genre) { is_expected.to include('Action') }
+        it { expect(subject.genre.include?('Action')).to be_truthy }
         its(:year) { is_expected.to be > 2003 }
       end
 
@@ -60,7 +60,7 @@ module TopMovies
           let(:filters) { {new_sci_fi: true} }
           let(:first_blok) { Proc.new { |movie| !movie.title.include?('Terminator') && movie.genre.include?('Action') && movie.year > 2003} }
           let(:blok) { Proc.new { |movie| movie.genre.include?('Sci-Fi') && !movie.author.include?('Steven Spielberg') && !movie.country.include?('UK') } }
-          its(:genre) { is_expected.to include('Sci-Fi') }
+          it { expect(subject.genre.include?('Sci-Fi')).to be_truthy }
           its(:author) { is_expected.not_to eq('Steven Spielberg') }
           its(:country) { is_expected.not_to eq('UK') }
         end
@@ -81,7 +81,7 @@ module TopMovies
         let(:films_from_custom) { netflix.find_by_custom_filters(films_from_blok, filters) }
         let(:blok) { Proc.new { |movie| !movie.title.include?('Terminator') && movie.genre.include?('Action') && movie.year > 2003} }
         let(:filters) { {new_sci_fi: true} }
-        its(:genre) { is_expected.to include('Mystery') }
+        it { expect(subject.genre.include?('Action')).to be_truthy }
         its(:period){ is_expected.to eq(:"topmovies::new") }
       end
 
@@ -115,16 +115,7 @@ module TopMovies
         before { netflix.define_filter(:not_spielberg) { |movie| !movie.author.include?('Steven Spielberg') } }
         subject { netflix.find_by_custom_filters(netflix.all, filters).first }
         let(:filters) { {new_sci_fi: true, not_spielberg: true} }
-        its(:genre) { is_expected.to include('Sci-Fi') }
-        its(:author) { is_expected.not_to include('Steven Spielberg') }
-      end
-
-      context 'several filters' do
-        before { netflix.define_filter(:new_sci_fi) { |movie| movie.genre.include?('Sci-Fi') && !movie.country.include?('UK') } }
-        before { netflix.define_filter(:not_spielberg) { |movie| !movie.author.include?('Steven Spielberg') } }
-        subject { netflix.find_by_custom_filters(netflix.all, filters).first }
-        let(:filters) { {new_sci_fi: true, not_spielberg: true} }
-        its(:genre) { is_expected.to include('Sci-Fi') }
+        it { expect(subject.genre.include?('Sci-Fi')).to be_truthy }
         its(:author) { is_expected.not_to include('Steven Spielberg') }
       end
 
@@ -139,7 +130,7 @@ module TopMovies
     end
 
     describe '#cash' do
-     let(:value) {Money.new(21000, "UAH")}
+     let(:value) {Money.new(19000, "UAH")}
      it { expect( Netflix.cash ).to eq(value) }
     end
 

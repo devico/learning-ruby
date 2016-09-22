@@ -1,7 +1,25 @@
 module TopMovies
   class Movie
-    attr_accessor :link, :title, :year, :country, :date, :genre, :length, :rate,
-                  :author, :actors, :period
+    require 'virtus'
+    include Virtus.model
+
+    class SplitArray < Virtus::Attribute
+      def coerce(value)
+        value.split(',')
+      end
+    end
+
+    attribute :link, String
+    attribute :title, String
+    attribute :year, Fixnum
+    attribute :country, String
+    attribute :date, String
+    attribute :genre, SplitArray
+    attribute :length, String
+    attribute :rate, String
+    attribute :author, Array
+    attribute :actors, SplitArray
+    attribute :collection, @collection
 
     require_relative './ancient_movie'
     require_relative './classic_movie'
@@ -9,20 +27,6 @@ module TopMovies
     require_relative './new_movie'
     MOVIE_TYPE = { AncientMovie => (1900..1944), ClassicMovie => (1945..1967),
                    ModernMovie => (1968..1999), NewMovie => (2000..2015) }.freeze
-
-    def initialize(params) # rubocop:disable Metrics/AbcSize
-      @link = params[:link]
-      @title = params[:title]
-      @year = params[:year].to_i
-      @country = params[:country]
-      @date = params[:date]
-      @genre = params[:genre].split(',')
-      @length = params[:length]
-      @rate = params[:rate]
-      @author = params[:author]
-      @actors = params[:actors].split(',')
-      @collection = params[:collection]
-    end
 
     def self.create(params)
       mov_type = MOVIE_TYPE.select { |_k, v| v.include?(params[:year].to_i) }
@@ -37,9 +41,10 @@ module TopMovies
               else
                 send(filter_name)
               end
-
       if value.is_a? Array
-        value.any? { |v| filter_value.include?(v) }
+        value.any? do |v|
+          filter_value.is_a?(Array) ? filter_value.include?(v) : v.include?(filter_value)
+        end
       else
         # rubocop:disable CaseEquality
         filter_value === value
@@ -53,14 +58,14 @@ module TopMovies
 
     def genre?(type_of_genre)
       raise ArgumentError, "Жанра #{type_of_genre} в коллекции нет!" unless
-        @collection.genre_exists?(type_of_genre)
-      @genre.include?(type_of_genre)
+        collection.genre_exists?(type_of_genre)
+      genre.include?(type_of_genre)
     end
 
     def show
       start_time = Time.now
-      end_time = start_time + @length.to_i * 60
-      "Now showing: #{@title} #{start_time.strftime('%H:%M')}
+      end_time = start_time + length.to_i * 60
+      "Now showing: #{title} #{start_time.strftime('%H:%M')}
         - #{end_time.strftime('%H:%M')}"
     end
 
