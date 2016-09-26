@@ -11,8 +11,8 @@ module TopMovies
     end
 
     def method_missing(method_name)
-     return super if method_name =~ /(\?|\.|\=)$/
-     @collect.select { |c| c.country.include?(method_name.to_s.upcase) }
+      return super if method_name =~ /(\?|\.|\=)$/
+      @collect.select { |c| c.country.include?(method_name.to_s.upcase) }
     end
   end
 end

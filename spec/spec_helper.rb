@@ -9,3 +9,6 @@ require_relative "../netflix"
 require_relative "../theatre"
 require "date"
 require "money"
+require 'vcr'
+require 'webmock/rspec'
+WebMock.disable_net_connect!(allow_localhost: true)

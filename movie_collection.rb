@@ -3,6 +3,11 @@ require_relative 'cash_box'
 require_relative 'filter_genre'
 require_relative 'country_filter'
 require 'money'
+require 'nokogiri'
+require 'open-uri'
+require 'yaml'
+require 'ruby-progressbar'
+require 'themoviedb-api'
 
 module TopMovies
   class MovieCollection
@@ -15,6 +20,7 @@ module TopMovies
       @collection = make_collection(file_name)
       @balance = Money.new(0, 'UAH')
       @filter = {}
+      Tmdb::Api.key("d0607e9a2cf6b939168457281815bc4d")
     end
 
     def make_collection(name_file)
@@ -80,6 +86,37 @@ module TopMovies
     def by_country
       country_filter = CountryFilter.new(@collection)
       country_filter
+    end
+
+    def get_budget
+      file_name = "budget.yml"
+      if File.exist?(file_name)
+        thing = YAML.load_file(file_name)
+        puts thing
+      else
+        budgetfile = File.open(file_name, "w")
+        progressbar = ProgressBar.create
+        progressbar.total = @collection.size
+        @collection.map do |film|
+          page = Nokogiri::HTML(open(film.link))
+          # puts page.class   # => Nokogiri::HTML::Document
+          #tl = page.css('.originalTitle').map { |el| el.text }
+          bd = page.css('div.txt-block:nth-child(11)').map { |el| el.text.split(' ')[1] }
+          data = { 'title' => film.title, 'budget' => bd[0] }.to_yaml
+          budgetfile.puts data
+          progressbar.increment
+        end
+        budgetfile.close
+      end
+    end
+
+    def get_posters_translations
+      @collection.map do |film|
+        imdb_id = film.link.scan(/tt\d{7}/).first
+        id_mov = Tmdb::Find.movie(imdb_id, external_source: 'imdb_id').first.id
+        puts Tmdb::Movie.posters(id_mov)
+        puts Tmdb::Movie.translations(id_mov)
+      end
     end
   end
 end
