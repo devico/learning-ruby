@@ -20,8 +20,9 @@ else
 end
 
 movies = TopMovies::MovieCollection.new(file_name)
-# movies.get_budget
-movies.get_posters_translations
+# puts movies.all.first.link
+movies.take_budget
+# movies.take_posters_translations
 # puts movies.class
 # movies.filter(genre: 'Comedy')
 # movies.filter(year: 2000)
