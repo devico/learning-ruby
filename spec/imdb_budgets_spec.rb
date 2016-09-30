@@ -22,12 +22,15 @@ module TopMovies
     end
 
     describe '#take_info' do
+      let(:value) { ["tt0111161", "$25,000,000"] }
       it 'when recieve info about movie' do
-        stub_request(:get, "http://imdb.com/title/tt0111161/?ref_=chttp_tt_41").
-         with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
-         to_return(:status => 200, :body => "", :headers => {})
-        page = Nokogiri::HTML(open("http://imdb.com/title/tt0111161/?ref_=chttp_tt_41"))
-        expect(movies.take_info(page)).to be_a Array
+        VCR.use_cassette('imdb/pages') do
+          stub_request(:get, "http://imdb.com/title/tt0111161/?ref_=chttp_tt_41").
+            with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
+            to_return(:status => 200, :body => "", :headers => {})
+          page = Nokogiri::HTML(open("http://imdb.com/title/tt0111161/?ref_=chttp_tt_41"))
+          expect(movies.take_info(page)[0]).to eq(value)
+        end
       end
     end
 
