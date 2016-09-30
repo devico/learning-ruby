@@ -35,12 +35,14 @@ module ImdbBudgets
     info = pages.map do |mp|
       imdb_id = mp.at("meta[property='pageId']")['content']
       budget = mp.css('div.txt-block:nth-child(11)').map { |el| el.text.split(' ')[1] }
-      info = [imdb_id, budget[0]]
+      [imdb_id, budget[0]]
     end
   end
 
   def info_to_yml(movie_info)
     budgets = movie_info.map { |i| { 'imdb_id' => i[0], 'budget' => i[1] }.to_yaml if i[1] =~ /^(\$|\€)/ }.compact
+    puts budgets.inspect
+    budgets
   end
 
   def put_to_file(budgetfile, data)
