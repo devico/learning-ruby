@@ -72,5 +72,10 @@ module TopMovies
     def period
       self.class.to_s.chomp('Movie').downcase.to_sym
     end
+
+    def imdb_id
+      self.link.scan(/tt\d{7}/).first
+    end
+
   end
 end

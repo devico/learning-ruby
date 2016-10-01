@@ -40,9 +40,10 @@ module ImdbBudgets
   end
 
   def info_to_yml(movie_info)
-    budgets = movie_info.map { |i| { 'imdb_id' => i[0], 'budget' => i[1] }.to_yaml if i[1] =~ /^(\$|\€)/ }.compact
-    puts budgets.inspect
-    budgets
+    budgets = movie_info.map { |i|
+      { 'imdb_id' => i[0],
+        'budget' => i[1]
+      }.to_yaml if i[1] =~ /^(\$|\€)/ }.compact
   end
 
   def put_to_file(budgetfile, data)
