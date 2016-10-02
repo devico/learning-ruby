@@ -21,8 +21,8 @@ end
 
 movies = TopMovies::MovieCollection.new(file_name)
 # puts movies.all.first.link
-# movies.take_budget
-movies.take_posters
+movies.take_budget
+# movies.take_posters
 # movies.take_translations
 # puts movies.class
 # movies.filter(genre: 'Comedy')

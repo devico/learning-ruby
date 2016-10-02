@@ -21,7 +21,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Sat, 01 Oct 2016 12:31:44 GMT
+      - Sun, 02 Oct 2016 11:12:37 GMT
       Server:
       - openresty
       Status:
@@ -31,7 +31,7 @@ http_interactions:
       X-Ratelimit-Remaining:
       - '39'
       X-Ratelimit-Reset:
-      - '1475325114'
+      - '1475406767'
       Content-Length:
       - '86'
       Connection:
@@ -41,5 +41,5 @@ http_interactions:
       string: '{"status_code":7,"status_message":"Invalid API key: You must be granted
         a valid key."}'
     http_version: 
-  recorded_at: Sat, 01 Oct 2016 12:31:44 GMT
+  recorded_at: Sun, 02 Oct 2016 11:12:38 GMT
 recorded_with: VCR 3.0.3

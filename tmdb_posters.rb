@@ -1,18 +1,13 @@
-require 'themoviedb'
 module TmdbPosters
   def take_posters
     @collection.map do |film|
-      id_imdb = film.imdb_id
-      id_mov = imdb_to_tmdb(id_imdb)
-      Tmdb::Movie.detail(id_mov)['poster_path']
+      Tmdb::Movie.detail(imdb_to_tmdb(film.imdb_id))['poster_path']
     end
   end
 
   def take_translations
     @collection.map do |film|
-      id_imdb = film.imdb_id
-      id_mov = imdb_to_tmdb(id_imdb)
-      Tmdb::Movie.translations(id_mov)['translations']
+      Tmdb::Movie.translations(imdb_to_tmdb(film.imdb_id))['translations']
     end
   end
 
