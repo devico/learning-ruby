@@ -4,50 +4,52 @@ require 'yaml'
 require 'ruby-progressbar'
 module ImdbBudgets
 
-  def take_budget
-    file_name = 'budget.yml'
-    if File.exist?(file_name)
-      YAML.load_file(File.read(file_name)).each { |item| puts item }
+  def take_budget_from_file(id, file_name)
+    item = YAML::load_stream(File.open(file_name)).select do |el|
+      el["imdb_id"].include?(id)
+    end
+    if item.empty?
+      element = take_budget_from_imdb(id, file_name)
     else
-      budgetfile = File.open(file_name, 'w')
-      create_yml(budgetfile)
+      item[0]["budget"]
+    end
+  end
+
+  def take_budget_from_imdb(id, file_name)
+    data = create_yml
+    result = if data.is_a?(Array)
+      output = "Нет данных о бюджете данного фильма"
+    else
+      budgetfile = File.open(file_name, 'a')
+      put_to_file(budgetfile, data)
       budgetfile.close
+      data.scan(/(\$.*0)/)
     end
   end
 
-  def create_yml(budgetfile)
-    pages = obtain_pages
-    movie_info = take_info(pages)
+  def create_yml
+    page = Nokogiri::HTML(open(self.link))
+    movie_info = take_info(page)
     data = info_to_yml(movie_info)
-    put_to_file(budgetfile, data)
   end
 
-  def obtain_pages
-    progressbar = ProgressBar.create
-    progressbar.total = @collection.size
-    pages = @collection.map do |film|
-      progressbar.increment
-      Nokogiri::HTML(open(film.link))
+  def take_info(page)
+    imdb_id = page.at("meta[property='pageId']")['content']
+    budget = page.css('div.txt-block:nth-child(11)').map do |el|
+      el.text.split(' ')[1]
     end
-  end
-
-  def take_info(pages)
-    info = pages.map do |mp|
-      imdb_id = mp.at("meta[property='pageId']")['content']
-      budget = mp.css('div.txt-block:nth-child(11)').map { |el| el.text.split(' ')[1] }
-      [imdb_id, budget[0]]
-    end
+    [imdb_id, budget[0]]
   end
 
   def info_to_yml(movie_info)
-    budgets = movie_info.map { |i|
-      { 'imdb_id' => i[0],
-        'budget' => i[1]
-      }.to_yaml if i[1] =~ /^(\$|\€)/ }.compact
+    if movie_info[1] =~ /^(\$|\€)/
+      { 'imdb_id' => movie_info[0], 'budget' => movie_info[1] }.to_yaml
+    else
+      movie_info
+    end
   end
 
   def put_to_file(budgetfile, data)
     budgetfile.puts data
   end
-
 end

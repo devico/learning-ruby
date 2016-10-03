@@ -20,8 +20,9 @@ else
 end
 
 movies = TopMovies::MovieCollection.new(file_name)
-# puts movies.all.first.link
-movies.take_budget
+movie = movies.all[121]
+puts movie.budget
+# movies.take_budget
 # movies.take_posters
 # movies.take_translations
 # puts movies.class

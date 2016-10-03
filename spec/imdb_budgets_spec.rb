@@ -5,7 +5,22 @@ module TopMovies
     let(:movies) { TopMovies::MovieCollection.new("movies.txt") { include ImdbBudgets } }
 
     describe '#take_budget' do
-      it 'when file exist' do
+      let(:file) { 'budgets.yml' }
+
+      context 'when file exist' do
+        #let(:elem) { /imdb_id\:\stt0111161\nbudget\:\s*\"\$25,000,000\"/ }
+        it { expect(file).to be_an_existing_file }
+        it { expect(file).to have_file_content  }
+      end
+
+      context 'when file not exist' do
+        it { expect(file).to be_an_existing_file }
+      end
+
+    end
+
+    describe '#create_yml' do
+      it 'when create yml file' do
         allow(File).to receive(:exists?).with('budget.yml').and_return(true)
       end
     end

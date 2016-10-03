@@ -19,7 +19,7 @@ module TopMovies
       @collection = make_collection(file_name)
       @balance = Money.new(0, 'UAH')
       @filter = {}
-      #Tmdb::Api.key('5be10fe1e829eadc8be80b37bb0a2ae0')
+      # Tmdb::Api.key('5be10fe1e829eadc8be80b37bb0a2ae0')
     end
 
     def make_collection(name_file)
