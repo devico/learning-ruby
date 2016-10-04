@@ -4,19 +4,29 @@ module TopMovies
 
     let(:movies) { TopMovies::MovieCollection.new("movies.txt") { include ImdbBudgets } }
 
-    describe '#take_budget' do
-      let(:file) { 'budgets.yml' }
-
-      context 'when file exist' do
-        #let(:elem) { /imdb_id\:\stt0111161\nbudget\:\s*\"\$25,000,000\"/ }
-        it { expect(file).to be_an_existing_file }
-        it { expect(file).to have_file_content  }
+    describe '#take_budget_from_file' do
+      subject { movie.take_budget_from_file(id, file) }
+      let(:movie) { movies.all.first }
+      let(:file) { 'budget.yml' }
+      let(:id) { movie.imdb_id }
+      it 'when take budget from file' do
+        VCR.use_cassette('imdb/budget_file') do
+          expect(subject).to eq("$25,000,000")
+        end
       end
 
-      context 'when file not exist' do
-        it { expect(file).to be_an_existing_file }
-      end
+    end
 
+    describe '#take_budget_from_imdb' do
+      subject { movie.take_budget_from_imdb(id, file)[0][0] }
+      let(:movie) { movies.all[120] }
+      let(:file) { 'budget.yml' }
+      let(:id) { movie.imdb_id }
+      it 'when take budget from IMDB' do
+        VCR.use_cassette('imdb/budget_imdb') do
+          expect(subject).to eq("$28,000,000")
+        end
+      end
     end
 
     describe '#create_yml' do
@@ -25,33 +35,22 @@ module TopMovies
       end
     end
 
-    describe '#obtain_pages' do
-      it "given a pages" do
-        VCR.use_cassette('imdb/pages') do
-          page = Nokogiri::HTML(open("http://imdb.com/title/tt0111161/?ref_=chttp_tt_41"))
-          expect(page.class).to eq(Nokogiri::HTML::Document)
-        end
-      end
-    end
-
     describe '#take_info' do
-      let(:pages) { [] }
       let(:value) { ["tt0111161", "$25,000,000"] }
       it 'when recieve info about movie' do
         VCR.use_cassette('imdb/budget') do
-          pages << Nokogiri::HTML(open("http://imdb.com/title/tt0111161/?ref_=chttp_tt_41"))
-          expect(movies.take_info(pages).first).to eq(value)
+          page = Nokogiri::HTML(open("http://imdb.com/title/tt0111161/?ref_=chttp_tt_41"))
+          expect(movies.take_info(page)).to eq(value)
         end
       end
     end
 
     describe '#info_to_yml' do
-      let(:pages) { [] }
-      let(:value) { ["---\nimdb_id: tt0111161\nbudget: \"$25,000,000\"\n"] }
+      let(:value) { "---\nimdb_id: tt0111161\nbudget: \"$25,000,000\"\n" }
       it 'when convert info to yml format' do
         VCR.use_cassette('imdb/saved_info') do
-          pages << Nokogiri::HTML(open("http://imdb.com/title/tt0111161/?ref_=chttp_tt_41"))
-          info = movies.take_info(pages)
+          page = Nokogiri::HTML(open("http://imdb.com/title/tt0111161/?ref_=chttp_tt_41"))
+          info = movies.take_info(page)
           expect(movies.info_to_yml(info)).to eq(value)
         end
       end
