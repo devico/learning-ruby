@@ -17,14 +17,11 @@ module ImdbBudgets
 
   def take_budget_from_imdb(id, file_name)
     data = create_yml
-    result = if data.is_a?(Array)
-      raise ArgumentError, "Нет данных о бюджете данного фильма"
-    else
-      budgetfile = File.open(file_name, 'a')
-      put_to_file(budgetfile, data)
-      budgetfile.close
-      data.scan(/(\$.*0)/)
-    end
+    raise ArgumentError, "Нет данных о бюджете данного фильма" if data.is_a?(Array)
+    budgetfile = File.open(file_name, 'a')
+    put_to_file(budgetfile, data)
+    budgetfile.close
+    data.scan(/(\$.*0)/)
   end
 
   def create_yml
