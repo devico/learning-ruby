@@ -79,13 +79,10 @@ module TopMovies
       link.scan(/tt\d{7}/).first
     end
 
-    def budget
-      file_name = 'budget.yml'
-      if File.exist?(file_name)
-        take_budget_from_file(imdb_id, file_name)
-      else
-        take_budget_from_imdb(imdb_id, file_name)
-      end
+     def budget
+      file_name = "#{self.imdb_id}.yml"
+      take_budget_from_imdb(self.imdb_id) unless File.exist?(file_name)
+      take_budget_from_file(file_name)
     end
   end
 end

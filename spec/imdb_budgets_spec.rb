@@ -5,23 +5,17 @@ module TopMovies
     let(:movies) { TopMovies::MovieCollection.new("movies.txt") { include ImdbBudgets } }
 
     describe '#take_budget_from_file' do
-      subject { movie.take_budget_from_file(id, file) }
+      subject { movie.take_budget_from_file(file) }
       let(:movie) { movies.all.first }
-      let(:file) { 'budget.yml' }
-      let(:id) { movie.imdb_id }
+      let(:file) { "#{movie.imdb_id}.yml" }
       it 'when take budget from file' do
-        VCR.use_cassette('imdb/budget_file') do
-          expect(subject).to eq("$25,000,000")
-        end
+        expect(subject).to eq("$25,000,000")
       end
-
     end
 
     describe '#take_budget_from_imdb' do
-      subject { movie.take_budget_from_imdb(id, file)[0][0] }
+      subject { movie.take_budget_from_imdb(movie.imdb_id)[0][0] }
       let(:movie) { movies.all[120] }
-      let(:file) { 'budget.yml' }
-      let(:id) { movie.imdb_id }
       it 'when take budget from IMDB' do
         VCR.use_cassette('imdb/budget_imdb') do
           expect(subject).to eq("$28,000,000")
@@ -30,8 +24,9 @@ module TopMovies
     end
 
     describe '#create_yml' do
+      let(:movie) { movies.all[120] }
       it 'when create yml file' do
-        allow(File).to receive(:exists?).with('budget.yml').and_return(true)
+        allow(File).to receive(:exists?).with("#{movie.imdb_id}.yml").and_return(true)
       end
     end
 
