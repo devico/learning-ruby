@@ -14,21 +14,20 @@ module TopMovies
     end
 
     describe '#take_budget_from_imdb' do
-      subject { movie.take_budget_from_imdb(movie.imdb_id)[0][0] }
+      subject { movie.take_budget_from_imdb(movie.imdb_id) }
       let(:movie) { movies.all[120] }
       it 'when take budget from IMDB' do
         VCR.use_cassette('imdb/budget_imdb') do
-          expect(subject).to eq("$28,000,000")
+          allow(File).to receive(:exists?).with("#{movie.imdb_id}.yml").and_return(true)
         end
       end
     end
 
     describe '#take_info' do
       let(:movie) { movies.all[151] }
-      let(:value) { "---\nimdb_id: tt0031381\nbudget: \"$3,977,000\"\n" }
       it 'when recieve info about movie' do
         VCR.use_cassette('imdb/budget') do
-          expect(movie.take_info).to eq(value)
+          expect(movie.take_info).to eq("$3,977,000")
         end
       end
     end
