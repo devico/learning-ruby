@@ -7,6 +7,7 @@ require_relative "../new_movie"
 require_relative "../movie_collection"
 require_relative "../netflix"
 require_relative "../theatre"
+require 'haml'
 require "date"
 require "money"
 require 'vcr'

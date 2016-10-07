@@ -1,0 +1,17 @@
+- @collection.each do |film|
+  .row
+    .col-lg-4 Название:
+    .col-lg-8
+      = film.title
+  .row
+    .col-lg-4 Страна:
+    .col-lg-8
+      = film.country
+  .row
+    .col-lg-4 Жанр:
+    .col-lg-8
+      = film.genre
+  .row
+    .col-lg-4 Продолжительность:
+    .col-lg-8
+      film.length

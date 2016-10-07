@@ -1,4 +1,5 @@
 require 'csv'
+require 'haml'
 require_relative 'cash_box'
 require_relative 'filter_genre'
 require_relative 'country_filter'
@@ -85,6 +86,12 @@ module TopMovies
     def by_country
       country_filter = CountryFilter.new(@collection)
       country_filter
+    end
+
+    def web
+      template = File.open('index.haml')
+      engine = Haml::Engine.new(template.read)
+      puts engine.render
     end
   end
 end
