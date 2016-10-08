@@ -20,7 +20,7 @@ else
 end
 
 movies = TopMovies::MovieCollection.new(file_name)
-movies.web
+movies.render_html
 # movie = movies.all.first
 # puts movie.poster
 # movies.take_budget

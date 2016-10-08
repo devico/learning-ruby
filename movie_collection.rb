@@ -88,9 +88,9 @@ module TopMovies
       country_filter
     end
 
-    def web
+    def render_html
       template = File.open('index.haml')
-      File.write('index.html', Haml::Engine.new(template.read).render(@collection))
+      html = Haml::Engine.new(template.read).render(@collection)
     end
   end
 end

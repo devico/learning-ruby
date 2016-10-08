@@ -10,11 +10,10 @@ module ImdbBudgets
 
   def take_budget_from_imdb(id)
     data = take_info
-    puts data.inspect
     data = if data.nil?
-        "Нет данных о бюджете данного фильма"
+        nil
       elsif !data.include?("$" || "DEM" || "AUD" || "£" || "€")
-        "Нет данных о бюджете данного фильма"
+        nil
       else
         data
       end
