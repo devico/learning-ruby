@@ -10,7 +10,14 @@ module ImdbBudgets
 
   def take_budget_from_imdb(id)
     data = take_info
-    raise ArgumentError, "Нет данных о бюджете данного фильма" unless data.include?("$")
+    puts data.inspect
+    data = if data.nil?
+        "Нет данных о бюджете данного фильма"
+      elsif !data.include?("$" || "DEM" || "AUD" || "£" || "€")
+        "Нет данных о бюджете данного фильма"
+      else
+        data
+      end
     File.write("#{id}.yml", {id => data}.to_yaml)
   end
 

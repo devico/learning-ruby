@@ -2,27 +2,56 @@
 %html{:lang => "en"}
   %head
     %meta{:charset => "utf-8"}/
-    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
-    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
-    / The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags
     %title Movies
-    / Bootstrap
-    %link{:href => "css/bootstrap.css", :rel => "stylesheet"}/
-    / HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
-    / WARNING: Respond.js doesn't work if you view the page via file://
-    /[if lt IE 9]
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.js"></script>
+    %link{:href => "css/style.css", :rel => "stylesheet"}/
   %body
-    .container
-      .row
-        .col-lg-10
-        .col-lg-2
-      .row
-        .col-lg-6 Posters:
-        .col-lg-6
-          = Haml::Engine.new(File.read('output.haml')).render
-        / jQuery (necessary for Bootstrap's JavaScript plugins)
-        %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"}
-        / Include all compiled plugins (below), or include individual files as needed
-        %script{:src => "js/bootstrap.js"}
+    %table{:border => "0", :cellpadding => "1", :cellspacing => "1", :style => "width:1000px"}
+      %tbody
+        %tr
+          %td
+          - each do |movie|
+            %table{ :align => "center", :border => "1", :cellpadding => "1", :cellspacing => "1", :style => "height:1px; width:910px"}
+              %tbody
+                %tr
+                  %td{:colspan => "3", :style => "background-color:rgb(204, 255, 255)"}
+                    %strong
+                      = "#{movie.title} (#{movie.year})"
+                %tr
+                  %td{:colspan => "1", :rowspan => "8", :style => "width:30%"} Poster:
+                  %td{:style => "width:15%"} Страна выпуска:
+                  %td
+                    = movie.country
+                %tr
+                  %td{:style => "width:15%"} Премьера(США):
+                  %td
+                    = movie.date
+                %tr
+                  %td{:style => "width:15%"} Жанр:
+                  %td
+                    - movie.genre.each do |i|
+                      = i
+                %tr
+                  %td{:style => "width:15%"} Продолжительность:
+                  %td
+                    = movie.length
+                %tr
+                  %td{:style => "width:15%"} Рейтинг:
+                  %td
+                    = movie.rate
+                %tr
+                  %td{:style => "width:15%"} Режиссер:
+                  %td
+                    - movie.genre.each do |i|
+                      = i
+                %tr
+                  %td{:style => "width:15%"} Актеры:
+                  %td
+                    - movie.genre.each do |i|
+                      = i
+                %tr
+                  %td{:style => "width:15%"} Бюджет:
+                  %td
+                    = movie.budget
+                %tr
+                  %td{:colspan => "3", :style => "width:30%"}
+                    %p

@@ -20,7 +20,7 @@ module TopMovies
       @collection = make_collection(file_name)
       @balance = Money.new(0, 'UAH')
       @filter = {}
-      # Tmdb::Api.key('5be10fe1e829eadc8be80b37bb0a2ae0')
+      # Tmdb::Api.key('d0607e9a2cf6b939168457281815bc4d')
     end
 
     def make_collection(name_file)
@@ -90,8 +90,7 @@ module TopMovies
 
     def web
       template = File.open('index.haml')
-      engine = Haml::Engine.new(template.read)
-      puts engine.render
+      File.write('index.html', Haml::Engine.new(template.read).render(@collection))
     end
   end
 end

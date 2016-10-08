@@ -1,9 +1,11 @@
 require_relative 'imdb_budgets'
+require_relative 'tmdb_posters'
 module TopMovies
   class Movie
     require 'virtus'
     include Virtus.model
     include ImdbBudgets
+    include TmdbPosters
 
     class SplitArray < Virtus::Attribute
       def coerce(value)
@@ -83,6 +85,10 @@ module TopMovies
       file_name = "#{self.imdb_id}.yml"
       take_budget_from_imdb(self.imdb_id) unless File.exist?(file_name)
       take_budget_from_file(file_name)
+    end
+
+    def poster
+      take_poster(self.imdb_id)
     end
   end
 end

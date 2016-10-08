@@ -22,7 +22,7 @@ end
 movies = TopMovies::MovieCollection.new(file_name)
 movies.web
 # movie = movies.all.first
-# puts movie.budget
+# puts movie.poster
 # movies.take_budget
 # movies.take_posters
 # movies.take_translations
