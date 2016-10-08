@@ -90,7 +90,7 @@ module TopMovies
 
     def render_html
       template = File.open('index.haml')
-      html = Haml::Engine.new(template.read).render(@collection)
+      Haml::Engine.new(template.read).render(@collection)
     end
   end
 end

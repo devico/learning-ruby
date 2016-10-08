@@ -5,16 +5,16 @@ require 'ruby-progressbar'
 module ImdbBudgets
 
   def take_budget_from_file(file_name)
-    YAML::load_file(File.open(file_name))[file_name[0,9]]
+    YAML::load_file(File.open(file_name))[file_name[5,9]]
   end
 
   def take_budget_from_imdb(id)
     data = take_info
-    data = if data.nil? || !data.include?("$" || "DEM" || "AUD" || "£" || "€")
-        nil
-      else
-        data
-      end
+    data = if data =~ /^(\$|\€|\£|DEM|AUD|FRF)/
+            data
+           else
+             nil
+           end
     File.write("data/#{id}.yml", {id => data}.to_yaml)
   end
 

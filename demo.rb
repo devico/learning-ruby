@@ -21,8 +21,9 @@ end
 
 movies = TopMovies::MovieCollection.new(file_name)
 movies.render_html
-# movie = movies.all.first
+# movie = movies.all[120]
 # puts movie.poster
+# puts movie.budget
 # movies.take_budget
 # movies.take_posters
 # movies.take_translations
