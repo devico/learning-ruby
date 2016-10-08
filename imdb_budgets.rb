@@ -10,14 +10,12 @@ module ImdbBudgets
 
   def take_budget_from_imdb(id)
     data = take_info
-    data = if data.nil?
-        nil
-      elsif !data.include?("$" || "DEM" || "AUD" || "£" || "€")
+    data = if data.nil? || !data.include?("$" || "DEM" || "AUD" || "£" || "€")
         nil
       else
         data
       end
-    File.write("#{id}.yml", {id => data}.to_yaml)
+    File.write("data/#{id}.yml", {id => data}.to_yaml)
   end
 
   def take_info

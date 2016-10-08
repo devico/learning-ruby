@@ -82,7 +82,7 @@ module TopMovies
     end
 
      def budget
-      file_name = "#{self.imdb_id}.yml"
+      file_name = "data/#{self.imdb_id}.yml"
       take_budget_from_imdb(self.imdb_id) unless File.exist?(file_name)
       take_budget_from_file(file_name)
     end
