@@ -1,5 +1,5 @@
-require_relative 'imdb_budgets'
-require_relative 'tmdb_posters'
+require_relative '../../wwww/imdb_budgets'
+require_relative '../../wwww/tmdb_posters'
 module TopMovies
   class Movie
     require 'virtus'
@@ -82,7 +82,7 @@ module TopMovies
     end
 
      def budget
-      file_name = "data/#{self.imdb_id}.yml"
+      file_name = "../../data/budgets/#{self.imdb_id}.yml"
       take_budget_from_imdb(self.imdb_id) unless File.exist?(file_name)
       take_budget_from_file(file_name)
     end

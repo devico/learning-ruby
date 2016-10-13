@@ -5,7 +5,7 @@ module TopMovies
     attr_accessor :halls, :periods
 
     def initialize(&block)
-      super('movies.txt')
+      super('../../data/movies.txt')
       @halls = {}
       @periods = []
       @blck = {}

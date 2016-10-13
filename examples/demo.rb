@@ -1,16 +1,16 @@
-require_relative 'movie'
-require_relative 'ancient_movie'
-require_relative 'classic_movie'
-require_relative 'modern_movie'
-require_relative 'new_movie'
-require_relative 'movie_collection'
-require_relative 'filter_genre'
-require_relative 'country_filter'
-require_relative 'netflix'
-require_relative 'theatre'
+require_relative '../lib/topmovies/movie'
+require_relative '../lib/topmovies/ancient_movie'
+require_relative '../lib/topmovies/classic_movie'
+require_relative '../lib/topmovies/modern_movie'
+require_relative '../lib/topmovies/new_movie'
+require_relative '../lib/topmovies/movie_collection'
+require_relative '../lib/topmovies/filter_genre'
+require_relative '../lib/topmovies/country_filter'
+require_relative '../lib/topmovies/netflix'
+require_relative '../lib/topmovies/theatre'
 require 'date'
 
-file_name = ARGV[0] || 'movies.txt'
+file_name = ARGV[0] || '../data/movies.txt'
 
 if File.exist?(file_name)
   File.open(file_name)
