@@ -42,6 +42,12 @@ module TopMovies
       it { expect( subject ).to be_truthy }
     end
 
-  end
+    describe '#imdb_id' do
+      subject { movie.imdb_id }
+      let(:netflix) { Netflix.new("movies.txt")}
+      let(:movie) { netflix.all.first }
+      it { expect( subject ).to eq('tt0111161') }
+    end
 
+  end
 end

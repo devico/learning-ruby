@@ -11,3 +11,5 @@ Metrics/MethodLength:
   Max: 12
 LiteralInInterpolation:
   Enabled: false
+Style/AsciiComments:
+  Enabled: false

@@ -1,13 +1,18 @@
 require 'csv'
+require 'haml'
 require_relative 'cash_box'
 require_relative 'filter_genre'
 require_relative 'country_filter'
 require 'money'
+require_relative 'imdb_budgets'
+require_relative 'tmdb_posters'
 
 module TopMovies
   class MovieCollection
     include Enumerable
     include CashBox
+    include ImdbBudgets
+    include TmdbPosters
 
     attr_accessor :collection
 
@@ -15,6 +20,7 @@ module TopMovies
       @collection = make_collection(file_name)
       @balance = Money.new(0, 'UAH')
       @filter = {}
+      # Tmdb::Api.key('d0607e9a2cf6b939168457281815bc4d')
     end
 
     def make_collection(name_file)
@@ -80,6 +86,11 @@ module TopMovies
     def by_country
       country_filter = CountryFilter.new(@collection)
       country_filter
+    end
+
+    def render_html
+      template = File.open('index.haml')
+      Haml::Engine.new(template.read).render(@collection)
     end
   end
 end

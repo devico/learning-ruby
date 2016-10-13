@@ -1,0 +1,57 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}/
+    %title Movies
+    %link{:href => "css/style.css", :rel => "stylesheet"}/
+  %body
+    %table{:border => "0", :cellpadding => "1", :cellspacing => "1", :style => "width:1000px"}
+      %tbody
+        %tr
+          %td
+          - each do |movie|
+            %table{ :align => "center", :border => "1", :cellpadding => "1", :cellspacing => "1", :style => "height:1px; width:910px"}
+              %tbody
+                %tr
+                  %td{:colspan => "3", :style => "background-color:rgb(204, 255, 255)"}
+                    %strong
+                      = "#{movie.title} (#{movie.year})"
+                %tr
+                  %td{:colspan => "1", :rowspan => "8", :style => "width:30%"} Poster:
+                  %td{:style => "width:15%"} Страна выпуска:
+                  %td
+                    = movie.country
+                %tr
+                  %td{:style => "width:15%"} Премьера(США):
+                  %td
+                    = movie.date
+                %tr
+                  %td{:style => "width:15%"} Жанр:
+                  %td
+                    - movie.genre.each do |i|
+                      = i
+                %tr
+                  %td{:style => "width:15%"} Продолжительность:
+                  %td
+                    = movie.length
+                %tr
+                  %td{:style => "width:15%"} Рейтинг:
+                  %td
+                    = movie.rate
+                %tr
+                  %td{:style => "width:15%"} Режиссер:
+                  %td
+                    - movie.genre.each do |i|
+                      = i
+                %tr
+                  %td{:style => "width:15%"} Актеры:
+                  %td
+                    - movie.genre.each do |i|
+                      = i
+                %tr
+                  %td{:style => "width:15%"} Бюджет:
+                  %td
+                    = movie.budget
+                %tr
+                  %td{:colspan => "3", :style => "width:30%"}
+                    %p
