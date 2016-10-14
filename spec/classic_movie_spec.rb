@@ -2,7 +2,7 @@ module TopMovies
 
   describe ClassicMovie do
 
-    let(:netflix) { TopMovies::Netflix.new("movies.txt") }
+    let(:netflix) { TopMovies::Netflix.new("data/movies.txt") }
     let(:movie) { netflix.filter(period: :classic).first }
 
     describe '#cost' do

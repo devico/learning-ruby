@@ -5,7 +5,8 @@ module TopMovies
     attr_accessor :halls, :periods
 
     def initialize(&block)
-      super('../../data/movies.txt')
+      Dir.chdir File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'data'))
+      super('movies.txt')
       @halls = {}
       @periods = []
       @blck = {}

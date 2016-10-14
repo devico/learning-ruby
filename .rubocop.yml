@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
     - spec/*.rb
+  TargetRubyVersion: 2.0
 Documentation:
   Enabled: false
 ParameterLists:

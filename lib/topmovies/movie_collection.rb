@@ -4,8 +4,8 @@ require_relative 'cash_box'
 require_relative 'filter_genre'
 require_relative 'country_filter'
 require 'money'
-require_relative '../../wwww/imdb_budgets'
-require_relative '../../wwww/tmdb_posters'
+require_relative '../../www/imdb_budgets'
+require_relative '../../www/tmdb_posters'
 
 module TopMovies
   class MovieCollection
@@ -89,7 +89,7 @@ module TopMovies
     end
 
     def render_html
-      template = File.open('../../wwww/pages/index.haml')
+      template = File.open('../../www/pages/index.haml')
       Haml::Engine.new(template.read).render(@collection)
     end
   end

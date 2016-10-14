@@ -12,8 +12,3 @@ require_relative 'topmovies/period'
 require_relative 'topmovies/theatre'
 require_relative '../www/imdb_budgets'
 require_relative '../www/tmdb_posters'
-
-module TopMovies
-  VERSION = "0.1.1"
-
-end
