@@ -4,9 +4,10 @@ module TopMovies
   class Theatre < MovieCollection
     attr_accessor :halls, :periods
 
+    PATH_DATA = "../data/movies.txt"
+
     def initialize(&block)
-      Dir.chdir File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'data'))
-      super('movies.txt')
+      super(PATH_DATA)
       @halls = {}
       @periods = []
       @blck = {}

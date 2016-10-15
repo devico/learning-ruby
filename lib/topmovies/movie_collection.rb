@@ -4,8 +4,8 @@ require_relative 'cash_box'
 require_relative 'filter_genre'
 require_relative 'country_filter'
 require 'money'
-require_relative '../../www/imdb_budgets'
-require_relative '../../www/tmdb_posters'
+require_relative 'imdb_budgets'
+require_relative 'tmdb_posters'
 
 module TopMovies
   class MovieCollection
@@ -15,6 +15,8 @@ module TopMovies
     include TmdbPosters
 
     attr_accessor :collection
+
+    PATH_PAGES = '../pages'
 
     def initialize(file_name)
       @collection = make_collection(file_name)
@@ -89,7 +91,7 @@ module TopMovies
     end
 
     def render_html
-      template = File.open('../../www/pages/index.haml')
+      template = File.open('../pages/index.haml')
       Haml::Engine.new(template.read).render(@collection)
     end
   end

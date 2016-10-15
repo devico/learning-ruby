@@ -130,7 +130,7 @@ module TopMovies
     end
 
     describe '#cash' do
-     let(:value) {Money.new(18500, "UAH")}
+     let(:value) {Money.new(19000, "UAH")}
      it { expect( Netflix.cash ).to eq(value) }
     end
 

@@ -1,5 +1,5 @@
-require_relative '../../www/imdb_budgets'
-require_relative '../../www/tmdb_posters'
+require_relative 'imdb_budgets'
+require_relative 'tmdb_posters'
 module TopMovies
   class Movie
     require 'virtus'
@@ -82,8 +82,7 @@ module TopMovies
     end
 
     def budget
-      Dir.chdir File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'data', 'budgets'))
-      file_name = "#{imdb_id}.yml"
+      file_name = "../data/budgets/#{imdb_id}.yml"
       take_budget_from_imdb(imdb_id) unless File.exist?(file_name)
       take_budget_from_file(file_name)
     end

@@ -4,8 +4,7 @@ require 'yaml'
 require 'ruby-progressbar'
 module ImdbBudgets
   def take_budget_from_file(file_name)
-    Dir.chdir File.expand_path( File.join( File.dirname(__FILE__), "..", "data", "budgets") )
-    YAML::load_file(File.open(file_name))[file_name[0,9]]
+    YAML::load_file(File.open(file_name))[file_name[16,9]]
   end
 
   def take_budget_from_imdb(id)
@@ -15,8 +14,7 @@ module ImdbBudgets
            else
              nil
            end
-    Dir.chdir File.expand_path( File.join( File.dirname(__FILE__), "..", "data", "budgets") )
-    File.write("#{id}.yml", {id => data}.to_yaml)
+    File.write("../data/budgets/#{id}.yml", {id => data}.to_yaml)
   end
 
   def take_info
