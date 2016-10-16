@@ -2,7 +2,7 @@ module TopMovies
 
   describe ImdbBudgets do
 
-    let(:movies) { TopMovies::MovieCollection.new("lib/topmovies/data/movies.txt") { include ImdbBudgets } }
+    let(:movies) { TopMovies::MovieCollection.new(DEFAULT_MOVIES_PATH) { include ImdbBudgets } }
 
     describe '#take_budget_from_file' do
       subject { movie.take_budget_from_file(file) }

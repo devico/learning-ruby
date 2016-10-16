@@ -25,7 +25,7 @@ module TopMovies
     end
 
     describe '#imdb_to_tmdb' do
-      let(:movies) { TopMovies::MovieCollection.new("data/movies.txt") }
+      let(:movies) { TopMovies::MovieCollection.new(DEFAULT_MOVIES_PATH) }
       let(:film) { movies.all.first }
       let(:id_imdb) { film.link.scan(/tt\d{7}/).first }
       it 'when imdb_id convert to tmdb_id' do

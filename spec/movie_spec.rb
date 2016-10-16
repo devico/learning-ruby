@@ -36,7 +36,7 @@ module TopMovies
 
     describe '#matches_all?' do
       subject { movie.matches_all?(params) }
-      let(:netflix) { Netflix.new("lib/topmovies/data/movies.txt")}
+      let(:netflix) { Netflix.new(DEFAULT_MOVIES_PATH)}
       let(:movie) { netflix.filter(genre: 'Comedy').first }
       let(:params) { {genre: 'Comedy', year: 1983...1998} }
       it { expect( subject ).to be_truthy }
@@ -44,7 +44,7 @@ module TopMovies
 
     describe '#imdb_id' do
       subject { movie.imdb_id }
-      let(:netflix) { Netflix.new("lib/topmovies/data/movies.txt")}
+      let(:netflix) { Netflix.new(DEFAULT_MOVIES_PATH)}
       let(:movie) { netflix.all.first }
       it { expect( subject ).to eq('tt0111161') }
     end
