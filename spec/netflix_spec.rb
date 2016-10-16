@@ -2,7 +2,7 @@ module TopMovies
 
   describe Netflix do
 
-    let(:netflix) { TopMovies::Netflix.new('data/movies.txt') }
+    let(:netflix) { TopMovies::Netflix.new("lib/topmovies/data/movies.txt") }
 
     describe '#balance status' do
       subject { netflix }
@@ -130,7 +130,7 @@ module TopMovies
     end
 
     describe '#cash' do
-     let(:value) {Money.new(19000, "UAH")}
+     let(:value) {Money.new(18500, "UAH")}
      it { expect( Netflix.cash ).to eq(value) }
     end
 

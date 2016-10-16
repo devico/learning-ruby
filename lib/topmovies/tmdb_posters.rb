@@ -15,7 +15,7 @@ module TmdbPosters
     Tmdb::Find.imdb_id(id_imdb).first[1][0]['id']
   end
 
-  def take_poster(id_imdb)
+  def take_poster(*)
     Tmdb::Movie.detail(imdb_to_tmdb(imdb_id))['poster_path']
   end
 end

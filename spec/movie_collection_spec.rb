@@ -1,7 +1,7 @@
 module TopMovies
 
   describe MovieCollection do
-    let(:collection) { TopMovies::MovieCollection.new('data/movies.txt') }
+    let(:collection) { TopMovies::MovieCollection.new("lib/topmovies/data/movies.txt") }
 
     describe '#by_genre' do
       before { TopMovies::MovieCollection.send(:define_method, 'comedy') { filter(genre: 'Comedy') } }

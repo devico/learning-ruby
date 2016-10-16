@@ -2,7 +2,7 @@ module TopMovies
 
   describe ModernMovie do
 
-    let(:netflix) { TopMovies::Netflix.new("data/movies.txt") }
+    let(:netflix) { TopMovies::Netflix.new("lib/topmovies/data/movies.txt") }
     let(:movie) { netflix.filter(period: :modern).first }
 
     describe '#cost' do

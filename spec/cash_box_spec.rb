@@ -2,7 +2,7 @@ module TopMovies
 
   describe CashBox do
 
-    let(:netflix) { TopMovies::Netflix.new("data/movies.txt") { include CashBox } }
+    let(:netflix) { TopMovies::Netflix.new("lib/topmovies/data/movies.txt") { include CashBox } }
     let(:value) { Money.new(0, "UAH") }
 
 

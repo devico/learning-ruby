@@ -18,28 +18,28 @@ puts online.show(genre: 'Drama', period: :new)
 
 # component filter
 movies = online.show do |movie|
-   !movie.title.include?('Terminator') && \
-     movie.genre[0].include?('Action') && \
-     movie.year > 2003
+  !movie.title.include?('Terminator') && \
+    movie.genre[0].include?('Action') && \
+    movie.year > 2003
 end
 puts movies
 
 # define new filter
- online.define_filter(:new_sci_fi) do |movie|
-   movie.genre[0].include?('Sci-Fi') && \
-     !movie.country.include?('UK')
- end
+online.define_filter(:new_sci_fi) do |movie|
+  movie.genre[0].include?('Sci-Fi') && \
+    !movie.country.include?('UK')
+end
 puts online.show(new_sci_fi: true)
 
 online.define_filter(:not_spielberg) do |movie|
-   !movie.author.include?('Steven Spielberg')
+  !movie.author.include?('Steven Spielberg')
 end
 puts online.show(new_sci_fi: true, not_spielberg: true)
 
 online.define_filter(:country) do |movie|
-   movie.genre.include?('Sci-Fi') && \
-     !movie.author.include?('Steven Spielberg') && \
-     !movie.country.include?('UK')
+  movie.genre.include?('Sci-Fi') && \
+    !movie.author.include?('Steven Spielberg') && \
+    !movie.country.include?('UK')
 end
 
 # define new filter based on existing filter

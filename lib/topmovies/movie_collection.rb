@@ -16,7 +16,7 @@ module TopMovies
 
     attr_accessor :collection
 
-    PATH_PAGES = '../pages'
+    PATH_PAGES = File.expand_path('pages/', __dir__)
 
     def initialize(file_name)
       @collection = make_collection(file_name)
@@ -91,7 +91,7 @@ module TopMovies
     end
 
     def render_html
-      template = File.open('../pages/index.haml')
+      template = File.open("#{PATH_PAGES}/index.haml")
       Haml::Engine.new(template.read).render(@collection)
     end
   end

@@ -1,4 +1,4 @@
-require_relative 'lib/top_movies'
+require_relative '../lib/top_movies'
 require 'date'
 
 file_name = ARGV[0] || '../lib/topmovies/data/movies.txt'

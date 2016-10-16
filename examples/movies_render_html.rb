@@ -11,4 +11,4 @@ else
 end
 
 movies = TopMovies::MovieCollection.new(file_name)
-movies.render_html
+puts movies.render_html

@@ -7,6 +7,8 @@ module TopMovies
     include ImdbBudgets
     include TmdbPosters
 
+    PATH_BUDGETS = File.dirname(File.expand_path('data/budgets/*.*', __dir__))
+
     class SplitArray < Virtus::Attribute
       def coerce(value)
         value.split(',')
@@ -82,8 +84,8 @@ module TopMovies
     end
 
     def budget
-      file_name = "../data/budgets/#{imdb_id}.yml"
-      take_budget_from_imdb(imdb_id) unless File.exist?(file_name)
+      file_name = "#{imdb_id}.yml"
+      take_budget_from_imdb(imdb_id) unless File.exist?("#{PATH_BUDGETS}/#{file_name}")
       take_budget_from_file(file_name)
     end
 

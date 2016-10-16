@@ -52,4 +52,4 @@ theatre.period '21:00'..'23:00' do
   hall :red
 end
 
-puts theatre
+puts theatre.inspect

@@ -3,8 +3,11 @@ require 'open-uri'
 require 'yaml'
 require 'ruby-progressbar'
 module ImdbBudgets
+
+  PATH_BUDGETS = File.dirname(File.expand_path('data/budgets/*.*',__dir__))
+
   def take_budget_from_file(file_name)
-    YAML::load_file(File.open(file_name))[file_name[16,9]]
+    YAML::load_file(File.open("#{PATH_BUDGETS}/#{file_name}"))[file_name[0,9]]
   end
 
   def take_budget_from_imdb(id)
@@ -14,7 +17,7 @@ module ImdbBudgets
            else
              nil
            end
-    File.write("../data/budgets/#{id}.yml", {id => data}.to_yaml)
+    File.write("#{PATH_BUDGETS}/#{id}.yml", {id => data}.to_yaml)
   end
 
   def take_info
