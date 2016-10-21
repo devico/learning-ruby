@@ -16,11 +16,7 @@ $ gem install topmovies
 Usage
 -------------------
 
-To use gem topmovies you need to do the following:
-
-1.create a Movie Collection on the basis of added movies list
-
-  ```ruby
+```ruby
     file_name = ARGV[0] || '../lib/topmovies/data/movies.txt'
     if File.exist?(file_name)
       File.open(file_name)
@@ -28,23 +24,14 @@ To use gem topmovies you need to do the following:
       puts 'Ошибка. Файл отсутствует!'
       exit
     end
-  ```
 
-2.create a Movie Collection on the basis of added movies list
-
-```ruby
   movies = TopMovies::MovieCollection.new(file_name)
-```
+  movies.filter(genre: 'Comedy')
+  movies.sort_by(:year)
 
-3.create an online cinema Netflix
-
-```ruby
   online = TopMovies::Netflix.new(file_name)
-```
+  online.show(genre: 'Drama', period: :new)
 
-4.create a normal cinema Theatre
-
-```ruby
   theatre =
     TopMovies::Theatre.new do
       hall :red, title: 'Красный зал', places: 100
@@ -79,9 +66,18 @@ To use gem topmovies you need to do the following:
         hall :green
       end
   end
+
+  theatre.period '21:00'..'23:00' do
+   description 'Еще один сеанс'
+   filters genre: 'Sci-Fi', year: 1900..1980
+   price 13
+   hall :red
+ end
+
+ theatre.buy_ticket('19:20', hall: :green)
 ```
 
-After that you will be available to a large number of methods for manipulating data list IMDB top 250 films
+Other methods for manipulating data list IMDB top 250 films described to documentation
 
 Examples
 -----------
