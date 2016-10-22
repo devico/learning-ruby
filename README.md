@@ -2,9 +2,6 @@ TopMovies
 ========
 
 TopMovies is a console application to manipulate the data from the list of top 250 IMDB movies.
-
-In addition, the application can get the budget for each film with IMDb site, extract the posters and film title translation into other languages with TMDB site, and renders html page with all the movies
-
 Usage
 ==========
 
@@ -12,7 +9,7 @@ Installation
 -------------------
 $ gem install topmovies
 
-Перед тем как использовать все возможности библиотеки нужно подключить файл данных с фильмами
+Before you can use all the features of the library you want to connect a data file with movies
 
 ```ruby
   file_name = ARGV[0] || '../lib/topmovies/data/movies.txt'
@@ -62,6 +59,7 @@ MovieCollection, created in the application, allows you to extract data and show
   # Arnold Shwarzenegger played in this movie
   movie.actors.include?('Arnold Shwarzenegger')
   # => false
+```
 
 ####Cinema
 
@@ -161,6 +159,8 @@ MovieCollection, created in the application, allows you to extract data and show
 
 ```
 ####Additional info
+
+  In addition, the application can get the budget for each film with IMDb site, extract the posters and film title translation into other languages with TMDB site, and renders html page with all the movies.
 
 ```ruby
   # get the film's budget
