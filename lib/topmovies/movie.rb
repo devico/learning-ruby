@@ -92,5 +92,9 @@ module TopMovies
     def poster
       take_poster(imdb_id)
     end
+
+    def translations
+      take_translations(imdb_id)
+    end
   end
 end

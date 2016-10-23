@@ -11,6 +11,7 @@ else
 end
 
 movies = TopMovies::MovieCollection.new(file_name)
+puts movies
 
 # collection filters by genre
 puts movies.filter(genre: 'Comedy')

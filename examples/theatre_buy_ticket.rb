@@ -51,6 +51,7 @@ theatre =
       hall :red
     end
   end
+puts theatre
 
 puts theatre.buy_ticket('10:20')
 puts theatre.buy_ticket('13:20')

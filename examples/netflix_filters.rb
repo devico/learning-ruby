@@ -11,7 +11,9 @@ else
 end
 
 online = TopMovies::Netflix.new(file_name)
-online.pay(35)
+puts online
+
+puts online.pay(35)
 
 # inner filters
 puts online.show(genre: 'Drama', period: :new)
