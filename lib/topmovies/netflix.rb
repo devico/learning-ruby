@@ -4,20 +4,18 @@ module TopMovies
 
     Money.use_i18n = false
 
-    # show amount money in cashbox
-    # @note called when you need to know how much money in cashbox
-    # @return [Fixnum] @balance
+    # Get the amount of money at the cashbox
+    # @return [Fixnum]
     def self.cash
       cashbox_balance
     end
 
     attr_reader :balance
 
-    # withdraw money from the cashbox for preview movie
+    # Withdraw money from the cashbox for preview movie
     # @note called from #show
-    # @param
-    #   movie [Movie] movie to shown
-    # @return [Fixnum] @balance
+    # @param movie [Movie] movie to shown
+    # @return [Fixnum] amount money in cashbox
     def make_payment(movie)
       raise ArgumentError, 'В базе нет такого фильма' unless movie
       if @balance.to_f < movie.cost
@@ -28,13 +26,12 @@ module TopMovies
       end
     end
 
-    # define filter
+    # Define a new filter based on an existing filter
     # @note called from #show
-    # @param
-    #   filter_name [Symbol] name new filter
-    #   from: [Symbol] name filter on which the new filter is created
-    #   arg: [Array] value property of the movie, that define in based filter
-    #   &block [Proc] code block containing the filter condition
+    # @param filter_name [Symbol] name new filter
+    # @param from: [Symbol] name existing filter
+    # @param arg: [Array] value property of the movie, that define in existing filter
+    # @param &block [Proc] code block containing the filter condition
     # @return [Hash] @filter
     # @example
     #   define_filter(:new_sci_fi) { |movie, year| movie.year > year }
@@ -50,10 +47,10 @@ module TopMovies
         end
     end
 
-    # split filters to internal and external
+    # Split filters to internal(based on properties of the movie) and
+    #   external(custom filters maked users)
     # @note called from find_by_custom_filters and find_by_inner_filters
-    # @param
-    #   filters [Hash] filters represents as hash
+    # @param filters [Hash] filters represents as hash
     # @return [Array] @custom_filters and @inner_filters
     def parse_filters(filters)
       @custom_filters, @inner_filters = filters.partition do |flt|
@@ -61,15 +58,14 @@ module TopMovies
       end
     end
 
-    # get movie that will show
+    # Get movie that will show
     # @note called from #show
-    # @param
-    #   filters [Hash] show filters represents as hash
-    #   &block [Proc] show filters represents as block
-    # @return [Movie] movie
+    # @param filters [Hash] filters for the selection of the movie represents as hash
+    # @param &block [Proc] filters for the selection of the movie represents as block
+    # @return [Movie] movie satisfying all filters
     # @example
     #   filter_movie(new_sci_fi: true)
-    #   # => Blade Runner — современное кино:
+    #   # => Blade Runner — современное кино...
     def filter_movie(filters, &block)
       movies = @collection.dup
       movies = find_by_block(movies, &block)
@@ -79,11 +75,10 @@ module TopMovies
       movie
     end
 
-    # get movies if send block into
-    # @note called when send block
-    # @param
-    #   movies [MovieCollection] movies collection
-    #   &block [Proc] it filter represents as block
+    # Get array movies
+    # @note called when into #show send block
+    # @param movies [MovieCollection] movies collection
+    # @param &block [Proc] it filter represents as block
     # @return [Array] array movies
     # @example
     #   find_by_block(movies, &block)
@@ -92,11 +87,10 @@ module TopMovies
       movies
     end
 
-    # get movies filetred composite filters
+    # Get movies filtered composite filters
     # @note called when define custom filter
-    # @param
-    #   movies [MovieCollection] movies collection
-    #   filters [Hash] filters represents as hash
+    # @param movies [MovieCollection] movies collection
+    # @param filters [Hash] filters represents as hash
     # @return [Array] array movies
     # @example
     #   netflix.find_by_custom_filters(@collection, new_sci_fi: true)
@@ -115,11 +109,10 @@ module TopMovies
       movies
     end
 
-    # get movies filetred inner filters
-    # @note called as needed
-    # @param
-    #   movies [MovieCollection] movies collection
-    #   filters [Hash] filters represents as hash
+    # Get movies filtered inner filters
+    # @note called when into #show send inner filters
+    # @param movies [MovieCollection] movies collection
+    # @param filters [Hash] filters represents as hash
     # @return [Array] array movies
     # @example
     #   netflix.find_by_inner_filters(@collection, genre: 'Drama')
@@ -134,11 +127,9 @@ module TopMovies
       movies
     end
 
-    # show movie
-    # @note called as needed
-    # @param
-    #   filter_name [Hash] filter name
-    #   block [Proc] composite filter represented as a block
+    # Show movie
+    # @param filter_name [Hash] filter name
+    # @param block [Proc] composite filter represented as a block
     # @return [Movie] film in a certain format
     # @example
     #   netflix.show(genre: 'Drama', period: :new)
@@ -155,18 +146,15 @@ module TopMovies
       movie.show
     end
 
-    # get movie with high rate
-    # @note called as needed
+    # Get movie with high rate
     # @param col_movies [MovieCollection] movies collection
     # @return [Movie] movie with high rate
-    # @example
-    #   rand_high_rate(col_movies)
     def rand_high_rate(col_movies)
       col_movies.sort_by { |m| m.rate.to_f * rand(1000) }.last
     end
 
-    # put cash to cashbox of Netflix
-    # @note called as needed
+    # Put cash to cashbox of Netflix to be able to watch movie
+    # @note called before show the movie
     # @param payment [Fixnum] amount of payment
     # @return [Fixnum] the amount of money at the cashbox
     # @example
@@ -181,8 +169,7 @@ module TopMovies
       @balance += money
     end
 
-    # define the cost of the film by title
-    # @note called as needed
+    # Want to know how much of the movie by title
     # @param title [String] title movie
     # @return [Money] movie cost in currency format
     # @example
@@ -194,8 +181,8 @@ module TopMovies
       to_money(movie.cost)
     end
 
-    # converts number into a currency format
-    # @note called as needed
+    # Converts number into a currency format
+    # @note called when numerical amount need represents in currency format
     # @param price [Fixnum] ticket cost
     # @return [Money] ticket cost with currency symbol
     # @example

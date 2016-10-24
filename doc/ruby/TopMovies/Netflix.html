@@ -192,7 +192,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>show amount money in cashbox.</p>
+<p>Get the amount of money at the cashbox.</p>
 </div></span>
   
 </li>
@@ -225,7 +225,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>define filter.</p>
+<p>Define a new filter based on an existing filter.</p>
 </div></span>
   
 </li>
@@ -249,7 +249,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>define the cost of the film by title.</p>
+<p>Want to know how much of the movie by title.</p>
 </div></span>
   
 </li>
@@ -273,7 +273,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>get movie that will show.</p>
+<p>Get movie that will show.</p>
 </div></span>
   
 </li>
@@ -297,7 +297,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>get movies if send block into.</p>
+<p>Get array movies.</p>
 </div></span>
   
 </li>
@@ -321,7 +321,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>get movies filetred composite filters.</p>
+<p>Get movies filtered composite filters.</p>
 </div></span>
   
 </li>
@@ -345,7 +345,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>get movies filetred inner filters.</p>
+<p>Get movies filtered inner filters.</p>
 </div></span>
   
 </li>
@@ -369,7 +369,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>withdraw money from the cashbox for preview movie.</p>
+<p>Withdraw money from the cashbox for preview movie.</p>
 </div></span>
   
 </li>
@@ -393,7 +393,8 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>split filters to internal and external.</p>
+<p>Split filters to internal(based on properties of the movie) and  
+external(custom filters maked users).</p>
 </div></span>
   
 </li>
@@ -417,7 +418,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>put cash to cashbox of Netflix.</p>
+<p>Put cash to cashbox of Netflix to be able to watch movie.</p>
 </div></span>
   
 </li>
@@ -441,7 +442,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>get movie with high rate.</p>
+<p>Get movie with high rate.</p>
 </div></span>
   
 </li>
@@ -465,7 +466,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>show movie.</p>
+<p>Show movie.</p>
 </div></span>
   
 </li>
@@ -489,7 +490,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>converts number into a currency format.</p>
+<p>Converts number into a currency format.</p>
 </div></span>
   
 </li>
@@ -581,12 +582,12 @@
       <pre class="lines">
 
 
+13
 14
-15
-16</pre>
+15</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_balance'>balance</span>
   <span class='ivar'>@balance</span>
@@ -615,15 +616,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-  <div class="note notetag">
-    <strong>Note:</strong>
-    <div class='inline'>
-<p>called when you need to know how much money in cashbox</p>
-</div>
-  </div>
-
-
-<p>show amount money in cashbox</p>
+<p>Get the amount of money at the cashbox</p>
 
 
   </div>
@@ -640,11 +633,6 @@
       
       
       
-        &mdash;
-        <div class='inline'>
-<p>@balance</p>
-</div>
-      
     </li>
   
 </ul>
@@ -655,12 +643,12 @@
       <pre class="lines">
 
 
+9
 10
-11
-12</pre>
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_cash'>cash</span>
   <span class='id identifier rubyid_cashbox_balance'>cashbox_balance</span>
@@ -696,7 +684,7 @@
   </div>
 
 
-<p>define filter</p>
+<p>Define a new filter based on an existing filter</p>
 
 
   </div>
@@ -719,19 +707,65 @@
         <span class='name'>filter_name</span>
       
       
-        <span class='type'></span>
+        <span class='type'>(<tt>Symbol</tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><dl class="rdoc-list label-list"><dt>Symbol
-<dd>
+        <div class='inline'>
 <p>name new filter</p>
-</dd></dl>
-
-<p>from: [Symbol] name filter on which the new filter is created arg: [Array]
-value property of the movie, that define in based filter &amp;block [Proc]
-code block containing the filter condition</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>from:</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>name existing filter</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>arg:</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>value property of the movie, that define in existing filter</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>&amp;block</span>
+      
+      
+        <span class='type'>(<tt>Proc</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>code block containing the filter condition</p>
 </div>
       
     </li>
@@ -763,19 +797,19 @@ code block containing the filter condition</p>
       <pre class="lines">
 
 
+39
+40
+41
 42
 43
 44
 45
 46
 47
-48
-49
-50
-51</pre>
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_define_filter'>define_filter</span><span class='lparen'>(</span><span class='id identifier rubyid_filter_name'>filter_name</span><span class='comma'>,</span> <span class='label'>from:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>arg:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_blk'>blk</span><span class='rparen'>)</span>
   <span class='ivar'>@filter</span><span class='lbracket'>[</span><span class='id identifier rubyid_filter_name'>filter_name</span><span class='rbracket'>]</span> <span class='op'>=</span>
@@ -804,15 +838,7 @@ code block containing the filter condition</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-  <div class="note notetag">
-    <strong>Note:</strong>
-    <div class='inline'>
-<p>called as needed</p>
-</div>
-  </div>
-
-
-<p>define the cost of the film by title</p>
+<p>Want to know how much of the movie by title</p>
 
 
   </div>
@@ -886,14 +912,14 @@ code block containing the filter condition</p>
       <pre class="lines">
 
 
-191
-192
-193
-194
-195</pre>
+178
+179
+180
+181
+182</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 191</span>
+      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 178</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_film_costs'>film_costs</span><span class='lparen'>(</span><span class='id identifier rubyid_title'>title</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_movie'>movie</span> <span class='op'>=</span> <span class='id identifier rubyid_filter'>filter</span><span class='lparen'>(</span><span class='id identifier rubyid_title'>title</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
@@ -925,7 +951,7 @@ code block containing the filter condition</p>
   </div>
 
 
-<p>get movie that will show</p>
+<p>Get movie that will show</p>
 
 
   </div>
@@ -937,7 +963,7 @@ code block containing the filter condition</p>
     
       
       <pre class="example code"><code><span class='id identifier rubyid_filter_movie'>filter_movie</span><span class='lparen'>(</span><span class='label'>new_sci_fi:</span> <span class='kw'>true</span><span class='rparen'>)</span>
-<span class='comment'># =&gt; Blade Runner — современное кино:</span></code></pre>
+<span class='comment'># =&gt; Blade Runner — современное кино...</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -948,17 +974,29 @@ code block containing the filter condition</p>
         <span class='name'>filters</span>
       
       
-        <span class='type'></span>
+        <span class='type'>(<tt>Hash</tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><dl class="rdoc-list label-list"><dt>Hash
-<dd>
-<p>show filters represents as hash</p>
-</dd></dl>
-
-<p>&amp;block [Proc] show filters represents as block</p>
+        <div class='inline'>
+<p>filters for the selection of the movie represents as hash</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>&amp;block</span>
+      
+      
+        <span class='type'>(<tt>Proc</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>filters for the selection of the movie represents as block</p>
 </div>
       
     </li>
@@ -977,7 +1015,7 @@ code block containing the filter condition</p>
       
         &mdash;
         <div class='inline'>
-<p>movie</p>
+<p>movie satisfying all filters</p>
 </div>
       
     </li>
@@ -990,17 +1028,17 @@ code block containing the filter condition</p>
       <pre class="lines">
 
 
+69
+70
+71
+72
 73
 74
 75
-76
-77
-78
-79
-80</pre>
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 69</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_filter_movie'>filter_movie</span><span class='lparen'>(</span><span class='id identifier rubyid_filters'>filters</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_movies'>movies</span> <span class='op'>=</span> <span class='ivar'>@collection</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
@@ -1030,12 +1068,12 @@ code block containing the filter condition</p>
   <div class="note notetag">
     <strong>Note:</strong>
     <div class='inline'>
-<p>called when send block</p>
+<p>called when into #show send block</p>
 </div>
   </div>
 
 
-<p>get movies if send block into</p>
+<p>Get array movies</p>
 
 
   </div>
@@ -1057,17 +1095,29 @@ code block containing the filter condition</p>
         <span class='name'>movies</span>
       
       
-        <span class='type'></span>
+        <span class='type'>(<tt><span class='object_link'><a href="MovieCollection.html" title="TopMovies::MovieCollection (class)">MovieCollection</a></span></tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><dl class="rdoc-list label-list"><dt>MovieCollection
-<dd>
+        <div class='inline'>
 <p>movies collection</p>
-</dd></dl>
-
-<p>&amp;block [Proc] it filter represents as block</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>&amp;block</span>
+      
+      
+        <span class='type'>(<tt>Proc</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>it filter represents as block</p>
 </div>
       
     </li>
@@ -1099,13 +1149,13 @@ code block containing the filter condition</p>
       <pre class="lines">
 
 
-90
-91
-92
-93</pre>
+85
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_by_block'>find_by_block</span><span class='lparen'>(</span><span class='id identifier rubyid_movies'>movies</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_movies'>movies</span> <span class='op'>=</span> <span class='id identifier rubyid_movies'>movies</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -1136,7 +1186,7 @@ code block containing the filter condition</p>
   </div>
 
 
-<p>get movies filetred composite filters</p>
+<p>Get movies filtered composite filters</p>
 
 
   </div>
@@ -1159,17 +1209,29 @@ code block containing the filter condition</p>
         <span class='name'>movies</span>
       
       
-        <span class='type'></span>
+        <span class='type'>(<tt><span class='object_link'><a href="MovieCollection.html" title="TopMovies::MovieCollection (class)">MovieCollection</a></span></tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><dl class="rdoc-list label-list"><dt>MovieCollection
-<dd>
+        <div class='inline'>
 <p>movies collection</p>
-</dd></dl>
-
-<p>filters [Hash] filters represents as hash</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>filters</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>filters represents as hash</p>
 </div>
       
     </li>
@@ -1201,22 +1263,22 @@ code block containing the filter condition</p>
       <pre class="lines">
 
 
+98
+99
+100
+101
+102
+103
 104
 105
 106
 107
 108
 109
-110
-111
-112
-113
-114
-115
-116</pre>
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 98</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_by_custom_filters'>find_by_custom_filters</span><span class='lparen'>(</span><span class='id identifier rubyid_movies'>movies</span><span class='comma'>,</span> <span class='id identifier rubyid_filters'>filters</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_parse_filters'>parse_filters</span><span class='lparen'>(</span><span class='id identifier rubyid_filters'>filters</span><span class='rparen'>)</span>
@@ -1251,12 +1313,12 @@ code block containing the filter condition</p>
   <div class="note notetag">
     <strong>Note:</strong>
     <div class='inline'>
-<p>called as needed</p>
+<p>called when into #show send inner filters</p>
 </div>
   </div>
 
 
-<p>get movies filetred inner filters</p>
+<p>Get movies filtered inner filters</p>
 
 
   </div>
@@ -1279,17 +1341,29 @@ code block containing the filter condition</p>
         <span class='name'>movies</span>
       
       
-        <span class='type'></span>
+        <span class='type'>(<tt><span class='object_link'><a href="MovieCollection.html" title="TopMovies::MovieCollection (class)">MovieCollection</a></span></tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><dl class="rdoc-list label-list"><dt>MovieCollection
-<dd>
+        <div class='inline'>
 <p>movies collection</p>
-</dd></dl>
-
-<p>filters [Hash] filters represents as hash</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>filters</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>filters represents as hash</p>
 </div>
       
     </li>
@@ -1321,18 +1395,18 @@ code block containing the filter condition</p>
       <pre class="lines">
 
 
+120
+121
+122
+123
+124
+125
+126
 127
-128
-129
-130
-131
-132
-133
-134
-135</pre>
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 120</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_by_inner_filters'>find_by_inner_filters</span><span class='lparen'>(</span><span class='id identifier rubyid_movies'>movies</span><span class='comma'>,</span> <span class='id identifier rubyid_filters'>filters</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_parse_filters'>parse_filters</span><span class='lparen'>(</span><span class='id identifier rubyid_filters'>filters</span><span class='rparen'>)</span>
@@ -1368,7 +1442,7 @@ code block containing the filter condition</p>
   </div>
 
 
-<p>withdraw money from the cashbox for preview movie</p>
+<p>Withdraw money from the cashbox for preview movie</p>
 
 
   </div>
@@ -1382,15 +1456,13 @@ code block containing the filter condition</p>
         <span class='name'>movie</span>
       
       
-        <span class='type'></span>
+        <span class='type'>(<tt><span class='object_link'><a href="Movie.html" title="TopMovies::Movie (class)">Movie</a></span></tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><dl class="rdoc-list label-list"><dt>Movie
-<dd>
+        <div class='inline'>
 <p>movie to shown</p>
-</dd></dl>
 </div>
       
     </li>
@@ -1409,7 +1481,7 @@ code block containing the filter condition</p>
       
         &mdash;
         <div class='inline'>
-<p>@balance</p>
+<p>amount money in cashbox</p>
 </div>
       
     </li>
@@ -1435,18 +1507,18 @@ code block containing the filter condition</p>
       <pre class="lines">
 
 
+19
+20
 21
 22
 23
 24
 25
 26
-27
-28
-29</pre>
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_make_payment'>make_payment</span><span class='lparen'>(</span><span class='id identifier rubyid_movie'>movie</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>В базе нет такого фильма</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_movie'>movie</span>
@@ -1482,7 +1554,10 @@ code block containing the filter condition</p>
   </div>
 
 
-<p>split filters to internal and external</p>
+<p>Split filters to internal(based on properties of the movie) and</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_external'>external</span><span class='lparen'>(</span><span class='id identifier rubyid_custom'>custom</span> <span class='id identifier rubyid_filters'>filters</span> <span class='id identifier rubyid_maked'>maked</span> <span class='id identifier rubyid_users'>users</span><span class='rparen'>)</span>
+</code></pre>
 
 
   </div>
@@ -1496,15 +1571,13 @@ code block containing the filter condition</p>
         <span class='name'>filters</span>
       
       
-        <span class='type'></span>
+        <span class='type'>(<tt>Hash</tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><dl class="rdoc-list label-list"><dt>Hash
-<dd>
+        <div class='inline'>
 <p>filters represents as hash</p>
-</dd></dl>
 </div>
       
     </li>
@@ -1536,14 +1609,14 @@ code block containing the filter condition</p>
       <pre class="lines">
 
 
+55
+56
+57
 58
-59
-60
-61
-62</pre>
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 55</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_filters'>parse_filters</span><span class='lparen'>(</span><span class='id identifier rubyid_filters'>filters</span><span class='rparen'>)</span>
   <span class='ivar'>@custom_filters</span><span class='comma'>,</span> <span class='ivar'>@inner_filters</span> <span class='op'>=</span> <span class='id identifier rubyid_filters'>filters</span><span class='period'>.</span><span class='id identifier rubyid_partition'>partition</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_flt'>flt</span><span class='op'>|</span>
@@ -1570,12 +1643,12 @@ code block containing the filter condition</p>
   <div class="note notetag">
     <strong>Note:</strong>
     <div class='inline'>
-<p>called as needed</p>
+<p>called before show the movie</p>
 </div>
   </div>
 
 
-<p>put cash to cashbox of Netflix</p>
+<p>Put cash to cashbox of Netflix to be able to watch movie</p>
 
 
   </div>
@@ -1649,17 +1722,17 @@ code block containing the filter condition</p>
       <pre class="lines">
 
 
-175
-176
-177
-178
-179
-180
-181
-182</pre>
+163
+164
+165
+166
+167
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 175</span>
+      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 163</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pay'>pay</span><span class='lparen'>(</span><span class='id identifier rubyid_payment'>payment</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_money'>money</span> <span class='op'>=</span> <span class='const'>Money</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_payment'>payment</span> <span class='op'>*</span> <span class='int'>100</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>UAH</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
@@ -1686,29 +1759,13 @@ code block containing the filter condition</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-  <div class="note notetag">
-    <strong>Note:</strong>
-    <div class='inline'>
-<p>called as needed</p>
-</div>
-  </div>
-
-
-<p>get movie with high rate</p>
+<p>Get movie with high rate</p>
 
 
   </div>
 </div>
 <div class="tags">
-  
-  <div class="examples">
-    <p class="tag_title">Examples:</p>
-    
-      
-      <pre class="example code"><code><span class='id identifier rubyid_rand_high_rate'>rand_high_rate</span><span class='lparen'>(</span><span class='id identifier rubyid_col_movies'>col_movies</span><span class='rparen'>)</span></code></pre>
-    
-  </div>
-<p class="tag_title">Parameters:</p>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1754,12 +1811,12 @@ code block containing the filter condition</p>
       <pre class="lines">
 
 
-164
-165
-166</pre>
+152
+153
+154</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 164</span>
+      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 152</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rand_high_rate'>rand_high_rate</span><span class='lparen'>(</span><span class='id identifier rubyid_col_movies'>col_movies</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_col_movies'>col_movies</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_m'>m</span><span class='op'>|</span> <span class='id identifier rubyid_m'>m</span><span class='period'>.</span><span class='id identifier rubyid_rate'>rate</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='op'>*</span> <span class='id identifier rubyid_rand'>rand</span><span class='lparen'>(</span><span class='int'>1000</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
@@ -1781,15 +1838,7 @@ code block containing the filter condition</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-  <div class="note notetag">
-    <strong>Note:</strong>
-    <div class='inline'>
-<p>called as needed</p>
-</div>
-  </div>
-
-
-<p>show movie</p>
+<p>Show movie</p>
 
 
   </div>
@@ -1818,19 +1867,31 @@ code block containing the filter condition</p>
         <span class='name'>filter_name</span>
       
       
-        <span class='type'></span>
+        <span class='type'>(<tt>Hash</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
       
       
         &mdash;
-        <div class='inline'><dl class="rdoc-list label-list"><dt>Hash
-<dd>
+        <div class='inline'>
 <p>filter name</p>
-</dd></dl>
-
-<p>block [Proc] composite filter represented as a block</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>block</span>
+      
+      
+        <span class='type'>(<tt>Proc</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>composite filter represented as a block</p>
 </div>
       
     </li>
@@ -1862,14 +1923,14 @@ code block containing the filter condition</p>
       <pre class="lines">
 
 
-152
-153
-154
-155
-156</pre>
+143
+144
+145
+146
+147</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 152</span>
+      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 143</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show'>show</span><span class='lparen'>(</span><span class='id identifier rubyid_filter_name'>filter_name</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_movie'>movie</span> <span class='op'>=</span> <span class='id identifier rubyid_filter_movie'>filter_movie</span><span class='lparen'>(</span><span class='id identifier rubyid_filter_name'>filter_name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -1896,12 +1957,12 @@ code block containing the filter condition</p>
   <div class="note notetag">
     <strong>Note:</strong>
     <div class='inline'>
-<p>called as needed</p>
+<p>called when numerical amount need represents in currency format</p>
 </div>
   </div>
 
 
-<p>converts number into a currency format</p>
+<p>Converts number into a currency format</p>
 
 
   </div>
@@ -1969,12 +2030,12 @@ code block containing the filter condition</p>
       <pre class="lines">
 
 
-205
-206
-207</pre>
+192
+193
+194</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 205</span>
+      <pre class="code"><span class="info file"># File 'lib/topmovies/netflix.rb', line 192</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_money'>to_money</span><span class='lparen'>(</span><span class='id identifier rubyid_price'>price</span><span class='rparen'>)</span>
   <span class='const'>Money</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_price'>price</span> <span class='op'>*</span> <span class='int'>100</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>UAH</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
@@ -1989,7 +2050,7 @@ code block containing the filter condition</p>
 </div>
 
       <div id="footer">
-  Generated on Sun Oct 23 18:17:27 2016 by
+  Generated on Mon Oct 24 15:45:11 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.5 (ruby-2.3.0).
 </div>
