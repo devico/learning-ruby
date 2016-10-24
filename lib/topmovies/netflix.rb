@@ -29,9 +29,9 @@ module TopMovies
     # Define a new filter based on an existing filter
     # @note called from #show
     # @param filter_name [Symbol] name new filter
-    # @param from: [Symbol] name existing filter
-    # @param arg: [Array] value property of the movie, that define in existing filter
-    # @param &block [Proc] code block containing the filter condition
+    # @param from [Symbol] name existing filter
+    # @param arg [Array] value property of the movie, that define in existing filter
+    # @param blk [Proc] code block containing the filter condition
     # @return [Hash] @filter
     # @example
     #   define_filter(:new_sci_fi) { |movie, year| movie.year > year }
@@ -61,7 +61,7 @@ module TopMovies
     # Get movie that will show
     # @note called from #show
     # @param filters [Hash] filters for the selection of the movie represents as hash
-    # @param &block [Proc] filters for the selection of the movie represents as block
+    # @param block [Proc] filters for the selection of the movie represents as block
     # @return [Movie] movie satisfying all filters
     # @example
     #   filter_movie(new_sci_fi: true)
@@ -78,7 +78,7 @@ module TopMovies
     # Get array movies
     # @note called when into #show send block
     # @param movies [MovieCollection] movies collection
-    # @param &block [Proc] it filter represents as block
+    # @param block [Proc] it filter represents as block
     # @return [Array] array movies
     # @example
     #   find_by_block(movies, &block)

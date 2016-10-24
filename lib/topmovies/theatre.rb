@@ -15,6 +15,9 @@ module TopMovies
     end
 
     # Add hall to Theatre
+    # @note called when created Theatre
+    #   Hall is the place showing of the movie and will be used
+    #   in the methods of adding periods and buy tickets
     # @param name [Symbol] name hall
     # @param description [Hash] description hall (title, places)
     # @return [Hash] @halls
@@ -25,8 +28,12 @@ module TopMovies
     end
 
     # Add period to Theatre
+    # @note called when created Theatre
+    #   Period this is schedule, which indicates the hall and time for show movie,
+    #   presence of filters and the cost of tickets, used used when displaying movies
+    #   and buying tickets
     # @param name [Range] name period
-    # @param &block [Proc] data period(description, filters, price, hall)
+    # @param block [Proc] data period(description, filters, price, hall)
     # @return [Hash] @periods
     # @example
     #   period '09:00'..'12:00' do
@@ -107,7 +114,7 @@ module TopMovies
     end
 
     # Buy a ticket to a movie at a certain time, you can specify the hall
-    # @param time [String] show time
+    # @param time_show [String] show time
     # @param hall [Hash] name hall
     # @return [String]
     # @example
