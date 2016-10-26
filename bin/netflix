@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+require "thor"
+require_relative '../lib/topmovies/movie'
+require_relative '../lib/topmovies/ancient_movie'
+require_relative '../lib/topmovies/classic_movie'
+require_relative '../lib/topmovies/modern_movie'
+require_relative '../lib/topmovies/new_movie'
+require_relative '../lib/topmovies/movie_collection'
+require_relative '../lib/topmovies/netflix'
+
+class MyCLI < Thor
+  online = TopMovies::Netflix.new('lib/topmovies/data/movies.txt')
+  desc "Preview Movie", "say hello to NAME"
+  option :pay, :required => true
+  option :show, :required => true
+  show_arg = ARGV[3].split(':')
+  filter = { show_arg[0].to_sym => show_arg[1] }
+  puts online.pay(ARGV[1].to_i)
+  puts online.show(filter)
+end
+
+MyCLI.start(ARGV)
