@@ -182,6 +182,21 @@ MovieCollection, created in the application, allows you to extract data and show
   # => html markup
 ```
 
+####Run library from CLI
+
+  There is an executable file (bin/netflix), which can be run from the command line
+  passing it parameters, and receive the filtered data.
+
+```ruby
+  # run
+  $ bin/netflix netflix --pay 25 --show genre:Comedy
+  # => 25.00
+  # => The General — старый фильм (1926 год)
+  $ bin/netflix netflix --pay 25 --show year:1988
+  # => 25.00
+  # => The General — старый фильм (1926 год)
+```
+
 Other methods for manipulating data list IMDB top 250 films described to documentation
 
 Author
