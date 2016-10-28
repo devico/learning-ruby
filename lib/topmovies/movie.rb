@@ -53,7 +53,11 @@ module TopMovies
         end
       else
         # rubocop:disable CaseEquality
-        filter_value === value
+        if value.is_a?(Fixnum)
+          filter_value.to_i === value
+        else
+          filter_value === value
+        end
         # rubocop:enable CaseEquality
       end
     end
