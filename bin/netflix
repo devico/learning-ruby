@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+require "thor"
+require_relative '../lib/topmovies/movie'
+require_relative '../lib/topmovies/ancient_movie'
+require_relative '../lib/topmovies/classic_movie'
+require_relative '../lib/topmovies/modern_movie'
+require_relative '../lib/topmovies/new_movie'
+require_relative '../lib/topmovies/movie_collection'
+require_relative '../lib/topmovies/netflix'
+
+class MyCLI < Thor
+  desc "Preview Movie", "pay to show movie"
+  option :pay, :type => :numeric, :required => true
+  option :show, :type => :hash, :required => true
+  def netflix
+    online = TopMovies::Netflix.new('lib/topmovies/data/movies.txt')
+    puts online.pay(options[:pay]) if options[:pay]
+    puts online.show(options[:show]) if options[:show]
+  end
+end
+
+MyCLI.start

@@ -2,7 +2,7 @@ module TopMovies
 
   describe Netflix do
 
-    let(:netflix) { TopMovies::Netflix.new("movies.txt") }
+    let(:netflix) { TopMovies::Netflix.new(DEFAULT_MOVIES_PATH) }
 
     describe '#balance status' do
       subject { netflix }
